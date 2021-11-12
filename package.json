@@ -1,6 +1,6 @@
 {
 	"name": "quick-switcher-button",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Add a quick switcher button next to the edit/preview mode toggle on mobile.",
 	"main": "src/main.ts",
 	"scripts": {
