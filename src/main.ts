@@ -23,5 +23,7 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
 
     onunload() {
         console.log('unloading Quick Switcher Button Plugin');
+        const quickSwitcherButton = document.getElementsByClassName("view-action quick-switcher-button")[0]
+        quickSwitcherButton.remove()
     }
 }
