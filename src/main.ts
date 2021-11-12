@@ -4,8 +4,8 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
     async onload() {
         console.log('loading Quick Switcher Button Plugin');
 
-        if (Platform.isMobile) {
-            this.app.workspace.onLayoutReady(() => {
+        this.app.workspace.onLayoutReady(() => {
+            if (Platform.isMobile) {
                 const quickSwitcherIcon = createEl('a', {
                     cls: ['view-action', 'quick-switcher-button'],
                 });
@@ -17,8 +17,8 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
                 this.registerDomEvent(quickSwitcherIcon, 'click', () => {
                     this.app.commands.executeCommandById('switcher:open');
                 });
-            });
-        }
+            }
+        });
     }
 
     onunload() {
