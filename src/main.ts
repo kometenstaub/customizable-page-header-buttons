@@ -39,13 +39,15 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
         console.log('loading Quick Switcher Button Plugin');
 
         if (Platform.isMobile) {
-            this.app.workspace.on('file-open', () => {
-                const currentLeaf = this.app.workspace.getLeaf();
-                if (!this.visited.has(currentLeaf)) {
-                    this.addButton();
-                }
-                this.visited.add(currentLeaf);
-            });
+            this.registerEvent(
+                this.app.workspace.on('file-open', () => {
+                    const currentLeaf = this.app.workspace.getLeaf();
+                    if (!this.visited.has(currentLeaf)) {
+                        this.addButton();
+                    }
+                    this.visited.add(currentLeaf);
+                })
+            );
         }
     }
 
