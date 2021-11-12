@@ -21,11 +21,20 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
     };
 
     removeButton = () => {
-        const quickSwitcherButton = document.getElementsByClassName(
-            'view-action quick-switcher-button'
-        )[0];
-        quickSwitcherButton.remove();
+        const activeLeaves = document.getElementsByClassName(
+            'workspace-leaf-content'
+        );
+        for (let i = 0; i < activeLeaves.length; i++) {
+            const leaf = activeLeaves[i];
+            const element = leaf.getElementsByClassName(
+                'view-action quick-switcher-button'
+            );
+            if (element[0]) {
+                element[0].remove();
+            }
+        }
     };
+
     async onload() {
         console.log('loading Quick Switcher Button Plugin');
 
