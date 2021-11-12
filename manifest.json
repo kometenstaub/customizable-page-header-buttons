@@ -1,7 +1,7 @@
 {
 	"id": "quick-switcher-button",
 	"name": "Quick Switcher Button",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minAppVersion": "0.12.19",
 	"description": "Add a quick switcher button next to the edit/preview mode toggle on mobile.",
 	"author": "kometenstaub",
