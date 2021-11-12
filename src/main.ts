@@ -1,29 +1,47 @@
-import { Plugin, setIcon, Platform } from 'obsidian';
+import { Plugin, setIcon, Platform, WorkspaceLeaf } from 'obsidian';
 
 export default class QuickSwitcherButtonPlugin extends Plugin {
+    visited: Set<WorkspaceLeaf> = new Set();
+
+    addButton = () => {
+        const quickSwitcherIcon = createEl('a', {
+            cls: ['view-action', 'quick-switcher-button'],
+        });
+        setIcon(quickSwitcherIcon, 'go-to-file');
+        const activeLeaf = document.getElementsByClassName(
+            'workspace-leaf mod-active'
+        )[0];
+        const viewActions =
+            activeLeaf.getElementsByClassName('view-actions')[0];
+        viewActions.prepend(quickSwitcherIcon);
+
+        this.registerDomEvent(quickSwitcherIcon, 'click', () => {
+            this.app.commands.executeCommandById('switcher:open');
+        });
+    };
+
+    removeButton = () => {
+        const quickSwitcherButton = document.getElementsByClassName(
+            'view-action quick-switcher-button'
+        )[0];
+        quickSwitcherButton.remove();
+    };
     async onload() {
         console.log('loading Quick Switcher Button Plugin');
 
-        this.app.workspace.onLayoutReady(() => {
-            if (Platform.isMobile) {
-                const quickSwitcherIcon = createEl('a', {
-                    cls: ['view-action', 'quick-switcher-button'],
-                });
-                setIcon(quickSwitcherIcon, 'go-to-file');
-                const viewActions =
-                    document.getElementsByClassName('view-actions')[0];
-                viewActions.prepend(quickSwitcherIcon);
-
-                this.registerDomEvent(quickSwitcherIcon, 'click', () => {
-                    this.app.commands.executeCommandById('switcher:open');
-                });
-            }
-        });
+        if (Platform.isMobile) {
+            this.app.workspace.on('file-open', () => {
+                const currentLeaf = this.app.workspace.getLeaf();
+                if (!this.visited.has(currentLeaf)) {
+                    this.addButton();
+                }
+                this.visited.add(currentLeaf);
+            });
+        }
     }
 
     onunload() {
         console.log('unloading Quick Switcher Button Plugin');
-        const quickSwitcherButton = document.getElementsByClassName("view-action quick-switcher-button")[0]
-        quickSwitcherButton.remove()
+        this.removeButton();
     }
 }
