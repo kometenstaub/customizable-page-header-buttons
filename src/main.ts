@@ -1,4 +1,4 @@
-import { Plugin, setIcon, Platform, WorkspaceLeaf } from 'obsidian';
+import { Plugin, setIcon, Platform } from 'obsidian';
 
 export default class QuickSwitcherButtonPlugin extends Plugin {
 
