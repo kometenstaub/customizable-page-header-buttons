@@ -2,6 +2,10 @@
 
 This plugin lets you add buttons that execute commands to the top bar in the mobile app.
 
-Currently it implements core commands and `Another Quick Switcher: Normal search`.
+It lets you choose from all commands and configure their icons. You can set icons from the core and feather icons.
 
-![GIF](https://github.com/kometenstaub/top-bar-buttons/blob/main/resources/top-bar-buttons.gif)
+## Credits
+
+Shoutout to [@phibr0](https://github.com/phibr0) for his awesome work on the [Customizable Sidebar Plugin](https://github.com/phibr0/obsidian-customizable-sidebar). The code that powers this plugins' settings (adding/removing commands/changing icons) is powered by an adapted version of his code.
+
+Also thank you to [Feather Icons](https://github.com/feathericons/feather#quick-start) and the [Obsidian Community Lib](https://github.com/obsidian-community/obsidian-community-lib) on which this plugin relies.
