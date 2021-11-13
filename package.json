@@ -1,6 +1,6 @@
 {
 	"name": "top-bar-buttons",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"description": "This plugin lets you add top bar buttons for Obsidian mobile.",
 	"main": "src/main.ts",
 	"scripts": {
