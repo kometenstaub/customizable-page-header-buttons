@@ -1,5 +1,6 @@
 import { Plugin, setIcon, Platform, WorkspaceLeaf } from 'obsidian';
 
+
 export default class QuickSwitcherButtonPlugin extends Plugin {
     visited: Set<WorkspaceLeaf> = new Set();
 
@@ -42,12 +43,15 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
                     const currentLeaf = this.app.workspace.getLeaf();
-                    if (!this.visited.has(currentLeaf)) {
+                    //@ts-expect-error
+                    if (!this.visited.has(currentLeaf.id)) {
                         this.addButton();
                     }
-                    this.visited.add(currentLeaf);
+                    //@ts-expect-error
+                    this.visited.add(currentLeaf.id);
                 })
             );
+
         }
     }
 
