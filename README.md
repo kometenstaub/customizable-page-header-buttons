@@ -4,6 +4,8 @@ This plugin lets you add buttons that execute commands to the top bar in the mob
 
 It lets you choose from all commands and configure their icons. You can set icons from the core and feather icons.
 
+![Settings and Buttons picture](https://raw.githubusercontent.com/kometenstaub/top-bar-buttons/main/resources/top-bar-settings-and-buttons.png)
+
 ## Credits
 
 Shoutout to [@phibr0](https://github.com/phibr0) for his awesome work on the [Customizable Sidebar Plugin](https://github.com/phibr0/obsidian-customizable-sidebar). The code that powers this plugins' settings (adding/removing commands/changing icons) is powered by an adapted version of his code.
