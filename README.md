@@ -1,5 +1,5 @@
-# Quick Switcher Button Obsidian Plugin
+# Top Bar Buttons Obsidian Plugin
 
-This plugin adds a button to the left of the change edit/preview mode button on mobile. 
+This plugin lets you add buttons that execute commands to the top bar in the mobile app.
 
-It opens the Quick Switcher.
+Currently it implements core commands and `Another Quick Switcher: Normal search`.

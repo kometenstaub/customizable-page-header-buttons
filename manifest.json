@@ -1,9 +1,9 @@
 {
-	"id": "quick-switcher-button",
-	"name": "Quick Switcher Button",
+	"id": "top-bar-buttons",
+	"name": "Top Bar Buttons",
 	"version": "0.0.5",
 	"minAppVersion": "0.12.19",
-	"description": "Add a quick switcher button next to the edit/preview mode toggle on mobile.",
+	"description": "This plugin lets you add top bar buttons for Obsidian mobile.",
 	"author": "kometenstaub",
 	"authorUrl": "https://github.com/kometenstaub",
 	"isDesktopOnly": false
