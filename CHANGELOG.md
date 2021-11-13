@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/kometenstaub/quick-switcher-button/compare/0.0.5...1.0.0) (2021-11-13)
+
 ### [0.0.5](https://github.com/kometenstaub/quick-switcher-button/compare/0.0.4...0.0.5) (2021-11-13)
 
 
