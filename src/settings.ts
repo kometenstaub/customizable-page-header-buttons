@@ -25,7 +25,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
 				.setName(obj.name)
 				.addToggle((toggle) => {
                 let buttonEnabled = false
-				if (this.plugin.settings.enabledButtons.includes(id)) {
+				if (settings.enabledButtons.includes(id)) {
 					buttonEnabled = true
 				}
                 if (buttonEnabled) {
@@ -33,9 +33,9 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
 						.setValue(true)
 						.onChange(async (state) => {
                         if (state) {
-                            this.plugin.settings.enabledButtons.push(id);
+                            settings.enabledButtons.push(id);
                         } else {
-                            this.plugin.settings.enabledButtons.remove(id);
+                            settings.enabledButtons.remove(id);
                         }
 						await this.plugin.saveSettings()
 						// console.log(this.plugin.settings.enabledButtons)
@@ -45,9 +45,9 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
 						.setValue(false)
 						.onChange(async (state) => {
                         if (state) {
-                            this.plugin.settings.enabledButtons.push(id);
+                            settings.enabledButtons.push(id);
                         } else {
-                            this.plugin.settings.enabledButtons.remove(id);
+                            settings.enabledButtons.remove(id);
                         }
 						await this.plugin.saveSettings()
 						// console.log(this.plugin.settings.enabledButtons)
