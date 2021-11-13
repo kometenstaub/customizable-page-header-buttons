@@ -1,6 +1,6 @@
-import type { Command } from "obsidian";
 export interface TopBarButtonsSettings {
-    enabledButtons: {id: string, icon: string, name: string}[];
+    enabledButtons: { id: string; icon: string; name: string }[];
+    desktop: boolean;
 }
 
 declare module 'obsidian' {

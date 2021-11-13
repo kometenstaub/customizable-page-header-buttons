@@ -28,6 +28,21 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             text: 'The buttons are added in the order in which they are shown here. This only takes effect after a reload.',
         });
 
+        new Setting(containerEl)
+            .setName('Show buttons on desktop')
+            .setDesc(
+                'By default, the buttons will only be shown in Obsidian Mobile. \
+                It requires a reload after being toggled to take effect.'
+            )
+            .addToggle((toggle) => {
+                toggle
+                    .setValue(settings.desktop)
+                    .onChange(async (state) => {
+                    settings.desktop = state;
+                    await this.plugin.saveSettings();
+                });
+            });
+
         // Thank you: https://github.com/phibr0/obsidian-customizable-sidebar/blob/50099ff41b17758b20f52bfd9a80abf8319c29fb/src/ui/settingsTab.ts
         new Setting(containerEl)
             .setName('Add Button')
@@ -70,6 +85,5 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             setting.nameEl.prepend(iconDiv);
             setting.nameEl.addClass('CS-flex');
         }
-
     }
 }
