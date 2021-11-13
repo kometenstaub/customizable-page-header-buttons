@@ -14,7 +14,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         const buttonIcon = createEl('a', {
             cls: ['view-action', button],
         });
-        setIcon(buttonIcon, idToNameAndIcon[button].icon);
+        setIcon(buttonIcon, idToNameAndIcon[button].icon, 24);
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
@@ -51,16 +51,20 @@ export default class TopBarButtonsPlugin extends Plugin {
                     const viewActions =
                         activeLeaf.getElementsByClassName('view-actions')[0];
 
-                    const enabledButtons =
-                        this.settings.enabledButtons.reverse();
-
-                    for (let button of enabledButtons) {
+                    for (
+                        let i = this.settings.enabledButtons.length - 1;
+                        i >= 0;
+                        i--
+                    ) {
                         if (
                             !viewActions.getElementsByClassName(
-                                `view-action ${button}`
+                                `view-action ${this.settings.enabledButtons[i]}`
                             )[0]
                         ) {
-                            this.addButton(viewActions, button);
+                            this.addButton(
+                                viewActions,
+                                this.settings.enabledButtons[i]
+                            );
                         }
                     }
                 })
