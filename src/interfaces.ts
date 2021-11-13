@@ -1,4 +1,6 @@
-export interface TopBarButtonsSettings {}
+export interface TopBarButtonsSettings {
+    enabledButtons: string[];
+}
 
 declare module 'obsidian' {
     interface App {
@@ -6,4 +8,8 @@ declare module 'obsidian' {
             executeCommandById: any;
         };
     }
+}
+
+export interface InternalCommands {
+    [id: string]: { name: string; icon: string };
 }

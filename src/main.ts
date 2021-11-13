@@ -2,7 +2,9 @@ import { Plugin, setIcon, Platform } from 'obsidian';
 import type { TopBarButtonsSettings } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 
-const DEFAULT_SETTINGS: TopBarButtonsSettings = {};
+const DEFAULT_SETTINGS: TopBarButtonsSettings = {
+    enabledButtons: ['switcher:open']
+};
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
@@ -36,6 +38,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     async onload() {
         console.log('loading Top Bar Buttons Plugin');
+
+        await this.loadSettings()
 
         if (Platform.isMobile) {
             this.registerEvent(
