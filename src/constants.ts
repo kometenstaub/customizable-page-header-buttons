@@ -125,7 +125,7 @@ export const idToNameAndIcon: InternalCommands = {
     },
     'switcher:open': {
         name: 'Quick switcher: Open quick switcher',
-        icon: 'navigate-glyph',
+        icon: 'go-to-file',
     },
     'tag-pane:open': {
         name: 'Tag pane: Show tag pane',
@@ -159,4 +159,8 @@ export const idToNameAndIcon: InternalCommands = {
         name: 'Zettelkasten prefixer: Create new Zettelkasten note',
         icon: 'box-glyph',
     },
+	'obsidian-another-quick-switcher:normal-search': {
+		name: 'Another Quick Switcher: Normal Search',
+		icon: 'go-to-file'
+	}
 };

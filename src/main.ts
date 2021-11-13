@@ -1,34 +1,35 @@
 import { Plugin, setIcon, Platform } from 'obsidian';
+import { idToNameAndIcon } from './constants';
 import type { TopBarButtonsSettings } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
-    enabledButtons: ['switcher:open']
+    enabledButtons: ['switcher:open'],
 };
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
 
-    addButton = (viewActions: Element) => {
-        const quickSwitcherIcon = createEl('a', {
-            cls: ['view-action', 'quick-switcher-button'],
+    addButton = (viewActions: Element, button: string) => {
+        const buttonIcon = createEl('a', {
+            cls: ['view-action', button],
         });
-        setIcon(quickSwitcherIcon, 'go-to-file');
-        viewActions.prepend(quickSwitcherIcon);
+        setIcon(buttonIcon, idToNameAndIcon[button].icon);
+        viewActions.prepend(buttonIcon);
 
-        this.registerDomEvent(quickSwitcherIcon, 'click', () => {
-            this.app.commands.executeCommandById('switcher:open');
+        this.registerDomEvent(buttonIcon, 'click', () => {
+            this.app.commands.executeCommandById(button);
         });
     };
 
-    removeButton = () => {
+    removeButton = (button: string) => {
         const activeLeaves = document.getElementsByClassName(
             'workspace-leaf-content'
         );
         for (let i = 0; i < activeLeaves.length; i++) {
             const leaf = activeLeaves[i];
             const element = leaf.getElementsByClassName(
-                'view-action quick-switcher-button'
+                `view-action ${button}`
             );
             if (element[0]) {
                 element[0].remove();
@@ -39,7 +40,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     async onload() {
         console.log('loading Top Bar Buttons Plugin');
 
-        await this.loadSettings()
+        await this.loadSettings();
 
         if (Platform.isMobile) {
             this.registerEvent(
@@ -50,12 +51,17 @@ export default class TopBarButtonsPlugin extends Plugin {
                     const viewActions =
                         activeLeaf.getElementsByClassName('view-actions')[0];
 
-                    if (
-                        !viewActions.getElementsByClassName(
-                            'view-action quick-switcher-button'
-                        )[0]
-                    ) {
-                        this.addButton(viewActions);
+                    const enabledButtons =
+                        this.settings.enabledButtons.reverse();
+
+                    for (let button of enabledButtons) {
+                        if (
+                            !viewActions.getElementsByClassName(
+                                `view-action ${button}`
+                            )[0]
+                        ) {
+                            this.addButton(viewActions, button);
+                        }
                     }
                 })
             );
@@ -66,7 +72,10 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     onunload() {
         console.log('unloading Top Bar Buttons Plugin');
-        this.removeButton();
+        const enabledButtons = this.settings.enabledButtons;
+        for (let button of enabledButtons) {
+            this.removeButton(button);
+        }
     }
 
     async loadSettings() {

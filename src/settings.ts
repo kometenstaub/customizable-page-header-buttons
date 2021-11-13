@@ -36,6 +36,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             settings.enabledButtons.push(id);
                         } else {
                             settings.enabledButtons.remove(id);
+							this.plugin.removeButton(id)
                         }
 						await this.plugin.saveSettings()
 						// console.log(this.plugin.settings.enabledButtons)
@@ -48,7 +49,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             settings.enabledButtons.push(id);
                         } else {
                             settings.enabledButtons.remove(id);
-                        }
+							this.plugin.removeButton(id)
+                       	}
 						await this.plugin.saveSettings()
 						// console.log(this.plugin.settings.enabledButtons)
                     });
@@ -56,18 +58,6 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             });
         }
 
-        // new Setting(containerEl)
-        //     .setName('Enable Quick Switcher')
-        //     .setDesc(
-        //         'This will increase performance when opening the modal, but will load the data into memory on startup.'
-        //     )
-        //     .addToggle((toggle) => {
-        //         toggle
-        //             .setValue(this.plugin.settings.loadLcsh)
-        //             .onChange((state) => {
-        //                 this.plugin.settings.loadLcsh = state;
-        //                 this.plugin.saveSettings();
-        //             });
-        //     });
+
     }
 }

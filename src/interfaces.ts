@@ -7,6 +7,9 @@ declare module 'obsidian' {
         commands: {
             executeCommandById: any;
         };
+        plugins: {
+            plugins: any;
+        };
     }
 }
 
