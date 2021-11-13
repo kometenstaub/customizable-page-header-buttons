@@ -1,7 +1,7 @@
 {
-	"name": "top-bar-buttons",
+	"name": "customizable-page-header-buttons",
 	"version": "2.1.0",
-	"description": "This plugin lets you add top bar buttons for Obsidian mobile.",
+	"description": "This plugin lets you add buttons for executing commands to the page header.",
 	"main": "src/main.ts",
 	"scripts": {
 		"dev": "cross-env BUILD=dev node esbuild.mjs",

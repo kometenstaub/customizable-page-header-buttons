@@ -1,9 +1,9 @@
 {
-	"id": "top-bar-buttons",
-	"name": "Top Bar Buttons",
+	"id": "customizable-page-header-buttons",
+	"name": "Customizable Page Header",
 	"version": "2.1.0",
 	"minAppVersion": "0.12.19",
-	"description": "This plugin lets you add top bar buttons for Obsidian mobile.",
+	"description": "This plugin lets you add buttons for executing commands to the page header.",
 	"author": "kometenstaub",
 	"authorUrl": "https://github.com/kometenstaub",
 	"isDesktopOnly": false
