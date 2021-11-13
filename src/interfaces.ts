@@ -1,4 +1,4 @@
-export interface QuickSwitcherSettings {}
+export interface TopBarButtonsSettings {}
 
 declare module 'obsidian' {
     interface App {

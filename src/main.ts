@@ -1,6 +1,11 @@
 import { Plugin, setIcon, Platform } from 'obsidian';
+import type { TopBarButtonsSettings } from './interfaces';
+import TopBarButtonsSettingTab from './settings';
 
-export default class QuickSwitcherButtonPlugin extends Plugin {
+const DEFAULT_SETTINGS: TopBarButtonsSettings = {};
+
+export default class TopBarButtonsPlugin extends Plugin {
+    settings!: TopBarButtonsSettings;
 
     addButton = (viewActions: Element) => {
         const quickSwitcherIcon = createEl('a', {
@@ -30,12 +35,11 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
     };
 
     async onload() {
-        console.log('loading Quick Switcher Button Plugin');
+        console.log('loading Top Bar Buttons Plugin');
 
         if (Platform.isMobile) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-
                     const activeLeaf = document.getElementsByClassName(
                         'workspace-leaf mod-active'
                     )[0];
@@ -52,10 +56,24 @@ export default class QuickSwitcherButtonPlugin extends Plugin {
                 })
             );
         }
+
+        this.addSettingTab(new TopBarButtonsSettingTab(this.app, this));
     }
 
     onunload() {
-        console.log('unloading Quick Switcher Button Plugin');
+        console.log('unloading Top Bar Buttons Plugin');
         this.removeButton();
+    }
+
+    async loadSettings() {
+        this.settings = Object.assign(
+            {},
+            DEFAULT_SETTINGS,
+            await this.loadData()
+        );
+    }
+
+    async saveSettings() {
+        await this.saveData(this.settings);
     }
 }
