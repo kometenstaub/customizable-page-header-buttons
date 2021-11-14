@@ -1,7 +1,7 @@
 {
 	"id": "customizable-page-header-buttons",
 	"name": "Customizable Page Header",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"minAppVersion": "0.12.19",
 	"description": "This plugin lets you add buttons for executing commands to the page header.",
 	"author": "kometenstaub",

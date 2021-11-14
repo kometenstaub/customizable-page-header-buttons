@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/kometenstaub/quick-switcher-button/compare/2.1.1...2.2.0) (2021-11-14)
+
+
+### Features
+
+* :sparkles: add tooltip ([dcedeef](https://github.com/kometenstaub/quick-switcher-button/commit/dcedeefa8abe298c459d9ef19e62699509829cad))
+
+
+### Bug Fixes
+
+* :lipstick: make tooltip look native; closes [#8](https://github.com/kometenstaub/quick-switcher-button/issues/8) ([4254412](https://github.com/kometenstaub/quick-switcher-button/commit/4254412339d1ed7a6b67481dc37595ac80b32001))
+
 ### [2.1.1](https://github.com/kometenstaub/quick-switcher-button/compare/2.1.0...2.1.1) (2021-11-13)
 
 ## [2.1.0](https://github.com/kometenstaub/quick-switcher-button/compare/2.0.0...2.1.0) (2021-11-13)
