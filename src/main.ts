@@ -12,24 +12,24 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     // https://github.com/phibr0/obsidian-customizable-sidebar/blob/master/src/main.ts
-    iconList: string[] = obsiIcons
+    iconList: string[] = obsiIcons;
 
     addButton = (viewActions: Element, button: enabledButton) => {
-        const { id, icon, name} = button
+        const { id, icon, name } = button;
 
-        let iconSize = 24
+        let iconSize = 24;
         if (Platform.isMobile) {
-            iconSize = 24
+            iconSize = 24;
         } else if (Platform.isDesktop) {
-            iconSize = 18
+            iconSize = 18;
         }
 
-        let tooltip = ''
-        name.includes(':') ? tooltip = name.split(':')[1].trim() : null;
+        let tooltip = '';
+        name.includes(':') ? (tooltip = name.split(':')[1].trim()) : tooltip = name;
 
         const buttonIcon = createEl('a', {
             cls: ['view-action', id],
-            title: tooltip,
+            attr: { 'aria-label-position': 'bottom', 'aria-label': tooltip },
         });
         setIcon(buttonIcon, icon, iconSize);
         viewActions.prepend(buttonIcon);
@@ -61,8 +61,6 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         addAllFeatherIcons();
 
-        
-
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
@@ -84,7 +82,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                         ) {
                             this.addButton(
                                 viewActions,
-                                this.settings.enabledButtons[i],
+                                this.settings.enabledButtons[i]
                             );
                         }
                     }
