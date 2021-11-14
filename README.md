@@ -3,6 +3,11 @@
 This plugin lets you add buttons that execute commands to the top bar in the mobile (and desktop, off by default) app.
 
 It lets you choose from all commands and configure their icons. You can set icons from the core and feather icons.
+## Example configuration
+
+![Example configuration](https://raw.githubusercontent.com/kometenstaub/customizable-page-header-buttons/main/resources/customizable-page-header.jpg)
+
+## Example settings
 
 ![Settings and Buttons picture](https://raw.githubusercontent.com/kometenstaub/top-bar-buttons/main/resources/top-bar-settings-and-buttons.png)
 
