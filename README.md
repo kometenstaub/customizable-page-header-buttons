@@ -1,6 +1,6 @@
 # Customizable Page Header Obsidian Plugin
 
-This plugin lets you add buttons that execute commands to the top bar in the mobile (and desktop, off by default) app.
+This plugin lets you add buttons that execute commands to page header in the mobile (and desktop, off by default) app.
 
 It lets you choose from all commands and configure their icons. You can set icons from the core and feather icons.
 ## Example configuration
