@@ -1,5 +1,5 @@
 import { Plugin, setIcon, Platform } from 'obsidian';
-import type { TopBarButtonsSettings } from './interfaces';
+import type { enabledButton, TopBarButtonsSettings } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 import { addAllFeatherIcons } from 'obsidian-community-lib';
 import { obsiIcons } from './constants';
@@ -14,21 +14,28 @@ export default class TopBarButtonsPlugin extends Plugin {
     // https://github.com/phibr0/obsidian-customizable-sidebar/blob/master/src/main.ts
     iconList: string[] = obsiIcons
 
-    addButton = (viewActions: Element, buttonId: string, icon: string) => {
+    addButton = (viewActions: Element, button: enabledButton) => {
+        const { id, icon, name} = button
+
         let iconSize = 24
         if (Platform.isMobile) {
             iconSize = 24
         } else if (Platform.isDesktop) {
             iconSize = 18
         }
+
+        let tooltip = ''
+        name.includes(':') ? tooltip = name.split(':')[1].trim() : null;
+
         const buttonIcon = createEl('a', {
-            cls: ['view-action', buttonId],
+            cls: ['view-action', id],
+            title: tooltip,
         });
         setIcon(buttonIcon, icon, iconSize);
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
-            this.app.commands.executeCommandById(buttonId);
+            this.app.commands.executeCommandById(id);
         });
     };
 
@@ -48,7 +55,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     };
 
     async onload() {
-        console.log('loading Top Bar Buttons Plugin');
+        console.log('loading Customize Page Header Plugin');
 
         await this.loadSettings();
 
@@ -77,8 +84,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                         ) {
                             this.addButton(
                                 viewActions,
-                                this.settings.enabledButtons[i].id,
-                                this.settings.enabledButtons[i].icon
+                                this.settings.enabledButtons[i],
                             );
                         }
                     }
@@ -90,7 +96,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     onunload() {
-        console.log('unloading Top Bar Buttons Plugin');
+        console.log('unloading Customize Page Header Plugin');
         const enabledButtons = this.settings.enabledButtons;
         for (let button of enabledButtons) {
             this.removeButton(button.id);

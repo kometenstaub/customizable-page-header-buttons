@@ -1,6 +1,12 @@
 export interface TopBarButtonsSettings {
-    enabledButtons: { id: string; icon: string; name: string }[];
+    enabledButtons: enabledButton[];
     desktop: boolean;
+}
+
+export interface enabledButton {
+    id: string;
+    icon: string;
+    name: string;
 }
 
 declare module 'obsidian' {
