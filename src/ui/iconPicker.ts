@@ -8,6 +8,7 @@ import {
     Notice,
 } from 'obsidian';
 import type TopBarButtonsPlugin from '../main';
+import type { Buttons } from 'src/interfaces';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
     plugin: TopBarButtonsPlugin;
@@ -52,13 +53,23 @@ export default class IconPicker extends FuzzySuggestModal<string> {
         this.command.icon = item;
         const { id, name } = this.command;
         const { settings } = this.plugin;
-        const showOnPlatform = settings.enabledButtons[this.index].showButtons
-        const settingsObject = { id: id, icon: item, name: name, showButtons: showOnPlatform };
+        let showOnPlatform: Buttons = 'both';
+        if (this.index === -1) {
+            showOnPlatform = 'both';
+        } else {
+            showOnPlatform = settings.enabledButtons[this.index].showButtons;
+        }
+        const settingsObject = {
+            id: id,
+            icon: item,
+            name: name,
+            showButtons: showOnPlatform,
+        };
         if (this.index === -1) {
             settings.enabledButtons.push(settingsObject);
         } else {
             settings.enabledButtons[this.index] = settingsObject;
-			new Notice('This change will take effect for new panes only.')
+            new Notice('This change will take effect for new panes only.');
         }
         await this.plugin.saveSettings();
 
