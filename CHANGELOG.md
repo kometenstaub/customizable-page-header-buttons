@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.0...3.0.1) (2021-11-15)
+
+
+### Bug Fixes
+
+* :bug: make buttons mobile only when desktop is turned off again ([6ddd1c0](https://github.com/kometenstaub/quick-switcher-button/commit/6ddd1c05b6558958b45878b516afea581ed06055))
+
 ## [3.0.0](https://github.com/kometenstaub/quick-switcher-button/compare/2.2.0...3.0.0) (2021-11-15)
 
 
