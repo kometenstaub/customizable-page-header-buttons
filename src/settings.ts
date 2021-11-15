@@ -1,8 +1,8 @@
-import { PluginSettingTab, App, Setting, setIcon } from 'obsidian';
+import { PluginSettingTab, App, Setting, setIcon, Platform } from 'obsidian';
 import type TopBarButtonsPlugin from './main';
 import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
-import type { Buttons } from './interfaces'
+import type { Buttons } from './interfaces';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
     plugin: TopBarButtonsPlugin;
@@ -39,7 +39,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 toggle.setValue(settings.desktop).onChange(async (state) => {
                     settings.desktop = state;
                     await this.plugin.saveSettings();
-                    this.display()
+                    this.display();
                 });
             });
 
@@ -56,7 +56,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             });
 
         for (let i = 0; i < settings.enabledButtons.length; i++) {
-            let command = settings.enabledButtons[i]
+            let command = settings.enabledButtons[i];
             const iconDiv = createDiv({ cls: 'CS-settings-icon' });
             setIcon(iconDiv, command.icon, 24);
             let setting = new Setting(containerEl).setName(command.name);
@@ -68,17 +68,25 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             'Add button for both mobile and desktop.'
                         )
                         .addOption('mobile', 'Add button only for mobile.')
-                        .addOption(
-                            'desktop',
-                            'Add button only for desktop.'
-                        )
+                        .addOption('desktop', 'Add button only for desktop.')
                         .setValue(command.showButtons)
                         .onChange(
                             //@ts-ignore
                             async (newValue: Buttons) => {
-                                command.showButtons = newValue
+                                command.showButtons = newValue;
                                 settings.enabledButtons[i] = command;
                                 await this.plugin.saveSettings();
+                                if (
+                                    newValue === 'desktop' &&
+                                    Platform.isMobile
+                                ) {
+                                    this.plugin.removeButton(command.id);
+                                } else if (
+                                    newValue === 'mobile' &&
+                                    Platform.isDesktop
+                                ) {
+                                    this.plugin.removeButton(command.id);
+                                } 
                             }
                         );
                 });
