@@ -25,10 +25,12 @@ export default class TopBarButtonsPlugin extends Plugin {
         }
 
         let tooltip = '';
-        name.includes(':') ? (tooltip = name.split(':')[1].trim()) : tooltip = name;
+        name.includes(':')
+            ? (tooltip = name.split(':')[1].trim())
+            : (tooltip = name);
 
         const buttonIcon = createEl('a', {
-            cls: ['view-action', id],
+            cls: ['view-action', 'page-header-button', id],
             attr: { 'aria-label-position': 'bottom', 'aria-label': tooltip },
         });
         setIcon(buttonIcon, icon, iconSize);
@@ -46,10 +48,27 @@ export default class TopBarButtonsPlugin extends Plugin {
         for (let i = 0; i < activeLeaves.length; i++) {
             const leaf = activeLeaves[i];
             const element = leaf.getElementsByClassName(
-                `view-action ${buttonId}`
+                `view-action page-header-button ${buttonId}`
             );
             if (element[0]) {
                 element[0].remove();
+            }
+        }
+    };
+
+    removeAllButtons = () => {
+        const activeLeaves = document.getElementsByClassName(
+            'workspace-leaf-content'
+        );
+        for (let i = 0; i < activeLeaves.length; i++) {
+            const leaf = activeLeaves[i];
+            const element = leaf.getElementsByClassName(`page-header-button`);
+            if (element.length > 0) {
+                for (let i = element.length; i >= 0; i--) {
+                    if (element[i]) {
+                        element[i].remove();
+                    }
+                }
             }
         }
     };
@@ -95,10 +114,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     onunload() {
         console.log('unloading Customize Page Header Plugin');
-        const enabledButtons = this.settings.enabledButtons;
-        for (let button of enabledButtons) {
-            this.removeButton(button.id);
-        }
+        this.removeAllButtons();
     }
 
     async loadSettings() {
