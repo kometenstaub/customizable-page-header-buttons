@@ -3,13 +3,21 @@
 This plugin lets you add buttons that execute commands to page header in the mobile (and desktop, off by default) app.
 
 It lets you choose from all commands and configure their icons. You can set icons from the core and feather icons.
+
+If you enable desktop compatibility, it will also let you configure buttons to be shown on both mobile and desktop, only desktop or only mobile.
+
+## Known limitations
+
+This plugin uses an internal API for showing the commands. That means for example that if some commands only work in edit mode, the last active pane before entering settings has to be in edit mode, otherwise you will not be able to select that command.
+
+
 ## Example configuration
 
 ![Example configuration](https://raw.githubusercontent.com/kometenstaub/customizable-page-header-buttons/main/resources/customizable-page-header.jpg)
 
 ## Example settings
 
-![Settings and Buttons picture](https://raw.githubusercontent.com/kometenstaub/top-bar-buttons/main/resources/top-bar-settings-and-buttons.png)
+![Settings picture](https://raw.githubusercontent.com/kometenstaub/top-bar-buttons/main/resources/settings.png)
 
 ## Credits
 
