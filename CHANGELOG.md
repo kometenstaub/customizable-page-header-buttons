@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.1...3.0.2) (2021-11-15)
+
+
+### Bug Fixes
+
+* :bug: adding command if it has no icon works again ([c579bab](https://github.com/kometenstaub/quick-switcher-button/commit/c579bab2c55a6a738a463b68d409e3344c3038ae))
+
 ### [3.0.1](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.0...3.0.1) (2021-11-15)
 
 
