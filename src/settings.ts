@@ -40,6 +40,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                     settings.desktop = state;
                     await this.plugin.saveSettings();
                     this.display();
+                    if (!state) {
+                        for (let button of settings.enabledButtons) {
+                            button.showButtons = 'mobile';
+                        }
+                        await this.plugin.saveSettings();
+                    }
                 });
             });
 
@@ -86,7 +92,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     Platform.isDesktop
                                 ) {
                                     this.plugin.removeButton(command.id);
-                                } 
+                                }
                             }
                         );
                 });
