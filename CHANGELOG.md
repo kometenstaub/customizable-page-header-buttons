@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/kometenstaub/quick-switcher-button/compare/2.2.0...3.0.0) (2021-11-15)
+
+
+### Features
+
+* :sparkles: configure action for both/mobile/desktop; closes [#9](https://github.com/kometenstaub/quick-switcher-button/issues/9) ([4adc89b](https://github.com/kometenstaub/quick-switcher-button/commit/4adc89b8dbce7ff3b86f580ef59a5710aa53422a))
+* :sparkles: remove button if only other Platform is selected ([4146248](https://github.com/kometenstaub/quick-switcher-button/commit/41462488cc440eec60b9f1eaa1b06ed4fe40ab92))
+
 ## [2.2.0](https://github.com/kometenstaub/quick-switcher-button/compare/2.1.1...2.2.0) (2021-11-14)
 
 
