@@ -2,6 +2,7 @@ import { PluginSettingTab, App, Setting, setIcon } from 'obsidian';
 import type TopBarButtonsPlugin from './main';
 import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
+import type { Buttons } from './interfaces'
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
     plugin: TopBarButtonsPlugin;
@@ -35,11 +36,10 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 It requires a reload after being toggled to take effect.'
             )
             .addToggle((toggle) => {
-                toggle
-                    .setValue(settings.desktop)
-                    .onChange(async (state) => {
+                toggle.setValue(settings.desktop).onChange(async (state) => {
                     settings.desktop = state;
                     await this.plugin.saveSettings();
+                    this.display()
                 });
             });
 
@@ -55,11 +55,35 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 });
             });
 
-        for (let command of settings.enabledButtons) {
+        for (let i = 0; i < settings.enabledButtons.length; i++) {
+            let command = settings.enabledButtons[i]
             const iconDiv = createDiv({ cls: 'CS-settings-icon' });
             setIcon(iconDiv, command.icon, 24);
-            let setting = new Setting(containerEl)
-                .setName(command.name)
+            let setting = new Setting(containerEl).setName(command.name);
+            if (settings.desktop) {
+                setting.addDropdown((dropdown) => {
+                    dropdown
+                        .addOption(
+                            'both',
+                            'Add button for both mobile and desktop.'
+                        )
+                        .addOption('mobile', 'Add button only for mobile.')
+                        .addOption(
+                            'desktop',
+                            'Add button only for desktop.'
+                        )
+                        .setValue(command.showButtons)
+                        .onChange(
+                            //@ts-ignore
+                            async (newValue: Buttons) => {
+                                command.showButtons = newValue
+                                settings.enabledButtons[i] = command;
+                                await this.plugin.saveSettings();
+                            }
+                        );
+                });
+            }
+            setting
                 .addExtraButton((button) => {
                     button
                         .setIcon('trash')

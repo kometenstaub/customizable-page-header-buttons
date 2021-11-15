@@ -95,15 +95,26 @@ export default class TopBarButtonsPlugin extends Plugin {
                         i--
                     ) {
                         if (
-                            !viewActions.getElementsByClassName(
-                                `view-action ${this.settings.enabledButtons[i].id}`
-                            )[0]
+                            (this.settings.enabledButtons[i].showButtons ===
+                                'both') ||
+                            (this.settings.enabledButtons[i].showButtons ===
+                                'mobile' &&
+                                Platform.isMobile) ||
+                            (this.settings.enabledButtons[i].showButtons ===
+                                'desktop' &&
+                                Platform.isDesktop)
                         ) {
-                            this.addButton(
-                                viewActions,
-                                this.settings.enabledButtons[i]
-                            );
-                        }
+                            if (
+                                !viewActions.getElementsByClassName(
+                                    `view-action page-header-button ${this.settings.enabledButtons[i].id}`
+                                )[0]
+                            ) {
+                                this.addButton(
+                                    viewActions,
+                                    this.settings.enabledButtons[i]
+                                );
+                            }
+                        } 
                     }
                 })
             );

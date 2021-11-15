@@ -3,10 +3,13 @@ export interface TopBarButtonsSettings {
     desktop: boolean;
 }
 
+export type Buttons = 'both' | 'mobile' | 'desktop';
+
 export interface enabledButton {
     id: string;
     icon: string;
     name: string;
+    showButtons: Buttons;
 }
 
 declare module 'obsidian' {

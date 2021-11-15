@@ -29,6 +29,7 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
                 id: item.id,
                 icon: item.icon,
                 name: item.name,
+                showButtons: 'both'
             });
             await this.plugin.saveSettings();
             setTimeout(() => {

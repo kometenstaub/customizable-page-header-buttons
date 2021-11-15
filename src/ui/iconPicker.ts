@@ -52,7 +52,8 @@ export default class IconPicker extends FuzzySuggestModal<string> {
         this.command.icon = item;
         const { id, name } = this.command;
         const { settings } = this.plugin;
-        const settingsObject = { id: id, icon: item, name: name };
+        const showOnPlatform = settings.enabledButtons[this.index].showButtons
+        const settingsObject = { id: id, icon: item, name: name, showButtons: showOnPlatform };
         if (this.index === -1) {
             settings.enabledButtons.push(settingsObject);
         } else {
