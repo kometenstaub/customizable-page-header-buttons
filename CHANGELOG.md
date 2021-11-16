@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.4](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.3...3.0.4) (2021-11-16)
+
+
+### Bug Fixes
+
+* :bug: feather icons can now be chosen ([dcfdd33](https://github.com/kometenstaub/quick-switcher-button/commit/dcfdd33ee1a49649a3bb46a394b2857e33b8a08e))
+
 ### [3.0.3](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.2...3.0.3) (2021-11-15)
 
 ### [3.0.2](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.1...3.0.2) (2021-11-15)

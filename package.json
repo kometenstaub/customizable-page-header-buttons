@@ -1,6 +1,6 @@
 {
 	"name": "customizable-page-header-buttons",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "This plugin lets you add buttons for executing commands to the page header.",
 	"main": "src/main.ts",
 	"scripts": {
