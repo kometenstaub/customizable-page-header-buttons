@@ -97,6 +97,34 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         );
                 });
             }
+            if (i > 0) {
+                setting.addExtraButton((button) => {
+                    button
+                        .setIcon('up-arrow-with-tail')
+                        .setTooltip('Move button to the left')
+                        .onClick(async () => {
+                            const leftCommand = settings.enabledButtons[i - 1];
+                            settings.enabledButtons[i] = leftCommand;
+                            settings.enabledButtons[i - 1] = command;
+                            await this.plugin.saveSettings();
+                            this.display();
+                        });
+                });
+            }
+            if (i < settings.enabledButtons.length - 1) {
+                setting.addExtraButton((button) => {
+                    button
+                        .setIcon('down-arrow-with-tail')
+                        .setTooltip('Move button to the right')
+                        .onClick(async () => {
+                            const rightCommand = settings.enabledButtons[i + 1];
+                            settings.enabledButtons[i] = rightCommand;
+                            settings.enabledButtons[i + 1] = command;
+                            await this.plugin.saveSettings();
+                            this.display();
+                        });
+                });
+            }
             setting
                 .addExtraButton((button) => {
                     button
