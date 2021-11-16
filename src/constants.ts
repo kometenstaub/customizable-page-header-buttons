@@ -1,3 +1,4 @@
+// https://github.com/phibr0/obsidian-customizable-sidebar/blob/master/src/main.ts
 export const obsiIcons = [
     'any-key',
     'audio-file',

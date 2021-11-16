@@ -1,8 +1,8 @@
 import { Plugin, setIcon, Platform } from 'obsidian';
 import type { enabledButton, TopBarButtonsSettings } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
-import { addAllFeatherIcons } from 'obsidian-community-lib';
 import { obsiIcons } from './constants';
+import { addFeatherIcons } from './ui/icons'
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -11,7 +11,6 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
-    // https://github.com/phibr0/obsidian-customizable-sidebar/blob/master/src/main.ts
     iconList: string[] = obsiIcons;
 
     addButton = (viewActions: Element, button: enabledButton) => {
@@ -78,7 +77,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         await this.loadSettings();
 
-        addAllFeatherIcons();
+        // add feather icons to icon list
+        addFeatherIcons(this.iconList)
 
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
