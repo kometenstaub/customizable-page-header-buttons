@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.4...3.1.0) (2021-11-16)
+
+
+### Features
+
+* :sparkles: buttons can be moved in settings; closes [#10](https://github.com/kometenstaub/quick-switcher-button/issues/10) ([1288cb5](https://github.com/kometenstaub/quick-switcher-button/commit/1288cb52054b0a9f7da0aaab94f8008c8d0a817f))
+
 ### [3.0.4](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.3...3.0.4) (2021-11-16)
 
 
