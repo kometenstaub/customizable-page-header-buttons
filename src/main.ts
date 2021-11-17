@@ -2,7 +2,7 @@ import { Plugin, setIcon, Platform } from 'obsidian';
 import type { enabledButton, TopBarButtonsSettings } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 import { obsiIcons } from './constants';
-import { addFeatherIcons } from './ui/icons'
+import { addFeatherIcons } from './ui/icons';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -74,12 +74,12 @@ export default class TopBarButtonsPlugin extends Plugin {
     };
 
     async onload() {
-        console.log('loading Customize Page Header Plugin');
+        console.log('loading Customizable Page Header Plugin');
 
         await this.loadSettings();
 
         // add feather icons to icon list
-        addFeatherIcons(this.iconList)
+        addFeatherIcons(this.iconList);
 
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
@@ -96,8 +96,8 @@ export default class TopBarButtonsPlugin extends Plugin {
                         i--
                     ) {
                         if (
-                            (this.settings.enabledButtons[i].showButtons ===
-                                'both') ||
+                            this.settings.enabledButtons[i].showButtons ===
+                                'both' ||
                             (this.settings.enabledButtons[i].showButtons ===
                                 'mobile' &&
                                 Platform.isMobile) ||
@@ -115,7 +115,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                                     this.settings.enabledButtons[i]
                                 );
                             }
-                        } 
+                        }
                     }
                 })
             );
@@ -125,7 +125,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     onunload() {
-        console.log('unloading Customize Page Header Plugin');
+        console.log('unloading Customizable Page Header Plugin');
         this.removeAllButtons();
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
     }

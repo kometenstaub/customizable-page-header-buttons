@@ -10,13 +10,11 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
     constructor(app: App, plugin: TopBarButtonsPlugin) {
         super(app, plugin);
         this.plugin = plugin;
-        this.plugin.listener = () => {this.display()}
-        addEventListener(
-            'TopBar-addedCommand',
-            this.plugin.listener
-        );
+        this.plugin.listener = () => {
+            this.display();
+        };
+        addEventListener('TopBar-addedCommand', this.plugin.listener);
     }
-
 
     display(): void {
         const { containerEl } = this;
