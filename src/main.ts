@@ -12,6 +12,7 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
+    listener!: () => void;
 
     addButton = (viewActions: Element, button: enabledButton) => {
         const { id, icon, name } = button;
@@ -126,6 +127,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     onunload() {
         console.log('unloading Customize Page Header Plugin');
         this.removeAllButtons();
+        globalThis.removeEventListener('TopBar-addedCommand', this.listener);
     }
 
     async loadSettings() {
