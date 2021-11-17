@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/kometenstaub/quick-switcher-button/compare/3.1.0...3.1.1) (2021-11-17)
+
+
+### Bug Fixes
+
+* :bug: unload event listener onunload ([b25387f](https://github.com/kometenstaub/quick-switcher-button/commit/b25387fd47e136eae4b229432cdfcd78698d1933))
+
 ## [3.1.0](https://github.com/kometenstaub/quick-switcher-button/compare/3.0.4...3.1.0) (2021-11-16)
 
 
