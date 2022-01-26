@@ -1,9 +1,17 @@
-import {Platform, Plugin, setIcon} from 'obsidian';
+import {Platform, Plugin} from 'obsidian';
 import type {baseButton, enabledButton, TopBarButtonsSettings} from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 import {obsiIcons, PLUGIN_CLASS_NAME, TITLEBAR_CLASS, TITLEBAR_CLASSES} from './constants';
 import {addFeatherIcons} from './ui/icons';
-import {getLeftNavBar, getRightNavBar} from "./utils";
+import {
+    getButtonIcon,
+    getButtonInfo,
+    getIconSize,
+    getLeftNavBar,
+    getRightNavBar,
+    removeElements,
+    removeSingleButton
+} from "./utils";
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -11,64 +19,6 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     titleLeft: [],
     titleRight: [],
 };
-
-function getTooltip(name: string) {
-    if (name.includes(':')){
-        return name.split(':')[1].trim()
-    } else {
-        return name
-    }
-}
-
-
-function getIconSize(button: enabledButton) {
-    const {id, icon, name} = button;
-
-    let iconSize = 24;
-    if (Platform.isMobile) {
-        iconSize = 24;
-    } else if (Platform.isDesktop) {
-        iconSize = 18;
-    }
-    return {id, icon, name, iconSize};
-}
-
-
-function getButtonIcon(name: string, id: string, icon: string, iconSize: number, classes: string[]) {
-    const tooltip = getTooltip(name);
-    const buttonClasses = classes.concat([id])
-
-    const buttonIcon = createEl('a', {
-        cls: buttonClasses,
-        attr: {'aria-label-position': 'bottom', 'aria-label': tooltip},
-    });
-    setIcon(buttonIcon, icon, iconSize);
-    return buttonIcon;
-}
-
-function getButtonInfo(button: baseButton | enabledButton, classes: string[]) {
-    const {id, icon, name} = button;
-    const iconSize = 15;
-    const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
-    return {id, buttonIcon};
-}
-
-function removeElements(element: HTMLCollectionOf<Element>):void {
-    for (let i = element.length; i >= 0; i--) {
-        if (element[i]) {
-            element[i].remove();
-        }
-    }
-}
-
-function removeSingleButton(htmlElement: Element, buttonId: string, className: string) {
-    const element = htmlElement.getElementsByClassName(
-        `${className} ${PLUGIN_CLASS_NAME} ${buttonId}`
-    );
-    if (element[0]) {
-        element[0].remove();
-    }
-}
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
