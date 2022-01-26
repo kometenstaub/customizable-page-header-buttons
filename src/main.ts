@@ -77,6 +77,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         console.log('loading Customizable Page Header Plugin');
 
         await this.loadSettings();
+        this.addSettingTab(new TopBarButtonsSettingTab(this.app, this));
 
         // add feather icons to icon list
         addFeatherIcons(this.iconList);
@@ -121,7 +122,6 @@ export default class TopBarButtonsPlugin extends Plugin {
             );
         }
 
-        this.addSettingTab(new TopBarButtonsSettingTab(this.app, this));
     }
 
     onunload() {
