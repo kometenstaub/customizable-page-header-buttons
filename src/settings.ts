@@ -14,6 +14,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             this.display();
         };
         addEventListener('TopBar-addedCommand', this.plugin.listener);
+        addEventListener('NavBar-addedCommand', this.plugin.listener);
     }
 
     display(): void {
@@ -87,12 +88,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     newValue === 'desktop' &&
                                     Platform.isMobile
                                 ) {
-                                    this.plugin.removeButton(command.id);
+                                    this.plugin.removePageHeaderButton(command.id);
                                 } else if (
                                     newValue === 'mobile' &&
                                     Platform.isDesktop
                                 ) {
-                                    this.plugin.removeButton(command.id);
+                                    this.plugin.removePageHeaderButton(command.id);
                                 }
                             }
                         );
@@ -133,7 +134,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setTooltip('Remove Command')
                         .onClick(async () => {
                             settings.enabledButtons.remove(command);
-                            this.plugin.removeButton(command.id);
+                            this.plugin.removePageHeaderButton(command.id);
                             await this.plugin.saveSettings();
                             this.display();
                         });

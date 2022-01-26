@@ -1,5 +1,5 @@
 import { Plugin, setIcon, Platform } from 'obsidian';
-import type { enabledButton, TopBarButtonsSettings } from './interfaces';
+import type {baseButton, enabledButton, TopBarButtonsSettings} from './interfaces';
 import TopBarButtonsSettingTab from './settings';
 import { obsiIcons } from './constants';
 import { addFeatherIcons } from './ui/icons';
@@ -7,33 +7,63 @@ import { addFeatherIcons } from './ui/icons';
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
     desktop: false,
+    titleLeft: [],
+    titleRight: [],
 };
+
+function getTooltip(name: string) {
+    if (name.includes(':')){
+        return name.split(':')[1].trim()
+    } else {
+        return name
+    }
+}
+
+
+function getIconSize(button: enabledButton) {
+    const {id, icon, name} = button;
+
+    let iconSize = 24;
+    if (Platform.isMobile) {
+        iconSize = 24;
+    } else if (Platform.isDesktop) {
+        iconSize = 18;
+    }
+    return {id, icon, name, iconSize};
+}
+
+
+function getButtonIcon(name: string, id: string, icon: string, iconSize: number, classes: string[]) {
+    const tooltip = getTooltip(name);
+    const buttonClasses = classes.concat([id])
+
+    const buttonIcon = createEl('a', {
+        cls: buttonClasses,
+        attr: {'aria-label-position': 'bottom', 'aria-label': tooltip},
+    });
+    setIcon(buttonIcon, icon, iconSize);
+    return buttonIcon;
+}
+
+function getButtonInfo(button: baseButton | enabledButton, classes: string[]) {
+    const {id, icon, name} = button;
+    const iconSize = 15;
+    const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
+    return {id, buttonIcon};
+}
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
     listener!: () => void;
 
-    addButton = (viewActions: Element, button: enabledButton) => {
-        const { id, icon, name } = button;
 
-        let iconSize = 24;
-        if (Platform.isMobile) {
-            iconSize = 24;
-        } else if (Platform.isDesktop) {
-            iconSize = 18;
-        }
+    addPageHeaderButton = (viewActions: Element, button: enabledButton) => {
+        let {id, icon, name, iconSize} = getIconSize(button);
+        const classes = ['view-action', 'page-header-button']
 
-        let tooltip = '';
-        name.includes(':')
-            ? (tooltip = name.split(':')[1].trim())
-            : (tooltip = name);
+        const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
 
-        const buttonIcon = createEl('a', {
-            cls: ['view-action', 'page-header-button', id],
-            attr: { 'aria-label-position': 'bottom', 'aria-label': tooltip },
-        });
-        setIcon(buttonIcon, icon, iconSize);
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
@@ -41,7 +71,8 @@ export default class TopBarButtonsPlugin extends Plugin {
         });
     };
 
-    removeButton = (buttonId: string) => {
+
+    removePageHeaderButton = (buttonId: string) => {
         const activeLeaves = document.getElementsByClassName(
             'workspace-leaf-content'
         );
@@ -56,7 +87,27 @@ export default class TopBarButtonsPlugin extends Plugin {
         }
     };
 
-    removeAllButtons = () => {
+    addLeftNavBarButton = (viewActions: Element, button: baseButton) => {
+        const classes = ['titlebar-button']
+        const {id, buttonIcon} = getButtonInfo(button, classes);
+        viewActions.append(buttonIcon);
+
+        this.registerDomEvent(buttonIcon, 'click', () => {
+            this.app.commands.executeCommandById(id);
+        });
+    }
+
+    addRightNavBarButton = (viewActions: Element, button: baseButton) => {
+        const classes = ['titlebar-button']
+        const {id, buttonIcon} = getButtonInfo(button, classes);
+        viewActions.prepend(buttonIcon);
+
+        this.registerDomEvent(buttonIcon, 'click', () => {
+            this.app.commands.executeCommandById(id);
+        });
+    }
+
+    removeAllPageHeaderButtons = () => {
         const activeLeaves = document.getElementsByClassName(
             'workspace-leaf-content'
         );
@@ -81,6 +132,27 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         // add feather icons to icon list
         addFeatherIcons(this.iconList);
+
+        this.app.workspace.onLayoutReady(() => {
+            if (Platform.isDesktopApp) {
+                if (this.settings.titleLeft.length > 0) {
+                    const modLeft = document.getElementsByClassName('titlebar-button-container mod-left')[0]
+                    for (const button of this.settings.titleLeft) {
+                        this.addLeftNavBarButton(modLeft, button)
+                    }
+                }
+                if (this.settings.titleRight.length > 0) {
+                    const modRight = document.getElementsByClassName('titlebar-button-container mod-right')[0]
+                    for (
+                        let i = this.settings.titleLeft.length - 1;
+                        i >= 0;
+                        i--
+                    ) {
+                        this.addRightNavBarButton(modRight, this.settings.enabledButtons[i])
+                    }
+                }
+            }
+        })
 
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
@@ -111,7 +183,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                                     `view-action page-header-button ${this.settings.enabledButtons[i].id}`
                                 )[0]
                             ) {
-                                this.addButton(
+                                this.addPageHeaderButton(
                                     viewActions,
                                     this.settings.enabledButtons[i]
                                 );
@@ -126,8 +198,9 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     onunload() {
         console.log('unloading Customizable Page Header Plugin');
-        this.removeAllButtons();
+        this.removeAllPageHeaderButtons();
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
+        globalThis.removeEventListener('NavBar-addedCommand', this.listener);
     }
 
     async loadSettings() {

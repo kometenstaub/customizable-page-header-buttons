@@ -1,14 +1,21 @@
+import type {Command} from "obsidian";
+
 export interface TopBarButtonsSettings {
     enabledButtons: enabledButton[];
     desktop: boolean;
+    titleLeft: baseButton[];
+    titleRight: baseButton[];
 }
 
 export type Buttons = 'both' | 'mobile' | 'desktop';
 
-export interface enabledButton {
+export interface baseButton {
     id: string;
     icon: string;
     name: string;
+}
+
+export interface enabledButton extends baseButton{
     showButtons: Buttons;
 }
 
