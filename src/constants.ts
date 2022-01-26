@@ -119,3 +119,8 @@ export const obsiIcons = [
     'vertical-three-dots',
     'wrench-screwdriver-glyph',
 ];
+
+
+export const PLUGIN_CLASS_NAME = 'page-header-button';
+export const TITLEBAR_CLASS = 'titlebar-button'
+export const TITLEBAR_CLASSES = [TITLEBAR_CLASS, PLUGIN_CLASS_NAME]

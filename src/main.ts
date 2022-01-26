@@ -1,8 +1,9 @@
-import { Plugin, setIcon, Platform } from 'obsidian';
+import {Platform, Plugin, setIcon} from 'obsidian';
 import type {baseButton, enabledButton, TopBarButtonsSettings} from './interfaces';
 import TopBarButtonsSettingTab from './settings';
-import { obsiIcons } from './constants';
-import { addFeatherIcons } from './ui/icons';
+import {obsiIcons, PLUGIN_CLASS_NAME, TITLEBAR_CLASS, TITLEBAR_CLASSES} from './constants';
+import {addFeatherIcons} from './ui/icons';
+import {getLeftNavBar, getRightNavBar} from "./utils";
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -52,6 +53,23 @@ function getButtonInfo(button: baseButton | enabledButton, classes: string[]) {
     return {id, buttonIcon};
 }
 
+function removeElements(element: HTMLCollectionOf<Element>):void {
+    for (let i = element.length; i >= 0; i--) {
+        if (element[i]) {
+            element[i].remove();
+        }
+    }
+}
+
+function removeSingleButton(htmlElement: Element, buttonId: string, className: string) {
+    const element = htmlElement.getElementsByClassName(
+        `${className} ${PLUGIN_CLASS_NAME} ${buttonId}`
+    );
+    if (element[0]) {
+        element[0].remove();
+    }
+}
+
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
@@ -60,7 +78,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     addPageHeaderButton = (viewActions: Element, button: enabledButton) => {
         let {id, icon, name, iconSize} = getIconSize(button);
-        const classes = ['view-action', 'page-header-button']
+        const classes = ['view-action', PLUGIN_CLASS_NAME]
 
         const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
 
@@ -78,18 +96,22 @@ export default class TopBarButtonsPlugin extends Plugin {
         );
         for (let i = 0; i < activeLeaves.length; i++) {
             const leaf = activeLeaves[i];
-            const element = leaf.getElementsByClassName(
-                `view-action page-header-button ${buttonId}`
-            );
-            if (element[0]) {
-                element[0].remove();
-            }
+            removeSingleButton(leaf, buttonId, 'view-action');
         }
     };
 
+    removeLeftNavHeaderButton = (buttonId: string) => {
+        const leftContainer = getLeftNavBar();
+        removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS)
+    }
+
+    removeRightNavHeaderButton = (buttonId: string) => {
+        const rightContainer = getRightNavBar();
+        removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS)
+    }
+
     addLeftNavBarButton = (viewActions: Element, button: baseButton) => {
-        const classes = ['titlebar-button']
-        const {id, buttonIcon} = getButtonInfo(button, classes);
+        const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
         viewActions.append(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
@@ -98,8 +120,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addRightNavBarButton = (viewActions: Element, button: baseButton) => {
-        const classes = ['titlebar-button']
-        const {id, buttonIcon} = getButtonInfo(button, classes);
+        const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
@@ -113,16 +134,26 @@ export default class TopBarButtonsPlugin extends Plugin {
         );
         for (let i = 0; i < activeLeaves.length; i++) {
             const leaf = activeLeaves[i];
-            const element = leaf.getElementsByClassName(`page-header-button`);
+            const element = leaf.getElementsByClassName(PLUGIN_CLASS_NAME);
             if (element.length > 0) {
-                for (let i = element.length; i >= 0; i--) {
-                    if (element[i]) {
-                        element[i].remove();
-                    }
-                }
+                removeElements(element);
             }
         }
     };
+
+    removeAllNavBarButtons = () => {
+        const leftContainer = getLeftNavBar();
+        const rightContainer = getRightNavBar();
+        const leftElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        if (leftElements.length > 0) {
+            removeElements(leftElements)
+        }
+        const rightElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        if (rightElements.length > 0) {
+            removeElements(rightElements)
+        }
+
+    }
 
     async onload() {
         console.log('loading Customizable Page Header Plugin');
@@ -136,13 +167,13 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.app.workspace.onLayoutReady(() => {
             if (Platform.isDesktopApp) {
                 if (this.settings.titleLeft.length > 0) {
-                    const modLeft = document.getElementsByClassName('titlebar-button-container mod-left')[0]
+                    const modLeft = getLeftNavBar();
                     for (const button of this.settings.titleLeft) {
-                        this.addLeftNavBarButton(modLeft, button)
+                        this.addLeftNavBarButton(modLeft, button);
                     }
                 }
                 if (this.settings.titleRight.length > 0) {
-                    const modRight = document.getElementsByClassName('titlebar-button-container mod-right')[0]
+                    const modRight = getRightNavBar();
                     for (
                         let i = this.settings.titleLeft.length - 1;
                         i >= 0;
@@ -199,6 +230,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     onunload() {
         console.log('unloading Customizable Page Header Plugin');
         this.removeAllPageHeaderButtons();
+        this.removeAllNavBarButtons();
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
         globalThis.removeEventListener('NavBar-addedCommand', this.listener);
     }
