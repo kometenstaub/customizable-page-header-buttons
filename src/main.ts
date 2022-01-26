@@ -148,7 +148,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         if (leftElements.length > 0) {
             removeElements(leftElements)
         }
-        const rightElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        const rightElements = rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
         if (rightElements.length > 0) {
             removeElements(rightElements)
         }
