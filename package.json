@@ -26,7 +26,8 @@
 				"hidden": false,
 				"section": "Bug Fixes"
 			}
-		]
+		],
+		"releaseCommitMessageFormat": "Customizable Page Header: {{currentTag}}"
 	},
 	"keywords": [],
 	"author": "kometenstaub",
