@@ -118,6 +118,7 @@ export const obsiIcons = [
     'vertical-split',
     'vertical-three-dots',
     'wrench-screwdriver-glyph',
+    'reading-glasses'
 ];
 
 
