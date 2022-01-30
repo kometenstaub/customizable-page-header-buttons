@@ -128,11 +128,11 @@ export default class TopBarButtonsPlugin extends Plugin {
         if (this.settings.titleRight.length > 0) {
             const modRight = getRightTitleBar();
             for (
-                let i = this.settings.titleLeft.length - 1;
+                let i = this.settings.titleRight.length - 1;
                 i >= 0;
                 i--
             ) {
-                this.addRightTitleBarButton(modRight, this.settings.enabledButtons[i])
+                this.addRightTitleBarButton(modRight, this.settings.titleRight[i])
             }
         }
     }
