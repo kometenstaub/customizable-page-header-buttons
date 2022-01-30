@@ -23,8 +23,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
 
         containerEl.empty();
 
-        containerEl.createEl('h2', {
-            text: 'Customizable Page Header Settings',
+        containerEl.createEl('h3', {
+            text: 'Page Header Buttons',
         });
 
         containerEl.createEl('p', {
