@@ -1,8 +1,8 @@
-import { PluginSettingTab, App, Setting, setIcon, Platform } from 'obsidian';
+import {App, Platform, PluginSettingTab, setIcon, Setting} from 'obsidian';
 import type TopBarButtonsPlugin from './main';
 import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
-import type { Buttons } from './interfaces';
+import type {Buttons} from './interfaces';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
     plugin: TopBarButtonsPlugin;
@@ -59,7 +59,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             )
             .addButton((button) => {
                 button.setButtonText('Add Command').onClick(() => {
-                    new CommandSuggester(this.plugin).open();
+                    new CommandSuggester(this.plugin, 'page').open();
                 });
             });
 
@@ -105,8 +105,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setIcon('up-arrow-with-tail')
                         .setTooltip('Move button to the left')
                         .onClick(async () => {
-                            const leftCommand = settings.enabledButtons[i - 1];
-                            settings.enabledButtons[i] = leftCommand;
+                            settings.enabledButtons[i] = settings.enabledButtons[i - 1];
                             settings.enabledButtons[i - 1] = command;
                             await this.plugin.saveSettings();
                             this.display();
@@ -119,8 +118,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setIcon('down-arrow-with-tail')
                         .setTooltip('Move button to the right')
                         .onClick(async () => {
-                            const rightCommand = settings.enabledButtons[i + 1];
-                            settings.enabledButtons[i] = rightCommand;
+                            settings.enabledButtons[i] = settings.enabledButtons[i + 1];
                             settings.enabledButtons[i + 1] = command;
                             await this.plugin.saveSettings();
                             this.display();
@@ -147,11 +145,88 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             const index = settings.enabledButtons.findIndex(
                                 (el) => el === command
                             );
-                            new IconPicker(this.plugin, command, index).open();
+                            new IconPicker(this.plugin, command, 'page', index).open();
                         });
                 });
             setting.nameEl.prepend(iconDiv);
             setting.nameEl.addClass('CS-flex');
+        }
+
+        if (Platform.isDesktopApp) {
+
+            containerEl.createEl('h3', {
+                text: 'Titlebar buttons',
+            });
+
+            new Setting(containerEl)
+                .setName('Add Button')
+                .setDesc(
+                    'Add a new button right to the back/forward buttons.'
+                )
+                .addButton((button) => {
+                    button.setButtonText('Add Command').onClick(() => {
+                        new CommandSuggester(this.plugin, 'title-left').open();
+                    });
+                });
+
+            for (let i = 0; i < settings.titleLeft.length; i++) {
+                let command = settings.titleLeft[i];
+                const iconDiv = createDiv({ cls: 'CS-settings-icon' });
+                setIcon(iconDiv, command.icon, 24);
+                let setting = new Setting(containerEl).setName(command.name);
+                if (i > 0) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('up-arrow-with-tail')
+                            .setTooltip('Move button to the left')
+                            .onClick(async () => {
+                                settings.titleLeft[i] = settings.titleLeft[i - 1];
+                                settings.titleLeft[i - 1] = command;
+                                await this.plugin.saveSettings();
+                                this.display();
+                            });
+                    });
+                }
+                if (i < settings.titleLeft.length - 1) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('down-arrow-with-tail')
+                            .setTooltip('Move button to the right')
+                            .onClick(async () => {
+                                settings.titleLeft[i] = settings.titleLeft[i + 1];
+                                settings.titleLeft[i + 1] = command;
+                                await this.plugin.saveSettings();
+                                this.display();
+                            });
+                    });
+                }
+                setting
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('trash')
+                            .setTooltip('Remove Command')
+                            .onClick(async () => {
+                                settings.titleLeft.remove(command);
+                                this.plugin.removeLeftNavHeaderButton(command.id);
+                                await this.plugin.saveSettings();
+                                this.display();
+                            });
+                    })
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('gear')
+                            .setTooltip('Edit Icon')
+                            .onClick(() => {
+                                const index = settings.titleLeft.findIndex(
+                                    (el) => el === command
+                                );
+                                new IconPicker(this.plugin, command, "title-left", index).open();
+                            });
+                    });
+                setting.nameEl.prepend(iconDiv);
+                setting.nameEl.addClass('CS-flex');
+            }
+
         }
     }
 }
