@@ -183,6 +183,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 settings.titleLeft[i] = settings.titleLeft[i - 1];
                                 settings.titleLeft[i - 1] = command;
                                 await this.plugin.saveSettings();
+                                this.plugin.removeLeftTitleBarButtons();
+                                this.plugin.addLeftTitleBarButtons();
                                 this.display();
                             });
                     });
@@ -196,6 +198,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 settings.titleLeft[i] = settings.titleLeft[i + 1];
                                 settings.titleLeft[i + 1] = command;
                                 await this.plugin.saveSettings();
+                                this.plugin.removeLeftTitleBarButtons();
+                                this.plugin.addLeftTitleBarButtons();
                                 this.display();
                             });
                     });
@@ -209,6 +213,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 settings.titleLeft.remove(command);
                                 this.plugin.removeLeftNavHeaderButton(command.id);
                                 await this.plugin.saveSettings();
+                                this.plugin.removeLeftTitleBarButtons();
+                                this.plugin.addLeftTitleBarButtons();
                                 this.display();
                             });
                     })
@@ -221,6 +227,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     (el) => el === command
                                 );
                                 new IconPicker(this.plugin, command, "title-left", index).open();
+                                this.plugin.removeLeftTitleBarButtons();
+                                this.plugin.addLeftTitleBarButtons();
                             });
                     });
                 setting.nameEl.prepend(iconDiv);
