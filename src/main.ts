@@ -8,7 +8,7 @@ import {
     getButtonInfo,
     getIconSize,
     getLeftTitleBar,
-    getRightNavBar,
+    getRightTitleBar,
     removeElements,
     removeSingleButton
 } from "./utils";
@@ -57,7 +57,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     removeRightTitleBarButton = (buttonId: string) => {
-        const rightContainer = getRightNavBar();
+        const rightContainer = getRightTitleBar();
         removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS)
     }
 
@@ -108,7 +108,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     removeRightTitleBarButtons() {
-        const rightContainer = getRightNavBar();
+        const rightContainer = getRightTitleBar();
         const rightElements = rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
         if (rightElements.length > 0) {
             removeElements(rightElements)
@@ -126,7 +126,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     addRightTitleBarButtons() {
         if (this.settings.titleRight.length > 0) {
-            const modRight = getRightNavBar();
+            const modRight = getRightTitleBar();
             for (
                 let i = this.settings.titleLeft.length - 1;
                 i >= 0;
