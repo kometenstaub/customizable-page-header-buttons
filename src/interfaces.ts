@@ -35,3 +35,9 @@ declare module 'obsidian' {
         };
     }
 }
+
+export type TitleOrPage = 'title-left' | 'title-right' | 'page';
+
+export type TitleSettings = 'titleLeft' | 'titleRight'
+
+export type ButtonSettings = TitleSettings | 'enabledSettings'
