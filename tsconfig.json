@@ -13,10 +13,8 @@
     "strict": true,
     "lib": [
       "dom",
-      "es5",
       "scripthost",
       "es6",
-      "es7"
     ]
   },
   "include": [
