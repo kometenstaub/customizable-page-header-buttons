@@ -26,7 +26,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     listener!: () => void;
 
 
-    addPageHeaderButton = (viewActions: Element, button: enabledButton) => {
+    addPageHeaderButton = (viewActions: Element, button: enabledButton | baseButton) => {
         const {id, icon, name} = button;
         const iconSize = getIconSize();
         const classes = ['view-action', PLUGIN_CLASS_NAME]
