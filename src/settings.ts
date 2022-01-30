@@ -158,6 +158,10 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 text: 'Titlebar buttons',
             });
 
+            containerEl.createEl('h4', {
+                text: 'Left titlebar',
+            });
+
             new Setting(containerEl)
                 .setName('Add Button')
                 .setDesc(
@@ -227,6 +231,87 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 new IconPicker(this.plugin, command, "title-left", index).open();
                                 this.plugin.removeLeftTitleBarButtons();
                                 this.plugin.addLeftTitleBarButtons();
+                            });
+                    });
+                setting.nameEl.prepend(iconDiv);
+                setting.nameEl.addClass('CS-flex');
+            }
+
+
+
+            containerEl.createEl('h4', {
+                text: 'Right titlebar',
+            });
+
+            new Setting(containerEl)
+                .setName('Add Button')
+                .setDesc(
+                    'Add a new button left to the minimize/maximize/close buttons.'
+                )
+                .addButton((button) => {
+                    button.setButtonText('Add Command').onClick(() => {
+                        new CommandSuggester(this.plugin, 'title-right').open();
+                    });
+                });
+
+            for (let i = 0; i < settings.titleRight.length; i++) {
+                let command = settings.titleRight[i];
+                const iconDiv = createDiv({ cls: 'CS-settings-icon' });
+                setIcon(iconDiv, command.icon, 24);
+                let setting = new Setting(containerEl).setName(command.name);
+                if (i > 0) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('up-arrow-with-tail')
+                            .setTooltip('Move button to the left')
+                            .onClick(async () => {
+                                settings.titleRight[i] = settings.titleRight[i - 1];
+                                settings.titleRight[i - 1] = command;
+                                await this.plugin.saveSettings();
+                                this.plugin.removeRightTitleBarButtons();
+                                this.plugin.addRightTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                if (i < settings.titleRight.length - 1) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('down-arrow-with-tail')
+                            .setTooltip('Move button to the right')
+                            .onClick(async () => {
+                                settings.titleRight[i] = settings.titleRight[i + 1];
+                                settings.titleRight[i + 1] = command;
+                                await this.plugin.saveSettings();
+                                this.plugin.removeRightTitleBarButtons();
+                                this.plugin.addRightTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                setting
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('trash')
+                            .setTooltip('Remove Command')
+                            .onClick(async () => {
+                                settings.titleRight.remove(command);
+                                await this.plugin.saveSettings();
+                                this.plugin.removeRightTitleBarButton(command.id);
+                                this.display();
+                            });
+                    })
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('gear')
+                            .setTooltip('Edit Icon')
+                            .onClick(() => {
+                                const index = settings.titleRight.findIndex(
+                                    (el) => el === command
+                                );
+                                new IconPicker(this.plugin, command, "title-right", index).open();
+                                this.plugin.removeRightTitleBarButtons();
+                                this.plugin.addRightTitleBarButtons();
                             });
                     });
                 setting.nameEl.prepend(iconDiv);
