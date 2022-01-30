@@ -211,10 +211,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .setTooltip('Remove Command')
                             .onClick(async () => {
                                 settings.titleLeft.remove(command);
-                                this.plugin.removeLeftNavHeaderButton(command.id);
                                 await this.plugin.saveSettings();
-                                this.plugin.removeLeftTitleBarButtons();
-                                this.plugin.addLeftTitleBarButtons();
+                                this.plugin.removeLeftTitleBarButton(command.id);
                                 this.display();
                             });
                     })
