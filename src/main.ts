@@ -1,16 +1,25 @@
-import {Platform, Plugin} from 'obsidian';
-import type {baseButton, enabledButton, TopBarButtonsSettings} from './interfaces';
+import { Platform, Plugin } from 'obsidian';
+import type {
+    baseButton,
+    enabledButton,
+    TopBarButtonsSettings,
+} from './interfaces';
 import TopBarButtonsSettingTab from './settings';
-import {obsiIcons, PLUGIN_CLASS_NAME, TITLEBAR_CLASS, TITLEBAR_CLASSES} from './constants';
-import {addFeatherIcons} from './ui/icons';
+import {
+    obsiIcons,
+    PLUGIN_CLASS_NAME,
+    TITLEBAR_CLASS,
+    TITLEBAR_CLASSES,
+} from './constants';
+import { addFeatherIcons } from './ui/icons';
 import {
     getButtonIcon,
     getIconSize,
     getLeftTitleBar,
     getRightTitleBar,
     removeElements,
-    removeSingleButton
-} from "./utils";
+    removeSingleButton,
+} from './utils';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -19,17 +28,18 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     titleRight: [],
 };
 
-
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
     listener!: () => void;
 
-
-    addPageHeaderButton = (viewActions: Element, button: enabledButton | baseButton) => {
-        const {id, icon, name} = button;
+    addPageHeaderButton = (
+        viewActions: Element,
+        button: enabledButton | baseButton
+    ) => {
+        const { id, icon, name } = button;
         const iconSize = getIconSize();
-        const classes = ['view-action', PLUGIN_CLASS_NAME]
+        const classes = ['view-action', PLUGIN_CLASS_NAME];
 
         const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
 
@@ -39,7 +49,6 @@ export default class TopBarButtonsPlugin extends Plugin {
             this.app.commands.executeCommandById(id);
         });
     };
-
 
     removePageHeaderButton = (buttonId: string) => {
         const activeLeaves = document.getElementsByClassName(
@@ -53,35 +62,49 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     removeLeftTitleBarButton = (buttonId: string) => {
         const leftContainer = getLeftTitleBar();
-        removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS)
-    }
+        removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
+    };
 
     removeRightTitleBarButton = (buttonId: string) => {
         const rightContainer = getRightTitleBar();
-        removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS)
-    }
+        removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
+    };
 
     addLeftTitleBarButton = (viewActions: Element, button: baseButton) => {
-        const {id, icon, name} = button;
+        const { id, icon, name } = button;
         const iconSize = 15;
-        const buttonIcon = getButtonIcon(name, id, icon, iconSize, TITLEBAR_CLASSES, 'div')
+        const buttonIcon = getButtonIcon(
+            name,
+            id,
+            icon,
+            iconSize,
+            TITLEBAR_CLASSES,
+            'div'
+        );
         viewActions.append(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    }
+    };
 
     addRightTitleBarButton = (viewActions: Element, button: baseButton) => {
-        const {id, icon, name} = button;
+        const { id, icon, name } = button;
         const iconSize = 15;
-        const buttonIcon = getButtonIcon(name, id, icon, iconSize, TITLEBAR_CLASSES, 'div')
+        const buttonIcon = getButtonIcon(
+            name,
+            id,
+            icon,
+            iconSize,
+            TITLEBAR_CLASSES,
+            'div'
+        );
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    }
+    };
 
     removeAllPageHeaderButtons = () => {
         const activeLeaves = document.getElementsByClassName(
@@ -96,26 +119,26 @@ export default class TopBarButtonsPlugin extends Plugin {
         }
     };
 
-
     removeAllTitleBarButtons = () => {
         this.removeLeftTitleBarButtons();
         this.removeRightTitleBarButtons();
-
-    }
+    };
 
     removeLeftTitleBarButtons() {
         const leftContainer = getLeftTitleBar();
-        const leftElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        const leftElements =
+            leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
         if (leftElements.length > 0) {
-            removeElements(leftElements)
+            removeElements(leftElements);
         }
     }
 
     removeRightTitleBarButtons() {
         const rightContainer = getRightTitleBar();
-        const rightElements = rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        const rightElements =
+            rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
         if (rightElements.length > 0) {
-            removeElements(rightElements)
+            removeElements(rightElements);
         }
     }
 
@@ -131,12 +154,11 @@ export default class TopBarButtonsPlugin extends Plugin {
     addRightTitleBarButtons() {
         if (this.settings.titleRight.length > 0) {
             const modRight = getRightTitleBar();
-            for (
-                let i = this.settings.titleRight.length - 1;
-                i >= 0;
-                i--
-            ) {
-                this.addRightTitleBarButton(modRight, this.settings.titleRight[i])
+            for (let i = this.settings.titleRight.length - 1; i >= 0; i--) {
+                this.addRightTitleBarButton(
+                    modRight,
+                    this.settings.titleRight[i]
+                );
             }
         }
     }
@@ -155,7 +177,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                 this.addLeftTitleBarButtons();
                 this.addRightTitleBarButtons();
             }
-        })
+        });
 
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
@@ -196,9 +218,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                 })
             );
         }
-
     }
-
 
     onunload() {
         console.log('unloading Customizable Page Header Plugin');

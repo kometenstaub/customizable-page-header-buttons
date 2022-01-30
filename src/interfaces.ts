@@ -1,4 +1,4 @@
-import type {Command} from "obsidian";
+import type { Command } from 'obsidian';
 
 export interface TopBarButtonsSettings {
     enabledButtons: enabledButton[];
@@ -15,7 +15,7 @@ export interface baseButton {
     name: string;
 }
 
-export interface enabledButton extends baseButton{
+export interface enabledButton extends baseButton {
     showButtons: Buttons;
 }
 
@@ -38,6 +38,6 @@ declare module 'obsidian' {
 
 export type TitleOrPage = 'title-left' | 'title-right' | 'page';
 
-export type TitleSettings = 'titleLeft' | 'titleRight'
+export type TitleSettings = 'titleLeft' | 'titleRight';
 
-export type ButtonSettings = TitleSettings | 'enabledSettings'
+export type ButtonSettings = TitleSettings | 'enabledSettings';

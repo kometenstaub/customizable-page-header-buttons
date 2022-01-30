@@ -1,8 +1,8 @@
-import {App, Platform, PluginSettingTab, setIcon, Setting} from 'obsidian';
+import { App, Platform, PluginSettingTab, setIcon, Setting } from 'obsidian';
 import type TopBarButtonsPlugin from './main';
 import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
-import type {Buttons} from './interfaces';
+import type { Buttons } from './interfaces';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
     plugin: TopBarButtonsPlugin;
@@ -88,12 +88,16 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     newValue === 'desktop' &&
                                     Platform.isMobile
                                 ) {
-                                    this.plugin.removePageHeaderButton(command.id);
+                                    this.plugin.removePageHeaderButton(
+                                        command.id
+                                    );
                                 } else if (
                                     newValue === 'mobile' &&
                                     Platform.isDesktop
                                 ) {
-                                    this.plugin.removePageHeaderButton(command.id);
+                                    this.plugin.removePageHeaderButton(
+                                        command.id
+                                    );
                                 }
                             }
                         );
@@ -105,7 +109,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setIcon('up-arrow-with-tail')
                         .setTooltip('Move button to the left')
                         .onClick(async () => {
-                            settings.enabledButtons[i] = settings.enabledButtons[i - 1];
+                            settings.enabledButtons[i] =
+                                settings.enabledButtons[i - 1];
                             settings.enabledButtons[i - 1] = command;
                             await this.plugin.saveSettings();
                             this.display();
@@ -118,7 +123,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setIcon('down-arrow-with-tail')
                         .setTooltip('Move button to the right')
                         .onClick(async () => {
-                            settings.enabledButtons[i] = settings.enabledButtons[i + 1];
+                            settings.enabledButtons[i] =
+                                settings.enabledButtons[i + 1];
                             settings.enabledButtons[i + 1] = command;
                             await this.plugin.saveSettings();
                             this.display();
@@ -145,7 +151,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             const index = settings.enabledButtons.findIndex(
                                 (el) => el === command
                             );
-                            new IconPicker(this.plugin, command, 'page', index).open();
+                            new IconPicker(
+                                this.plugin,
+                                command,
+                                'page',
+                                index
+                            ).open();
                         });
                 });
             setting.nameEl.prepend(iconDiv);
@@ -153,7 +164,6 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         }
 
         if (Platform.isDesktopApp) {
-
             containerEl.createEl('h3', {
                 text: 'Titlebar buttons',
             });
@@ -164,9 +174,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
 
             new Setting(containerEl)
                 .setName('Add Button')
-                .setDesc(
-                    'Add a new button right to the back/forward buttons.'
-                )
+                .setDesc('Add a new button right to the back/forward buttons.')
                 .addButton((button) => {
                     button.setButtonText('Add Command').onClick(() => {
                         new CommandSuggester(this.plugin, 'title-left').open();
@@ -184,7 +192,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .setIcon('up-arrow-with-tail')
                             .setTooltip('Move button to the left')
                             .onClick(async () => {
-                                settings.titleLeft[i] = settings.titleLeft[i - 1];
+                                settings.titleLeft[i] =
+                                    settings.titleLeft[i - 1];
                                 settings.titleLeft[i - 1] = command;
                                 await this.plugin.saveSettings();
                                 this.plugin.removeLeftTitleBarButtons();
@@ -199,7 +208,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .setIcon('down-arrow-with-tail')
                             .setTooltip('Move button to the right')
                             .onClick(async () => {
-                                settings.titleLeft[i] = settings.titleLeft[i + 1];
+                                settings.titleLeft[i] =
+                                    settings.titleLeft[i + 1];
                                 settings.titleLeft[i + 1] = command;
                                 await this.plugin.saveSettings();
                                 this.plugin.removeLeftTitleBarButtons();
@@ -216,7 +226,9 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleLeft.remove(command);
                                 await this.plugin.saveSettings();
-                                this.plugin.removeLeftTitleBarButton(command.id);
+                                this.plugin.removeLeftTitleBarButton(
+                                    command.id
+                                );
                                 this.display();
                             });
                     })
@@ -228,7 +240,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 const index = settings.titleLeft.findIndex(
                                     (el) => el === command
                                 );
-                                new IconPicker(this.plugin, command, "title-left", index).open();
+                                new IconPicker(
+                                    this.plugin,
+                                    command,
+                                    'title-left',
+                                    index
+                                ).open();
                                 this.plugin.removeLeftTitleBarButtons();
                                 this.plugin.addLeftTitleBarButtons();
                             });
@@ -236,8 +253,6 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 setting.nameEl.prepend(iconDiv);
                 setting.nameEl.addClass('CS-flex');
             }
-
-
 
             containerEl.createEl('h4', {
                 text: 'Right titlebar',
@@ -265,7 +280,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .setIcon('up-arrow-with-tail')
                             .setTooltip('Move button to the left')
                             .onClick(async () => {
-                                settings.titleRight[i] = settings.titleRight[i - 1];
+                                settings.titleRight[i] =
+                                    settings.titleRight[i - 1];
                                 settings.titleRight[i - 1] = command;
                                 await this.plugin.saveSettings();
                                 this.plugin.removeRightTitleBarButtons();
@@ -280,7 +296,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .setIcon('down-arrow-with-tail')
                             .setTooltip('Move button to the right')
                             .onClick(async () => {
-                                settings.titleRight[i] = settings.titleRight[i + 1];
+                                settings.titleRight[i] =
+                                    settings.titleRight[i + 1];
                                 settings.titleRight[i + 1] = command;
                                 await this.plugin.saveSettings();
                                 this.plugin.removeRightTitleBarButtons();
@@ -297,7 +314,9 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleRight.remove(command);
                                 await this.plugin.saveSettings();
-                                this.plugin.removeRightTitleBarButton(command.id);
+                                this.plugin.removeRightTitleBarButton(
+                                    command.id
+                                );
                                 this.display();
                             });
                     })
@@ -309,7 +328,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 const index = settings.titleRight.findIndex(
                                     (el) => el === command
                                 );
-                                new IconPicker(this.plugin, command, "title-right", index).open();
+                                new IconPicker(
+                                    this.plugin,
+                                    command,
+                                    'title-right',
+                                    index
+                                ).open();
                                 this.plugin.removeRightTitleBarButtons();
                                 this.plugin.addRightTitleBarButtons();
                             });
@@ -317,7 +341,6 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 setting.nameEl.prepend(iconDiv);
                 setting.nameEl.addClass('CS-flex');
             }
-
         }
     }
 }

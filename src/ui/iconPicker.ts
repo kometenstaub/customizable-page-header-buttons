@@ -8,7 +8,7 @@ import {
     Notice,
 } from 'obsidian';
 import type TopBarButtonsPlugin from '../main';
-import type {Buttons, TitleOrPage} from 'src/interfaces';
+import type { Buttons, TitleOrPage } from 'src/interfaces';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
     plugin: TopBarButtonsPlugin;
@@ -16,7 +16,12 @@ export default class IconPicker extends FuzzySuggestModal<string> {
     type: TitleOrPage;
     index: number;
 
-    constructor(plugin: TopBarButtonsPlugin, command: Command, type: TitleOrPage, index = -1) {
+    constructor(
+        plugin: TopBarButtonsPlugin,
+        command: Command,
+        type: TitleOrPage,
+        index = -1
+    ) {
         super(plugin.app);
         this.plugin = plugin;
         this.command = command;
@@ -62,7 +67,8 @@ export default class IconPicker extends FuzzySuggestModal<string> {
             if (this.index === -1) {
                 showOnPlatform = 'both';
             } else {
-                showOnPlatform = settings.enabledButtons[this.index].showButtons;
+                showOnPlatform =
+                    settings.enabledButtons[this.index].showButtons;
             }
             const settingsObject = {
                 id: id,
@@ -76,7 +82,7 @@ export default class IconPicker extends FuzzySuggestModal<string> {
                 settings.enabledButtons[this.index] = settingsObject;
                 new Notice('This change will take effect for new panes only.');
             }
-        // title bar button
+            // title bar button
         } else {
             const settingsObject = {
                 id: id,
@@ -90,7 +96,7 @@ export default class IconPicker extends FuzzySuggestModal<string> {
                 } else {
                     settings.titleRight.push(settingsObject);
                 }
-            // an icon is changed from within the settings
+                // an icon is changed from within the settings
             } else {
                 if (this.type === 'title-left') {
                     settings.titleLeft[this.index] = settingsObject;

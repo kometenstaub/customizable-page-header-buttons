@@ -118,10 +118,9 @@ export const obsiIcons = [
     'vertical-split',
     'vertical-three-dots',
     'wrench-screwdriver-glyph',
-    'reading-glasses'
+    'reading-glasses',
 ];
 
-
 export const PLUGIN_CLASS_NAME = 'page-header-button';
-export const TITLEBAR_CLASS = 'titlebar-button'
-export const TITLEBAR_CLASSES = [TITLEBAR_CLASS, PLUGIN_CLASS_NAME]
+export const TITLEBAR_CLASS = 'titlebar-button';
+export const TITLEBAR_CLASSES = [TITLEBAR_CLASS, PLUGIN_CLASS_NAME];
