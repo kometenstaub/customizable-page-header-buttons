@@ -101,6 +101,13 @@ export default class IconPicker extends FuzzySuggestModal<string> {
         }
 
         await this.plugin.saveSettings();
+        if (this.type === 'title-left') {
+            this.plugin.removeLeftTitleBarButtons();
+            this.plugin.addLeftTitleBarButtons();
+        } else if (this.type === 'title-right') {
+            this.plugin.removeRightTitleBarButtons();
+            this.plugin.addRightTitleBarButtons();
+        }
 
         setTimeout(() => {
             dispatchEvent(new Event('TopBar-addedCommand'));

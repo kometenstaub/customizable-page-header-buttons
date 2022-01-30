@@ -54,6 +54,13 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
                 this.pushToSettings(settings, item, 'titleRight');
             }
             await this.plugin.saveSettings();
+            if (this.type === 'title-left') {
+                this.plugin.removeLeftTitleBarButtons();
+                this.plugin.addLeftTitleBarButtons();
+            } else if (this.type === 'title-right') {
+                this.plugin.removeRightTitleBarButtons();
+                this.plugin.addRightTitleBarButtons();
+            }
             setTimeout(() => {
                 dispatchEvent(new Event('TopBar-addedCommand'));
             }, 100);
