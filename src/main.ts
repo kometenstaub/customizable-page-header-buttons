@@ -33,10 +33,10 @@ export default class TopBarButtonsPlugin extends Plugin {
     iconList: string[] = obsiIcons;
     listener!: () => void;
 
-    addPageHeaderButton = (
+    addPageHeaderButton(
         viewActions: Element,
         button: enabledButton | baseButton
-    ) => {
+    ) {
         const { id, icon, name } = button;
         const iconSize = getIconSize();
         const classes = ['view-action', PLUGIN_CLASS_NAME];
@@ -48,9 +48,9 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    };
+    }
 
-    removePageHeaderButton = (buttonId: string) => {
+    removePageHeaderButton(buttonId: string) {
         const activeLeaves = document.getElementsByClassName(
             'workspace-leaf-content'
         );
@@ -58,19 +58,19 @@ export default class TopBarButtonsPlugin extends Plugin {
             const leaf = activeLeaves[i];
             removeSingleButton(leaf, buttonId, 'view-action');
         }
-    };
+    }
 
-    removeLeftTitleBarButton = (buttonId: string) => {
+    removeLeftTitleBarButton(buttonId: string) {
         const leftContainer = getLeftTitleBar();
         removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
-    };
+    }
 
-    removeRightTitleBarButton = (buttonId: string) => {
+    removeRightTitleBarButton(buttonId: string) {
         const rightContainer = getRightTitleBar();
         removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
-    };
+    }
 
-    addLeftTitleBarButton = (viewActions: Element, button: baseButton) => {
+    addLeftTitleBarButton(viewActions: Element, button: baseButton) {
         const { id, icon, name } = button;
         const iconSize = 15;
         const buttonIcon = getButtonIcon(
@@ -86,9 +86,9 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    };
+    }
 
-    addRightTitleBarButton = (viewActions: Element, button: baseButton) => {
+    addRightTitleBarButton(viewActions: Element, button: baseButton) {
         const { id, icon, name } = button;
         const iconSize = 15;
         const buttonIcon = getButtonIcon(
@@ -104,9 +104,9 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    };
+    }
 
-    removeAllPageHeaderButtons = () => {
+    removeAllPageHeaderButtons() {
         const activeLeaves = document.getElementsByClassName(
             'workspace-leaf-content'
         );
@@ -117,12 +117,12 @@ export default class TopBarButtonsPlugin extends Plugin {
                 removeElements(element);
             }
         }
-    };
+    }
 
-    removeAllTitleBarButtons = () => {
+    removeAllTitleBarButtons() {
         this.removeLeftTitleBarButtons();
         this.removeRightTitleBarButtons();
-    };
+    }
 
     removeLeftTitleBarButtons() {
         const leftContainer = getLeftTitleBar();
