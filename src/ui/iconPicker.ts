@@ -8,17 +8,19 @@ import {
     Notice,
 } from 'obsidian';
 import type TopBarButtonsPlugin from '../main';
-import type { Buttons } from 'src/interfaces';
+import type {Buttons, TitleOrPage} from 'src/interfaces';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
     plugin: TopBarButtonsPlugin;
     command: Command;
+    type: TitleOrPage;
     index: number;
 
-    constructor(plugin: TopBarButtonsPlugin, command: Command, index = -1) {
+    constructor(plugin: TopBarButtonsPlugin, command: Command, type: TitleOrPage, index = -1) {
         super(plugin.app);
         this.plugin = plugin;
         this.command = command;
+        this.type = type;
         this.index = index;
         this.setPlaceholder('Please pick an icon');
     }
@@ -50,27 +52,54 @@ export default class IconPicker extends FuzzySuggestModal<string> {
     }
 
     async onChooseItem(item: string): Promise<void> {
-        this.command.icon = item;
+        // TODO: is this really needed?
+        //this.command.icon = item;
         const { id, name } = this.command;
         const { settings } = this.plugin;
-        let showOnPlatform: Buttons = 'both';
-        if (this.index === -1) {
-            showOnPlatform = 'both';
+        // page header button
+        if (this.type === 'page') {
+            let showOnPlatform: Buttons = 'both';
+            if (this.index === -1) {
+                showOnPlatform = 'both';
+            } else {
+                showOnPlatform = settings.enabledButtons[this.index].showButtons;
+            }
+            const settingsObject = {
+                id: id,
+                icon: item,
+                name: name,
+                showButtons: showOnPlatform,
+            };
+            if (this.index === -1) {
+                settings.enabledButtons.push(settingsObject);
+            } else {
+                settings.enabledButtons[this.index] = settingsObject;
+                new Notice('This change will take effect for new panes only.');
+            }
+        // title bar button
         } else {
-            showOnPlatform = settings.enabledButtons[this.index].showButtons;
+            const settingsObject = {
+                id: id,
+                icon: item,
+                name: name,
+            };
+            // a button is added at the end, `-1` is the default
+            if (this.index === -1) {
+                if (this.type === 'title-left') {
+                    settings.titleLeft.push(settingsObject);
+                } else {
+                    settings.titleRight.push(settingsObject);
+                }
+            // an icon is changed from within the settings
+            } else {
+                if (this.type === 'title-left') {
+                    settings.titleLeft[this.index] = settingsObject;
+                } else {
+                    settings.titleRight[this.index] = settingsObject;
+                }
+            }
         }
-        const settingsObject = {
-            id: id,
-            icon: item,
-            name: name,
-            showButtons: showOnPlatform,
-        };
-        if (this.index === -1) {
-            settings.enabledButtons.push(settingsObject);
-        } else {
-            settings.enabledButtons[this.index] = settingsObject;
-            new Notice('This change will take effect for new panes only.');
-        }
+
         await this.plugin.saveSettings();
 
         setTimeout(() => {
