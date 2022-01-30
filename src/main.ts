@@ -5,7 +5,6 @@ import {obsiIcons, PLUGIN_CLASS_NAME, TITLEBAR_CLASS, TITLEBAR_CLASSES} from './
 import {addFeatherIcons} from './ui/icons';
 import {
     getButtonIcon,
-    getButtonInfo,
     getIconSize,
     getLeftTitleBar,
     getRightTitleBar,
@@ -28,7 +27,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
 
     addPageHeaderButton = (viewActions: Element, button: enabledButton) => {
-        let {id, icon, name, iconSize} = getIconSize(button);
+        const {id, icon, name} = button;
+        const iconSize = getIconSize();
         const classes = ['view-action', PLUGIN_CLASS_NAME]
 
         const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
@@ -62,7 +62,9 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addLeftTitleBarButton = (viewActions: Element, button: baseButton) => {
-        const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
+        const {id, icon, name} = button;
+        const iconSize = 15;
+        const buttonIcon = getButtonIcon(name, id, icon, iconSize, TITLEBAR_CLASSES, 'div')
         viewActions.append(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
@@ -71,7 +73,9 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addRightTitleBarButton = (viewActions: Element, button: baseButton) => {
-        const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
+        const {id, icon, name} = button;
+        const iconSize = 15;
+        const buttonIcon = getButtonIcon(name, id, icon, iconSize, TITLEBAR_CLASSES, 'div')
         viewActions.prepend(buttonIcon);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
