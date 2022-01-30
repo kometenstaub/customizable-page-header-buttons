@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "cross-env BUILD=dev node esbuild.mjs",
 		"build": "cross-env BUILD=production node esbuild.mjs",
-		"release": "standard-version"
+		"release": "standard-version",
+		"format": "npx prettier --write src/"
 	},
 	"standard-version": {
 		"t": "",
