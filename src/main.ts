@@ -20,6 +20,7 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     titleRight: [],
 };
 
+
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
@@ -60,7 +61,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS)
     }
 
-    addLeftNavBarButton = (viewActions: Element, button: baseButton) => {
+    addLeftTitleBarButton = (viewActions: Element, button: baseButton) => {
         const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
         viewActions.append(buttonIcon);
 
@@ -69,7 +70,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         });
     }
 
-    addRightNavBarButton = (viewActions: Element, button: baseButton) => {
+    addRightTitleBarButton = (viewActions: Element, button: baseButton) => {
         const {id, buttonIcon} = getButtonInfo(button, TITLEBAR_CLASSES);
         viewActions.prepend(buttonIcon);
 
@@ -91,18 +92,35 @@ export default class TopBarButtonsPlugin extends Plugin {
         }
     };
 
-    removeAllNavBarButtons = () => {
-        const leftContainer = getLeftNavBar();
+    removeAllTitleBarButtons = () => {
+        this.removeLeftTitleBarButtons();
+        this.removeRightTitleBarButtons();
+
+    }
+
+    removeRightTitleBarButtons() {
         const rightContainer = getRightNavBar();
-        const leftElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
-        if (leftElements.length > 0) {
-            removeElements(leftElements)
-        }
         const rightElements = rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
         if (rightElements.length > 0) {
             removeElements(rightElements)
         }
+    }
 
+    removeLeftTitleBarButtons() {
+        const leftContainer = getLeftNavBar();
+        const leftElements = leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+        if (leftElements.length > 0) {
+            removeElements(leftElements)
+        }
+    }
+
+    addLeftTitleBarButtons() {
+        if (this.settings.titleLeft.length > 0) {
+            const modLeft = getLeftNavBar();
+            for (const button of this.settings.titleLeft) {
+                this.addLeftTitleBarButton(modLeft, button);
+            }
+        }
     }
 
     async onload() {
@@ -116,12 +134,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         this.app.workspace.onLayoutReady(() => {
             if (Platform.isDesktopApp) {
-                if (this.settings.titleLeft.length > 0) {
-                    const modLeft = getLeftNavBar();
-                    for (const button of this.settings.titleLeft) {
-                        this.addLeftNavBarButton(modLeft, button);
-                    }
-                }
+                this.addLeftTitleBarButtons();
                 if (this.settings.titleRight.length > 0) {
                     const modRight = getRightNavBar();
                     for (
@@ -129,7 +142,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                         i >= 0;
                         i--
                     ) {
-                        this.addRightNavBarButton(modRight, this.settings.enabledButtons[i])
+                        this.addRightTitleBarButton(modRight, this.settings.enabledButtons[i])
                     }
                 }
             }
@@ -180,7 +193,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     onunload() {
         console.log('unloading Customizable Page Header Plugin');
         this.removeAllPageHeaderButtons();
-        this.removeAllNavBarButtons();
+        this.removeAllTitleBarButtons();
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
         globalThis.removeEventListener('NavBar-addedCommand', this.listener);
     }
