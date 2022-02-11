@@ -9,6 +9,10 @@ import {
 } from 'obsidian';
 import type TopBarButtonsPlugin from '../main';
 import type { Buttons, TitleOrPage } from 'src/interfaces';
+import {
+    removeLeftTitleBarButtons,
+    removeRightTitleBarButtons,
+} from '../utils';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
     plugin: TopBarButtonsPlugin;
@@ -108,10 +112,10 @@ export default class IconPicker extends FuzzySuggestModal<string> {
 
         await this.plugin.saveSettings();
         if (this.type === 'title-left') {
-            this.plugin.removeLeftTitleBarButtons();
+            removeLeftTitleBarButtons();
             this.plugin.addLeftTitleBarButtons();
         } else if (this.type === 'title-right') {
-            this.plugin.removeRightTitleBarButtons();
+            removeRightTitleBarButtons();
             this.plugin.addRightTitleBarButtons();
         }
 

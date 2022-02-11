@@ -7,6 +7,10 @@ import type {
     TopBarButtonsSettings,
 } from '../interfaces';
 import type TopBarButtonsPlugin from '../main';
+import {
+    removeLeftTitleBarButtons,
+    removeRightTitleBarButtons,
+} from '../utils';
 
 export default class CommandSuggester extends FuzzySuggestModal<Command> {
     plugin: TopBarButtonsPlugin;
@@ -62,10 +66,10 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
             }
             await this.plugin.saveSettings();
             if (this.type === 'title-left') {
-                this.plugin.removeLeftTitleBarButtons();
+                removeLeftTitleBarButtons();
                 this.plugin.addLeftTitleBarButtons();
             } else if (this.type === 'title-right') {
-                this.plugin.removeRightTitleBarButtons();
+                removeRightTitleBarButtons();
                 this.plugin.addRightTitleBarButtons();
             }
             setTimeout(() => {
