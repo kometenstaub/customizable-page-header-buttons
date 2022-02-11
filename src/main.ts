@@ -8,17 +8,25 @@ import TopBarButtonsSettingTab from './settings';
 import {
     obsiIcons,
     PLUGIN_CLASS_NAME,
+    TITLEBAR_CENTER,
     TITLEBAR_CLASS,
     TITLEBAR_CLASSES,
 } from './constants';
 import { addFeatherIcons } from './ui/icons';
 import {
+    addCenterTitleBar,
     getButtonIcon,
     getIconSize,
     getLeftTitleBar,
     getRightTitleBar,
+    getTitlebarText,
+    removeAllPageHeaderButtons,
+    removeAllTitleBarButtons,
+    removeCenterTitlebar,
     removeElements,
     removeSingleButton,
+    removeTitlebarText,
+    restoreTitlebarText,
 } from './utils';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
@@ -26,12 +34,14 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     desktop: false,
     titleLeft: [],
     titleRight: [],
+    titleCenter: [],
 };
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons;
     listener!: () => void;
+    titlebarText!: string;
 
     addPageHeaderButton(
         viewActions: Element,
@@ -48,26 +58,6 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);
         });
-    }
-
-    removePageHeaderButton(buttonId: string) {
-        const activeLeaves = document.getElementsByClassName(
-            'workspace-leaf-content'
-        );
-        for (let i = 0; i < activeLeaves.length; i++) {
-            const leaf = activeLeaves[i];
-            removeSingleButton(leaf, buttonId, 'view-action');
-        }
-    }
-
-    removeLeftTitleBarButton(buttonId: string) {
-        const leftContainer = getLeftTitleBar();
-        removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
-    }
-
-    removeRightTitleBarButton(buttonId: string) {
-        const rightContainer = getRightTitleBar();
-        removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
     }
 
     addLeftTitleBarButton(viewActions: Element, button: baseButton) {
@@ -106,40 +96,22 @@ export default class TopBarButtonsPlugin extends Plugin {
         });
     }
 
-    removeAllPageHeaderButtons() {
-        const activeLeaves = document.getElementsByClassName(
-            'workspace-leaf-content'
+    addCenterTitleBarButton(viewActions: Element, button: baseButton) {
+        const { id, icon, name } = button;
+        const iconSize = 15;
+        const buttonIcon = getButtonIcon(
+            name,
+            id,
+            icon,
+            iconSize,
+            TITLEBAR_CLASSES,
+            'div'
         );
-        for (let i = 0; i < activeLeaves.length; i++) {
-            const leaf = activeLeaves[i];
-            const element = leaf.getElementsByClassName(PLUGIN_CLASS_NAME);
-            if (element.length > 0) {
-                removeElements(element);
-            }
-        }
-    }
+        viewActions.append(buttonIcon);
 
-    removeAllTitleBarButtons() {
-        this.removeLeftTitleBarButtons();
-        this.removeRightTitleBarButtons();
-    }
-
-    removeLeftTitleBarButtons() {
-        const leftContainer = getLeftTitleBar();
-        const leftElements =
-            leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
-        if (leftElements.length > 0) {
-            removeElements(leftElements);
-        }
-    }
-
-    removeRightTitleBarButtons() {
-        const rightContainer = getRightTitleBar();
-        const rightElements =
-            rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
-        if (rightElements.length > 0) {
-            removeElements(rightElements);
-        }
+        this.registerDomEvent(buttonIcon, 'click', () => {
+            this.app.commands.executeCommandById(id);
+        });
     }
 
     addLeftTitleBarButtons() {
@@ -163,6 +135,20 @@ export default class TopBarButtonsPlugin extends Plugin {
         }
     }
 
+    // before any button is added, the parent needs to be removed and the
+    // own parent added; this requires checks in the settings modal when
+    // buttons are added and removed
+    addCenterTitleBarButtons() {
+        if (this.settings.titleCenter.length > 0) {
+            const center = document.getElementsByClassName(
+                `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+            )[0];
+            for (const button of this.settings.titleCenter) {
+                this.addCenterTitleBarButton(center, button);
+            }
+        }
+    }
+
     async onload() {
         console.log('loading Customizable Page Header Plugin');
 
@@ -176,6 +162,12 @@ export default class TopBarButtonsPlugin extends Plugin {
             if (Platform.isDesktopApp) {
                 this.addLeftTitleBarButtons();
                 this.addRightTitleBarButtons();
+                this.titlebarText = getTitlebarText();
+                if (this.settings.titleCenter.length > 0) {
+                    removeTitlebarText();
+                    addCenterTitleBar();
+                    this.addCenterTitleBarButtons();
+                }
             }
         });
 
@@ -222,10 +214,14 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     onunload() {
         console.log('unloading Customizable Page Header Plugin');
-        this.removeAllPageHeaderButtons();
-        this.removeAllTitleBarButtons();
+        removeAllPageHeaderButtons();
+        removeAllTitleBarButtons();
+        // always remove it, in case the settings don't match
+        removeCenterTitlebar();
+        if (this.settings.titleCenter.length > 0) {
+            restoreTitlebarText(this.titlebarText);
+        }
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
-        globalThis.removeEventListener('NavBar-addedCommand', this.listener);
     }
 
     async loadSettings() {

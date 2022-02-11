@@ -3,7 +3,6 @@ import {
     PLUGIN_CLASS_NAME,
     TITLEBAR_CENTER,
     TITLEBAR_CLASS,
-    TITLEBAR_CLASSES,
 } from './constants';
 
 // General purpose utility functions
@@ -96,7 +95,7 @@ export function restoreTitlebarText(titlebarText: string) {
 export function addCenterTitleBar() {
     const titlebar = document.getElementsByClassName('titlebar-inner')[0];
     titlebar.createDiv({
-        cls: `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS} ${TITLEBAR_CENTER}`,
+        cls: `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`,
     });
 }
 
@@ -112,7 +111,7 @@ export function removeCenterTitlebarButtons() {
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
     const buttons = centerTitlebar.getElementsByClassName(
-        `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+        `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS}`
     );
     removeElements(buttons);
 }
