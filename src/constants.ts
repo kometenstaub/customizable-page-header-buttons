@@ -123,4 +123,5 @@ export const obsiIcons = [
 
 export const PLUGIN_CLASS_NAME = 'page-header-button';
 export const TITLEBAR_CLASS = 'titlebar-button';
+export const TITLEBAR_CENTER = 'titlebar-center';
 export const TITLEBAR_CLASSES = [TITLEBAR_CLASS, PLUGIN_CLASS_NAME];
