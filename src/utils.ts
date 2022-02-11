@@ -1,17 +1,12 @@
 import { Platform, setIcon } from 'obsidian';
-import { PLUGIN_CLASS_NAME } from './constants';
+import {
+    PLUGIN_CLASS_NAME,
+    TITLEBAR_CENTER,
+    TITLEBAR_CLASS,
+    TITLEBAR_CLASSES,
+} from './constants';
 
-export function getLeftTitleBar(): Element {
-    return document.getElementsByClassName(
-        'titlebar-button-container mod-left'
-    )[0];
-}
-
-export function getRightTitleBar(): Element {
-    return document.getElementsByClassName(
-        'titlebar-button-container mod-right'
-    )[0];
-}
+// General purpose utility functions
 
 function getTooltip(name: string) {
     if (name.includes(':')) {
@@ -78,4 +73,124 @@ export function removeSingleButton(
     if (element[0]) {
         element[0].remove();
     }
+}
+
+// Center title bar utility functions
+
+export function getTitlebarText() {
+    const titlebarText = document.getElementsByClassName('titlebar-text')[0];
+    return titlebarText.getText();
+}
+
+export function removeTitlebarText() {
+    const titlebarText = document.getElementsByClassName('titlebar-text');
+    removeElements(titlebarText);
+}
+
+export function restoreTitlebarText(titlebarText: string) {
+    const titlebar = document.getElementsByClassName('titlebar-inner')[0];
+    const child = createDiv({ cls: 'titlebar-text', text: titlebarText });
+    titlebar.appendChild(child);
+}
+
+export function addCenterTitleBar() {
+    const titlebar = document.getElementsByClassName('titlebar-inner')[0];
+    titlebar.createDiv({
+        cls: `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS} ${TITLEBAR_CENTER}`,
+    });
+}
+
+export function removeCenterTitlebar() {
+    const centerTitlebar = document.getElementsByClassName(
+        `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+    );
+    removeElements(centerTitlebar);
+}
+
+export function removeCenterTitlebarButtons() {
+    const centerTitlebar = document.getElementsByClassName(
+        `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+    )[0];
+    const buttons = centerTitlebar.getElementsByClassName(
+        `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+    );
+    removeElements(buttons);
+}
+
+// Page header utility functions
+
+export function removeAllPageHeaderButtons() {
+    const activeLeaves = document.getElementsByClassName(
+        'workspace-leaf-content'
+    );
+    for (let i = 0; i < activeLeaves.length; i++) {
+        const leaf = activeLeaves[i];
+        const element = leaf.getElementsByClassName(PLUGIN_CLASS_NAME);
+        if (element.length > 0) {
+            removeElements(element);
+        }
+    }
+}
+
+export function removePageHeaderButton(buttonId: string) {
+    const activeLeaves = document.getElementsByClassName(
+        'workspace-leaf-content'
+    );
+    for (let i = 0; i < activeLeaves.length; i++) {
+        const leaf = activeLeaves[i];
+        removeSingleButton(leaf, buttonId, 'view-action');
+    }
+}
+
+// Left and right title bar utility functions
+
+export function removeAllTitleBarButtons() {
+    removeLeftTitleBarButtons();
+    removeRightTitleBarButtons();
+}
+
+// remove all left and right title bar buttons
+
+export function removeLeftTitleBarButtons() {
+    const leftContainer = getLeftTitleBar();
+    const leftElements =
+        leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+    if (leftElements.length > 0) {
+        removeElements(leftElements);
+    }
+}
+
+export function removeRightTitleBarButtons() {
+    const rightContainer = getRightTitleBar();
+    const rightElements =
+        rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
+    if (rightElements.length > 0) {
+        removeElements(rightElements);
+    }
+}
+
+// remove single title bar button
+
+export function removeLeftTitleBarButton(buttonId: string) {
+    const leftContainer = getLeftTitleBar();
+    removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
+}
+
+export function removeRightTitleBarButton(buttonId: string) {
+    const rightContainer = getRightTitleBar();
+    removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
+}
+
+// get HTML Elements
+
+export function getLeftTitleBar(): Element {
+    return document.getElementsByClassName(
+        'titlebar-button-container mod-left'
+    )[0];
+}
+
+export function getRightTitleBar(): Element {
+    return document.getElementsByClassName(
+        'titlebar-button-container mod-right'
+    )[0];
 }
