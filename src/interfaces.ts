@@ -5,6 +5,7 @@ export interface TopBarButtonsSettings {
     desktop: boolean;
     titleLeft: baseButton[];
     titleRight: baseButton[];
+    titleCenter: baseButton[];
 }
 
 export type Buttons = 'both' | 'mobile' | 'desktop';
