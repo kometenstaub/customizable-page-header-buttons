@@ -10,8 +10,9 @@ import {
 import type TopBarButtonsPlugin from '../main';
 import type { Buttons, TitleOrPage } from 'src/interfaces';
 import {
+    removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons,
+    removeRightTitleBarButtons, restoreCenterTitlebar,
 } from '../utils';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
@@ -65,6 +66,7 @@ export default class IconPicker extends FuzzySuggestModal<string> {
         //this.command.icon = item;
         const { id, name } = this.command;
         const { settings } = this.plugin;
+        let centerCounter = 0;
         // page header button
         if (this.type === 'page') {
             let showOnPlatform: Buttons = 'both';
@@ -97,26 +99,50 @@ export default class IconPicker extends FuzzySuggestModal<string> {
             if (this.index === -1) {
                 if (this.type === 'title-left') {
                     settings.titleLeft.push(settingsObject);
-                } else {
+                } else if (this.type === 'title-right'){
                     settings.titleRight.push(settingsObject);
+                } else {
+                    const length = settings.titleCenter.length
+                    if (length !== 0) {
+                        centerCounter = length
+                    }
+                    settings.titleCenter.push(settingsObject);
                 }
                 // an icon is changed from within the settings
             } else {
                 if (this.type === 'title-left') {
                     settings.titleLeft[this.index] = settingsObject;
-                } else {
+                } else if (this.type === 'title-right') {
                     settings.titleRight[this.index] = settingsObject;
+                } else {
+                    const length = settings.titleCenter.length
+                    if (length !== 0) {
+                        centerCounter = length
+                    }
+                    settings.titleCenter[this.index] = settingsObject;
                 }
             }
         }
 
         await this.plugin.saveSettings();
+
         if (this.type === 'title-left') {
             removeLeftTitleBarButtons();
             this.plugin.addLeftTitleBarButtons();
         } else if (this.type === 'title-right') {
             removeRightTitleBarButtons();
             this.plugin.addRightTitleBarButtons();
+        } else {
+            // initial button is added
+            if (centerCounter === 0) {
+                this.plugin.addInitialCenterTitleBarButtons();
+            } else if (settings.titleCenter.length === 0) {
+                restoreCenterTitlebar(this.plugin.titlebarText)
+            } else {
+                removeCenterTitleBarButtons();
+                this.plugin.addCenterTitleBarButtons();
+            }
+
         }
 
         setTimeout(() => {

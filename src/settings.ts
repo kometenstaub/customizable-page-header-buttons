@@ -4,11 +4,13 @@ import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
 import type { Buttons } from './interfaces';
 import {
+    removeCenterTitleBarButton,
+    removeCenterTitleBarButtons,
     removeLeftTitleBarButton,
     removeLeftTitleBarButtons,
     removePageHeaderButton,
     removeRightTitleBarButton,
-    removeRightTitleBarButtons,
+    removeRightTitleBarButtons, restoreCenterTitlebar,
 } from './utils';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
@@ -334,6 +336,92 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                 ).open();
                                 removeRightTitleBarButtons();
                                 this.plugin.addRightTitleBarButtons();
+                            });
+                    });
+                setting.nameEl.prepend(iconDiv);
+                setting.nameEl.addClass('CS-flex');
+            }
+
+            containerEl.createEl('h4', {
+                text: 'Center titlebar',
+            });
+
+            new Setting(containerEl)
+                .setName('Add Button')
+                .setDesc('Add a new button to the center titlebar.')
+                .addButton((button) => {
+                    button.setButtonText('Add Command').onClick(() => {
+                        new CommandSuggester(this.plugin, 'title-center').open();
+                    });
+                });
+
+            for (let i = 0; i < settings.titleCenter.length; i++) {
+                let command = settings.titleCenter[i];
+                const iconDiv = createDiv({ cls: 'CS-settings-icon' });
+                setIcon(iconDiv, command.icon, 24);
+                let setting = new Setting(containerEl).setName(command.name);
+                if (i > 0) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('up-arrow-with-tail')
+                            .setTooltip('Move button to the left')
+                            .onClick(async () => {
+                                settings.titleCenter[i] =
+                                    settings.titleCenter[i - 1];
+                                settings.titleCenter[i - 1] = command;
+                                await this.plugin.saveSettings();
+                                removeCenterTitleBarButtons();
+                                this.plugin.addCenterTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                if (i < settings.titleCenter.length - 1) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('down-arrow-with-tail')
+                            .setTooltip('Move button to the right')
+                            .onClick(async () => {
+                                settings.titleCenter[i] =
+                                    settings.titleCenter[i + 1];
+                                settings.titleCenter[i + 1] = command;
+                                await this.plugin.saveSettings();
+                                removeCenterTitleBarButtons();
+                                this.plugin.addCenterTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                setting
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('trash')
+                            .setTooltip('Remove Command')
+                            .onClick(async () => {
+                                settings.titleCenter.remove(command);
+                                await this.plugin.saveSettings();
+                                if (this.plugin.settings.titleCenter.length === 0) {
+                                    restoreCenterTitlebar(this.plugin.titlebarText)
+                                } else {
+                                    removeCenterTitleBarButton(command.id);
+                                }
+                                this.display();
+                            });
+                    })
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('gear')
+                            .setTooltip('Edit Icon')
+                            .onClick(() => {
+                                const index = settings.titleCenter.findIndex(
+                                    (el) => el === command
+                                );
+                                new IconPicker(
+                                    this.plugin,
+                                    command,
+                                    'title-center',
+                                    index
+                                ).open();
                             });
                     });
                 setting.nameEl.prepend(iconDiv);

@@ -7,26 +7,20 @@ import type {
 import TopBarButtonsSettingTab from './settings';
 import {
     obsiIcons,
-    PLUGIN_CLASS_NAME,
-    TITLEBAR_CENTER,
-    TITLEBAR_CLASS,
+    PLUGIN_CLASS_NAME, TITLEBAR_CENTER,
     TITLEBAR_CLASSES,
 } from './constants';
 import { addFeatherIcons } from './ui/icons';
 import {
-    addCenterTitleBar,
-    getButtonIcon,
+    addCenterTitleBar, exchangeCenterTitleBar,
+    getButtonIcon, getCenterTitleBar,
     getIconSize,
     getLeftTitleBar,
     getRightTitleBar,
     getTitlebarText,
     removeAllPageHeaderButtons,
     removeAllTitleBarButtons,
-    removeCenterTitlebar,
-    removeElements,
-    removeSingleButton,
-    removeTitlebarText,
-    restoreTitlebarText,
+    removeTitlebarText, restoreCenterTitlebar,
 } from './utils';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
@@ -138,17 +132,29 @@ export default class TopBarButtonsPlugin extends Plugin {
     // before any button is added, the parent needs to be removed and the
     // own parent added; this requires checks in the settings modal when
     // buttons are added and removed
-    addCenterTitleBarButtons() {
+    addInitialCenterTitleBarButtons() {
         if (this.settings.titleCenter.length > 0) {
-            const center = document.getElementsByClassName(
-                `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
-            )[0];
+            const center = exchangeCenterTitleBar()
+            //const center = document.getElementsByClassName(
+            //    `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+            //)[0];
             for (const button of this.settings.titleCenter) {
                 this.addCenterTitleBarButton(center, button);
             }
         }
     }
 
+    addCenterTitleBarButtons() {
+        if (this.settings.titleCenter.length > 0) {
+            const center = getCenterTitleBar()
+            //const center = document.getElementsByClassName(
+            //    `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
+            //)[0];
+            for (const button of this.settings.titleCenter) {
+                this.addCenterTitleBarButton(center, button);
+            }
+        }
+    }
     async onload() {
         console.log('loading Customizable Page Header Plugin');
 
@@ -164,9 +170,7 @@ export default class TopBarButtonsPlugin extends Plugin {
                 this.addRightTitleBarButtons();
                 this.titlebarText = getTitlebarText();
                 if (this.settings.titleCenter.length > 0) {
-                    removeTitlebarText();
-                    addCenterTitleBar();
-                    this.addCenterTitleBarButtons();
+                    this.addInitialCenterTitleBarButtons();
                 }
             }
         });
@@ -217,10 +221,8 @@ export default class TopBarButtonsPlugin extends Plugin {
         removeAllPageHeaderButtons();
         removeAllTitleBarButtons();
         // always remove it, in case the settings don't match
-        removeCenterTitlebar();
-        if (this.settings.titleCenter.length > 0) {
-            restoreTitlebarText(this.titlebarText);
-        }
+        restoreCenterTitlebar(this.titlebarText);
+
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
     }
 

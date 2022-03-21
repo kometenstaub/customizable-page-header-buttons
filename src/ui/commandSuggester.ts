@@ -8,8 +8,9 @@ import type {
 } from '../interfaces';
 import type TopBarButtonsPlugin from '../main';
 import {
+    removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons,
+    removeRightTitleBarButtons, restoreCenterTitlebar,
 } from '../utils';
 
 export default class CommandSuggester extends FuzzySuggestModal<Command> {
@@ -27,7 +28,7 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
         item: Command,
         location: ButtonSettings
     ) {
-        if (location === 'titleRight' || location === 'titleLeft') {
+        if (location === 'titleRight' || location === 'titleLeft' || location === 'titleCenter') {
             settings[location].push({
                 id: item.id,
                 icon: item.icon as string,
@@ -56,13 +57,20 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
         evt: MouseEvent | KeyboardEvent
     ): Promise<void> {
         const { settings } = this.plugin;
+        let centerCounter = 0;
         if (item.icon !== undefined) {
             if (this.type === 'page') {
                 this.pushToSettings(settings, item, 'enabledSettings');
             } else if (this.type === 'title-left') {
                 this.pushToSettings(settings, item, 'titleLeft');
-            } else {
+            } else if (this.type === 'title-right') {
                 this.pushToSettings(settings, item, 'titleRight');
+            } else {
+                const length = this.plugin.settings.titleCenter.length
+                if (length !== 0) {
+                    centerCounter = length
+                }
+                this.pushToSettings(settings, item, 'titleCenter');
             }
             await this.plugin.saveSettings();
             if (this.type === 'title-left') {
@@ -71,6 +79,18 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
             } else if (this.type === 'title-right') {
                 removeRightTitleBarButtons();
                 this.plugin.addRightTitleBarButtons();
+            } else if (this.type === 'title-center') {
+                // initial button is added
+                if (centerCounter === 0) {
+                    this.plugin.addInitialCenterTitleBarButtons();
+                    // all buttons removed
+                } else if (this.plugin.settings.titleCenter.length === 0) {
+                    restoreCenterTitlebar(this.plugin.titlebarText);
+                    // button was there before or at least one is left
+                } else {
+                    removeCenterTitleBarButtons();
+                    this.plugin.addCenterTitleBarButtons();
+                }
             }
             setTimeout(() => {
                 dispatchEvent(new Event('TopBar-addedCommand'));
