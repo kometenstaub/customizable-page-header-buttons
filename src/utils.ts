@@ -86,21 +86,6 @@ export function removeTitlebarText() {
     removeElements(titlebarText);
 }
 
-/*
-export function restoreTitlebarText(titlebarText: string) {
-    const titlebar = document.getElementsByClassName('titlebar-inner')[0];
-    const child = createDiv({ cls: 'titlebar-text', text: titlebarText });
-    titlebar.appendChild(child);
-}
-*/
-
-export function addCenterTitleBar() {
-    const titlebar = document.getElementsByClassName('titlebar-inner')[0];
-    titlebar.createDiv({
-        cls: `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`,
-    });
-}
-
 export function restoreCenterTitlebar(text: string) {
     const centerTitlebar = document.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
