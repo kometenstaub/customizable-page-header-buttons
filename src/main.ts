@@ -8,12 +8,10 @@ import TopBarButtonsSettingTab from './settings';
 import {
     obsiIcons,
     PLUGIN_CLASS_NAME,
-    TITLEBAR_CENTER,
     TITLEBAR_CLASSES,
 } from './constants';
 import { addFeatherIcons } from './ui/icons';
 import {
-    addCenterTitleBar,
     exchangeCenterTitleBar,
     getButtonIcon,
     getCenterTitleBar,
@@ -23,7 +21,6 @@ import {
     getTitlebarText,
     removeAllPageHeaderButtons,
     removeAllTitleBarButtons,
-    removeTitlebarText,
     restoreCenterTitlebar,
 } from './utils';
 
