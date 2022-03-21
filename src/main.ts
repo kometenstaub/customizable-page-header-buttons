@@ -5,12 +5,7 @@ import type {
     TopBarButtonsSettings,
 } from './interfaces';
 import TopBarButtonsSettingTab from './settings';
-import {
-    obsiIcons,
-    PLUGIN_CLASS_NAME,
-    TITLEBAR_CLASSES,
-} from './constants';
-import { addFeatherIcons } from './ui/icons';
+import { obsiIcons, PLUGIN_CLASS_NAME, TITLEBAR_CLASSES } from './constants';
 import {
     exchangeCenterTitleBar,
     getButtonIcon,
@@ -23,6 +18,7 @@ import {
     removeAllTitleBarButtons,
     restoreCenterTitlebar,
 } from './utils';
+import { lucideIcons } from './lucide';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -34,7 +30,7 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
 
 export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
-    iconList: string[] = obsiIcons;
+    iconList: string[] = obsiIcons.concat(lucideIcons);
     listener!: () => void;
     titlebarText!: string;
 
@@ -161,9 +157,6 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         await this.loadSettings();
         this.addSettingTab(new TopBarButtonsSettingTab(this.app, this));
-
-        // add feather icons to icon list
-        addFeatherIcons(this.iconList);
 
         this.app.workspace.onLayoutReady(() => {
             if (Platform.isDesktopApp) {
