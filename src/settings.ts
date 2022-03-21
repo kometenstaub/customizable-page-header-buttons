@@ -23,6 +23,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         this.plugin.listener = () => {
             this.display();
         };
+        this.containerEl.addClass('page-header-button')
         addEventListener('TopBar-addedCommand', this.plugin.listener);
     }
 
@@ -169,6 +170,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         }
 
         if (Platform.isDesktopApp) {
+            containerEl.createEl('br')
             containerEl.createEl('h3', {
                 text: 'Titlebar buttons',
             });
