@@ -20,7 +20,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '14.16.0' # You might need to adjust this value to your own version
+        node-version: '16.13.0' # You might need to adjust this value to your own version
     - name: Build
       id: build
       run: | 
@@ -30,10 +30,8 @@ jobs:
         cp build/main.js build/manifest.json build/styles.css ${{ env.PLUGIN_NAME }}
         zip -r ${{ env.PLUGIN_NAME }}.zip ${{ env.PLUGIN_NAME }}
         ls
+        npx rexreplace "^.*?#(#+\s\[.*?\n.*?)(?=\s*#+\s\[)" "_" -s -M -G -m -o "CHANGELOG.md" > CHANGELOG-LATEST.md
         echo "::set-output name=tag_name::$(git tag --sort version:refname | tail -n 1)"
-        git config user.name "kometenstaub"
-        git config user.email "83140328+kometenstaub@users.noreply.github.com"
-        npx rexreplace "^.*?#+\s\[.*?\n.*?(?=\s*#+\s\[)" "_" -s -M -G -m -o "CHANGELOG.md" > CHANGELOG-LATEST.md
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
