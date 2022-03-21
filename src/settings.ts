@@ -3,6 +3,16 @@ import type TopBarButtonsPlugin from './main';
 import CommandSuggester from './ui/commandSuggester';
 import IconPicker from './ui/iconPicker';
 import type { Buttons } from './interfaces';
+import {
+    removeCenterTitleBarButton,
+    removeCenterTitleBarButtons,
+    removeLeftTitleBarButton,
+    removeLeftTitleBarButtons,
+    removePageHeaderButton,
+    removeRightTitleBarButton,
+    removeRightTitleBarButtons,
+    restoreCenterTitlebar,
+} from './utils';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
     plugin: TopBarButtonsPlugin;
@@ -13,8 +23,8 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         this.plugin.listener = () => {
             this.display();
         };
+        this.containerEl.addClass('page-header-button')
         addEventListener('TopBar-addedCommand', this.plugin.listener);
-        addEventListener('NavBar-addedCommand', this.plugin.listener);
     }
 
     display(): void {
@@ -88,16 +98,12 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     newValue === 'desktop' &&
                                     Platform.isMobile
                                 ) {
-                                    this.plugin.removePageHeaderButton(
-                                        command.id
-                                    );
+                                    removePageHeaderButton(command.id);
                                 } else if (
                                     newValue === 'mobile' &&
                                     Platform.isDesktop
                                 ) {
-                                    this.plugin.removePageHeaderButton(
-                                        command.id
-                                    );
+                                    removePageHeaderButton(command.id);
                                 }
                             }
                         );
@@ -138,7 +144,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                         .setTooltip('Remove Command')
                         .onClick(async () => {
                             settings.enabledButtons.remove(command);
-                            this.plugin.removePageHeaderButton(command.id);
+                            removePageHeaderButton(command.id);
                             await this.plugin.saveSettings();
                             this.display();
                         });
@@ -164,6 +170,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         }
 
         if (Platform.isDesktopApp) {
+            containerEl.createEl('br')
             containerEl.createEl('h3', {
                 text: 'Titlebar buttons',
             });
@@ -196,7 +203,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleLeft[i - 1];
                                 settings.titleLeft[i - 1] = command;
                                 await this.plugin.saveSettings();
-                                this.plugin.removeLeftTitleBarButtons();
+                                removeLeftTitleBarButtons();
                                 this.plugin.addLeftTitleBarButtons();
                                 this.display();
                             });
@@ -212,7 +219,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleLeft[i + 1];
                                 settings.titleLeft[i + 1] = command;
                                 await this.plugin.saveSettings();
-                                this.plugin.removeLeftTitleBarButtons();
+                                removeLeftTitleBarButtons();
                                 this.plugin.addLeftTitleBarButtons();
                                 this.display();
                             });
@@ -226,9 +233,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleLeft.remove(command);
                                 await this.plugin.saveSettings();
-                                this.plugin.removeLeftTitleBarButton(
-                                    command.id
-                                );
+                                removeLeftTitleBarButton(command.id);
                                 this.display();
                             });
                     })
@@ -246,7 +251,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     'title-left',
                                     index
                                 ).open();
-                                this.plugin.removeLeftTitleBarButtons();
+                                removeLeftTitleBarButtons();
                                 this.plugin.addLeftTitleBarButtons();
                             });
                     });
@@ -284,7 +289,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleRight[i - 1];
                                 settings.titleRight[i - 1] = command;
                                 await this.plugin.saveSettings();
-                                this.plugin.removeRightTitleBarButtons();
+                                removeRightTitleBarButtons();
                                 this.plugin.addRightTitleBarButtons();
                                 this.display();
                             });
@@ -300,7 +305,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleRight[i + 1];
                                 settings.titleRight[i + 1] = command;
                                 await this.plugin.saveSettings();
-                                this.plugin.removeRightTitleBarButtons();
+                                removeRightTitleBarButtons();
                                 this.plugin.addRightTitleBarButtons();
                                 this.display();
                             });
@@ -314,9 +319,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleRight.remove(command);
                                 await this.plugin.saveSettings();
-                                this.plugin.removeRightTitleBarButton(
-                                    command.id
-                                );
+                                removeRightTitleBarButton(command.id);
                                 this.display();
                             });
                     })
@@ -334,8 +337,102 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     'title-right',
                                     index
                                 ).open();
-                                this.plugin.removeRightTitleBarButtons();
+                                removeRightTitleBarButtons();
                                 this.plugin.addRightTitleBarButtons();
+                            });
+                    });
+                setting.nameEl.prepend(iconDiv);
+                setting.nameEl.addClass('CS-flex');
+            }
+
+            containerEl.createEl('h4', {
+                text: 'Center titlebar',
+            });
+
+            new Setting(containerEl)
+                .setName('Add Button')
+                .setDesc('Add a new button to the center titlebar.')
+                .addButton((button) => {
+                    button.setButtonText('Add Command').onClick(() => {
+                        new CommandSuggester(
+                            this.plugin,
+                            'title-center'
+                        ).open();
+                    });
+                });
+
+            for (let i = 0; i < settings.titleCenter.length; i++) {
+                let command = settings.titleCenter[i];
+                const iconDiv = createDiv({ cls: 'CS-settings-icon' });
+                setIcon(iconDiv, command.icon, 24);
+                let setting = new Setting(containerEl).setName(command.name);
+                if (i > 0) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('up-arrow-with-tail')
+                            .setTooltip('Move button to the left')
+                            .onClick(async () => {
+                                settings.titleCenter[i] =
+                                    settings.titleCenter[i - 1];
+                                settings.titleCenter[i - 1] = command;
+                                await this.plugin.saveSettings();
+                                removeCenterTitleBarButtons();
+                                this.plugin.addCenterTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                if (i < settings.titleCenter.length - 1) {
+                    setting.addExtraButton((button) => {
+                        button
+                            .setIcon('down-arrow-with-tail')
+                            .setTooltip('Move button to the right')
+                            .onClick(async () => {
+                                settings.titleCenter[i] =
+                                    settings.titleCenter[i + 1];
+                                settings.titleCenter[i + 1] = command;
+                                await this.plugin.saveSettings();
+                                removeCenterTitleBarButtons();
+                                this.plugin.addCenterTitleBarButtons();
+                                this.display();
+                            });
+                    });
+                }
+                setting
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('trash')
+                            .setTooltip('Remove Command')
+                            .onClick(async () => {
+                                settings.titleCenter.remove(command);
+                                await this.plugin.saveSettings();
+                                if (
+                                    this.plugin.settings.titleCenter.length ===
+                                    0
+                                ) {
+                                    restoreCenterTitlebar(
+                                        this.plugin.titlebarText
+                                    );
+                                } else {
+                                    removeCenterTitleBarButton(command.id);
+                                }
+                                this.display();
+                            });
+                    })
+                    .addExtraButton((button) => {
+                        button
+                            .setIcon('gear')
+                            .setTooltip('Edit Icon')
+                            .onClick(() => {
+                                const index = settings.titleCenter.findIndex(
+                                    (el) => el === command
+                                );
+                                new IconPicker(
+                                    this.plugin,
+                                    command,
+                                    'title-center',
+                                    index
+                                ).open();
                             });
                     });
                 setting.nameEl.prepend(iconDiv);

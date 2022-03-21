@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/3.2.0...4.0.0) (2022-03-21)
+
+
+### Features
+
+* add class for settings styling ([6f9ad94](https://github.com/kometenstaub/customizable-page-header-buttons/commit/6f9ad948923bdb1509401002f6548682eb6914b2))
+* add constant ([2b031c9](https://github.com/kometenstaub/customizable-page-header-buttons/commit/2b031c9e2c9018aaf3a798abe420faa9966225a3))
+* add methods for adding center buttons ([9128293](https://github.com/kometenstaub/customizable-page-header-buttons/commit/91282934135a144e066a345c460e5c1aa0a4c15b))
+* add styling from titlebar-text ([9fca0a0](https://github.com/kometenstaub/customizable-page-header-buttons/commit/9fca0a04be852b63f4d1c6344c75c92c72d7e095))
+* center title bar buttons ([f282e76](https://github.com/kometenstaub/customizable-page-header-buttons/commit/f282e76d2fced4112142b4db519f4af3ed296825))
+* change feather to lucide icons ([2bc09d7](https://github.com/kometenstaub/customizable-page-header-buttons/commit/2bc09d7b24435fd9984cb1e476919e77fec10029))
+* update default settings for center title bar ([9a742b2](https://github.com/kometenstaub/customizable-page-header-buttons/commit/9a742b2fce5be5a4cc1b5eec35d92f4a09ac21d9))
+* update obsi icons ([8f72294](https://github.com/kometenstaub/customizable-page-header-buttons/commit/8f72294d960ab1cc062a7a073ab43bfe3a14a3c8))
+* utility functions for center title bar ([86268a7](https://github.com/kometenstaub/customizable-page-header-buttons/commit/86268a73f0272df733f9a33132f452bdb587c639))
+
 ### [3.1.2](https://github.com/kometenstaub/quick-switcher-button/compare/3.1.1...3.1.2) (2021-11-20)
 
 ### [3.1.1](https://github.com/kometenstaub/quick-switcher-button/compare/3.1.0...3.1.1) (2021-11-17)

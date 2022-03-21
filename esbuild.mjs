@@ -113,6 +113,7 @@ const copyManifest = {
 	setup: (build) => {
 		build.onEnd(() => {
 			fs.copyFileSync('manifest.json', 'build/manifest.json');
+			fs.copyFileSync('src/styles.css', 'build/styles.css');
 		});
 	},
 };

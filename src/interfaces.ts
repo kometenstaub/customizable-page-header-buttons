@@ -5,6 +5,7 @@ export interface TopBarButtonsSettings {
     desktop: boolean;
     titleLeft: baseButton[];
     titleRight: baseButton[];
+    titleCenter: baseButton[];
 }
 
 export type Buttons = 'both' | 'mobile' | 'desktop';
@@ -36,8 +37,12 @@ declare module 'obsidian' {
     }
 }
 
-export type TitleOrPage = 'title-left' | 'title-right' | 'page';
+export type TitleOrPage =
+    | 'title-left'
+    | 'title-right'
+    | 'title-center'
+    | 'page';
 
-export type TitleSettings = 'titleLeft' | 'titleRight';
+export type TitleSettings = 'titleLeft' | 'titleRight' | 'titleCenter';
 
 export type ButtonSettings = TitleSettings | 'enabledSettings';
