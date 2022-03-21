@@ -10,7 +10,8 @@ import type TopBarButtonsPlugin from '../main';
 import {
     removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons, restoreCenterTitlebar,
+    removeRightTitleBarButtons,
+    restoreCenterTitlebar,
 } from '../utils';
 
 export default class CommandSuggester extends FuzzySuggestModal<Command> {
@@ -28,7 +29,11 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
         item: Command,
         location: ButtonSettings
     ) {
-        if (location === 'titleRight' || location === 'titleLeft' || location === 'titleCenter') {
+        if (
+            location === 'titleRight' ||
+            location === 'titleLeft' ||
+            location === 'titleCenter'
+        ) {
             settings[location].push({
                 id: item.id,
                 icon: item.icon as string,
@@ -66,9 +71,9 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
             } else if (this.type === 'title-right') {
                 this.pushToSettings(settings, item, 'titleRight');
             } else {
-                const length = this.plugin.settings.titleCenter.length
+                const length = this.plugin.settings.titleCenter.length;
                 if (length !== 0) {
-                    centerCounter = length
+                    centerCounter = length;
                 }
                 this.pushToSettings(settings, item, 'titleCenter');
             }

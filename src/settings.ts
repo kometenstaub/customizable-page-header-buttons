@@ -10,7 +10,8 @@ import {
     removeLeftTitleBarButtons,
     removePageHeaderButton,
     removeRightTitleBarButton,
-    removeRightTitleBarButtons, restoreCenterTitlebar,
+    removeRightTitleBarButtons,
+    restoreCenterTitlebar,
 } from './utils';
 
 export default class TopBarButtonsSettingTab extends PluginSettingTab {
@@ -351,7 +352,10 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 .setDesc('Add a new button to the center titlebar.')
                 .addButton((button) => {
                     button.setButtonText('Add Command').onClick(() => {
-                        new CommandSuggester(this.plugin, 'title-center').open();
+                        new CommandSuggester(
+                            this.plugin,
+                            'title-center'
+                        ).open();
                     });
                 });
 
@@ -400,8 +404,13 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleCenter.remove(command);
                                 await this.plugin.saveSettings();
-                                if (this.plugin.settings.titleCenter.length === 0) {
-                                    restoreCenterTitlebar(this.plugin.titlebarText)
+                                if (
+                                    this.plugin.settings.titleCenter.length ===
+                                    0
+                                ) {
+                                    restoreCenterTitlebar(
+                                        this.plugin.titlebarText
+                                    );
                                 } else {
                                     removeCenterTitleBarButton(command.id);
                                 }

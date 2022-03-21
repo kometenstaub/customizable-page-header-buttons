@@ -37,7 +37,11 @@ declare module 'obsidian' {
     }
 }
 
-export type TitleOrPage = 'title-left' | 'title-right' | 'title-center' | 'page';
+export type TitleOrPage =
+    | 'title-left'
+    | 'title-right'
+    | 'title-center'
+    | 'page';
 
 export type TitleSettings = 'titleLeft' | 'titleRight' | 'titleCenter';
 

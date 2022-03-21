@@ -107,15 +107,16 @@ export function restoreCenterTitlebar(text: string) {
     )[0];
     // needed for ununload if no center buttons are defined
     if (centerTitlebar !== undefined) {
-        centerTitlebar.classList.remove(...[PLUGIN_CLASS_NAME, TITLEBAR_CENTER])
-        centerTitlebar.addClass('titlebar-text')
-        centerTitlebar.innerHTML = text
+        centerTitlebar.classList.remove(
+            ...[PLUGIN_CLASS_NAME, TITLEBAR_CENTER]
+        );
+        centerTitlebar.addClass('titlebar-text');
+        centerTitlebar.innerHTML = text;
     }
-
 }
 
 export function removeCenterTitleBarButtons() {
-    const centerTitlebar = getCenterTitleBar()
+    const centerTitlebar = getCenterTitleBar();
     const buttons = centerTitlebar.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS}`
     );
@@ -124,10 +125,10 @@ export function removeCenterTitleBarButtons() {
 
 export function exchangeCenterTitleBar(): Element {
     const centerTitleBar = document.getElementsByClassName('titlebar-text')[0];
-    centerTitleBar.classList.remove('titlebar-text')
-    centerTitleBar.addClasses([PLUGIN_CLASS_NAME, TITLEBAR_CENTER])
-    centerTitleBar.innerHTML = ''
-    return centerTitleBar
+    centerTitleBar.classList.remove('titlebar-text');
+    centerTitleBar.addClasses([PLUGIN_CLASS_NAME, TITLEBAR_CENTER]);
+    centerTitleBar.innerHTML = '';
+    return centerTitleBar;
 }
 
 // Page header utility functions
@@ -196,7 +197,7 @@ export function removeRightTitleBarButton(buttonId: string) {
 
 export function removeCenterTitleBarButton(buttonId: string) {
     const centerContainer = getCenterTitleBar();
-    removeSingleButton(centerContainer, buttonId, TITLEBAR_CLASS)
+    removeSingleButton(centerContainer, buttonId, TITLEBAR_CLASS);
 }
 
 // get HTML Elements

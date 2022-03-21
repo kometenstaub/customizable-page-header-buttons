@@ -12,7 +12,8 @@ import type { Buttons, TitleOrPage } from 'src/interfaces';
 import {
     removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons, restoreCenterTitlebar,
+    removeRightTitleBarButtons,
+    restoreCenterTitlebar,
 } from '../utils';
 
 export default class IconPicker extends FuzzySuggestModal<string> {
@@ -99,12 +100,12 @@ export default class IconPicker extends FuzzySuggestModal<string> {
             if (this.index === -1) {
                 if (this.type === 'title-left') {
                     settings.titleLeft.push(settingsObject);
-                } else if (this.type === 'title-right'){
+                } else if (this.type === 'title-right') {
                     settings.titleRight.push(settingsObject);
                 } else {
-                    const length = settings.titleCenter.length
+                    const length = settings.titleCenter.length;
                     if (length !== 0) {
-                        centerCounter = length
+                        centerCounter = length;
                     }
                     settings.titleCenter.push(settingsObject);
                 }
@@ -115,9 +116,9 @@ export default class IconPicker extends FuzzySuggestModal<string> {
                 } else if (this.type === 'title-right') {
                     settings.titleRight[this.index] = settingsObject;
                 } else {
-                    const length = settings.titleCenter.length
+                    const length = settings.titleCenter.length;
                     if (length !== 0) {
-                        centerCounter = length
+                        centerCounter = length;
                     }
                     settings.titleCenter[this.index] = settingsObject;
                 }
@@ -137,12 +138,11 @@ export default class IconPicker extends FuzzySuggestModal<string> {
             if (centerCounter === 0) {
                 this.plugin.addInitialCenterTitleBarButtons();
             } else if (settings.titleCenter.length === 0) {
-                restoreCenterTitlebar(this.plugin.titlebarText)
+                restoreCenterTitlebar(this.plugin.titlebarText);
             } else {
                 removeCenterTitleBarButtons();
                 this.plugin.addCenterTitleBarButtons();
             }
-
         }
 
         setTimeout(() => {

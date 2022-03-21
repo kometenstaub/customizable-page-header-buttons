@@ -7,20 +7,24 @@ import type {
 import TopBarButtonsSettingTab from './settings';
 import {
     obsiIcons,
-    PLUGIN_CLASS_NAME, TITLEBAR_CENTER,
+    PLUGIN_CLASS_NAME,
+    TITLEBAR_CENTER,
     TITLEBAR_CLASSES,
 } from './constants';
 import { addFeatherIcons } from './ui/icons';
 import {
-    addCenterTitleBar, exchangeCenterTitleBar,
-    getButtonIcon, getCenterTitleBar,
+    addCenterTitleBar,
+    exchangeCenterTitleBar,
+    getButtonIcon,
+    getCenterTitleBar,
     getIconSize,
     getLeftTitleBar,
     getRightTitleBar,
     getTitlebarText,
     removeAllPageHeaderButtons,
     removeAllTitleBarButtons,
-    removeTitlebarText, restoreCenterTitlebar,
+    removeTitlebarText,
+    restoreCenterTitlebar,
 } from './utils';
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
@@ -134,7 +138,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     // buttons are added and removed
     addInitialCenterTitleBarButtons() {
         if (this.settings.titleCenter.length > 0) {
-            const center = exchangeCenterTitleBar()
+            const center = exchangeCenterTitleBar();
             //const center = document.getElementsByClassName(
             //    `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
             //)[0];
@@ -146,7 +150,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     addCenterTitleBarButtons() {
         if (this.settings.titleCenter.length > 0) {
-            const center = getCenterTitleBar()
+            const center = getCenterTitleBar();
             //const center = document.getElementsByClassName(
             //    `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
             //)[0];
