@@ -16,7 +16,7 @@ If you use pane relief and add back/forward buttons to the page header, you can 
 ```css
 /* Pane relief count */
 
-.view-action.page-header-button.app\:go-back::before {
+:not(.is-mobile) .view-action.page-header-button.app\:go-back::before {
     content: var(--pane-relief-backward-count);
     padding-right: 0.4em;
     font-size: 0.95em;
@@ -24,7 +24,7 @@ If you use pane relief and add back/forward buttons to the page header, you can 
     line-height: 1;
 }
 
-.view-action.page-header-button.app\:go-forward::after {
+:not(.is-mobile) .view-action.page-header-button.app\:go-forward::after {
     content: var(--pane-relief-forward-count);
     padding-left: 0.4em;
     font-size: 0.95em;
@@ -32,14 +32,14 @@ If you use pane relief and add back/forward buttons to the page header, you can 
     line-height: 1;
 }
 
-body:not(.no-svg-replace) svg.left-arrow-with-tail {
+:not(.is-mobile) body:not(.no-svg-replace) svg.left-arrow-with-tail {
     vertical-align: top;
 }
-body:not(.no-svg-replace) svg.right-arrow-with-tail {
+:not(.is-mobile) body:not(.no-svg-replace) svg.right-arrow-with-tail {
     vertical-align: top;
 }
 
-.view-actions {
+:not(.is-mobile) .view-actions {
     align-items: center;
 }
 
