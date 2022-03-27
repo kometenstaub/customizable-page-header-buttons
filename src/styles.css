@@ -34,9 +34,6 @@
 :not(.is-mobile) .pane-relief body:not(.no-svg-replace) svg {
     vertical-align: top;
 }
-:not(.is-mobile) .pane-relief body:not(.no-svg-replace) svg {
-    vertical-align: top;
-}
 
 :not(.is-mobile) .view-actions {
     align-items: center;
