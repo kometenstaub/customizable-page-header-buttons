@@ -7,7 +7,8 @@
 		"dev": "cross-env BUILD=dev node esbuild.mjs",
 		"build": "cross-env BUILD=production node esbuild.mjs",
 		"release": "standard-version",
-		"format": "npx prettier --write src/"
+		"format": "npx prettier --write src/",
+	  	"css": "npx sass --watch src/styles.scss build/styles.css"
 	},
 	"standard-version": {
 		"t": "",
