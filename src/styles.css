@@ -10,3 +10,39 @@
     letter-spacing: 0.05em;
     opacity: 0.8;
 }
+
+/* Pane relief count */
+
+:not(.is-mobile) .view-action.page-header-button.app\:go-back.pane-relief::before {
+    content: var(--pane-relief-backward-count);
+    display: inline;
+    padding-right: 0.4em;
+    font-size: 1em;
+    vertical-align: text-top;
+    line-height: 1;
+}
+
+:not(.is-mobile) .view-action.page-header-button.app\:go-forward.pane-relief::after {
+    content: var(--pane-relief-forward-count);
+    display: inline;
+    padding-left: 0.4em;
+    font-size: 1em;
+    vertical-align: text-top;
+    line-height: 1;
+}
+
+:not(.is-mobile) .pane-relief body:not(.no-svg-replace) svg {
+    vertical-align: top;
+}
+:not(.is-mobile) .pane-relief body:not(.no-svg-replace) svg {
+    vertical-align: top;
+}
+
+:not(.is-mobile) .view-actions {
+    align-items: center;
+}
+
+.view-action.pane-relief {
+    display: flex;
+    position: unset;
+}

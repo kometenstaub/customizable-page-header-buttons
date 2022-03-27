@@ -26,6 +26,7 @@ const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     titleLeft: [],
     titleRight: [],
     titleCenter: [],
+    paneRelief: false,
 };
 
 export default class TopBarButtonsPlugin extends Plugin {
@@ -43,6 +44,13 @@ export default class TopBarButtonsPlugin extends Plugin {
         const classes = ['view-action', PLUGIN_CLASS_NAME];
 
         const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
+
+        if (
+            this.settings.paneRelief &&
+            (id === 'app:go-forward' || id === 'app:go-back')
+        ) {
+            buttonIcon.addClass('pane-relief');
+        }
 
         viewActions.prepend(buttonIcon);
 

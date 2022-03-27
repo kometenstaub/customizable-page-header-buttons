@@ -23,7 +23,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         this.plugin.listener = () => {
             this.display();
         };
-        this.containerEl.addClass('page-header-button')
+        this.containerEl.addClass('page-header-button');
         addEventListener('TopBar-addedCommand', this.plugin.listener);
     }
 
@@ -72,6 +72,22 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                     new CommandSuggester(this.plugin, 'page').open();
                 });
             });
+
+        if (this.app.plugins.plugins['pane-relief']) {
+            new Setting(containerEl)
+                .setName('Pane Relief count')
+                .setDesc(
+                    'Enable to show the pane relief count next to back/forward buttons. Needs a reload to take effect.'
+                )
+                .addToggle((toggle) => {
+                    toggle
+                        .setValue(settings.paneRelief)
+                        .onChange(async (state) => {
+                            settings.paneRelief = state;
+                            await this.plugin.saveSettings();
+                        });
+                });
+        }
 
         for (let i = 0; i < settings.enabledButtons.length; i++) {
             let command = settings.enabledButtons[i];
@@ -170,7 +186,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         }
 
         if (Platform.isDesktopApp) {
-            containerEl.createEl('br')
+            containerEl.createEl('br');
             containerEl.createEl('h3', {
                 text: 'Titlebar buttons',
             });

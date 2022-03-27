@@ -8,45 +8,6 @@ If you enable desktop compatibility, it will also let you configure buttons to b
 
 As of v4.0.0, you can also add buttons to the title bar. You can add them to the left or right side and even exchange the center version text with buttons.
 
-
-## CSS snippet for Pane Relief count
-
-If you use pane relief and add back/forward buttons to the page header, you can add the count like this:
-
-```css
-/* Pane relief count */
-
-:not(.is-mobile) .view-action.page-header-button.app\:go-back::before {
-    content: var(--pane-relief-backward-count);
-    padding-right: 0.4em;
-    font-size: 0.95em;
-    vertical-align: text-top;
-    line-height: 1;
-}
-
-:not(.is-mobile) .view-action.page-header-button.app\:go-forward::after {
-    content: var(--pane-relief-forward-count);
-    padding-left: 0.4em;
-    font-size: 0.95em;
-    vertical-align: text-top;
-    line-height: 1;
-}
-
-:not(.is-mobile) body:not(.no-svg-replace) svg.left-arrow-with-tail {
-    vertical-align: top;
-}
-:not(.is-mobile) body:not(.no-svg-replace) svg.right-arrow-with-tail {
-    vertical-align: top;
-}
-
-:not(.is-mobile) .view-actions {
-    align-items: center;
-}
-
-```
-
-Depending on your theme, it may need some adjustment.
-
 ## Known limitations
 
 This plugin uses an internal API for showing the commands. That means for example that if some commands only work in edit mode, the last active pane before entering settings has to be in edit mode, otherwise you will not be able to select that command.

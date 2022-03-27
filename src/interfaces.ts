@@ -6,6 +6,7 @@ export interface TopBarButtonsSettings {
     titleLeft: baseButton[];
     titleRight: baseButton[];
     titleCenter: baseButton[];
+    paneRelief: boolean;
 }
 
 export type Buttons = 'both' | 'mobile' | 'desktop';
@@ -32,7 +33,7 @@ declare module 'obsidian' {
             listCommands: () => Command[];
         };
         plugins: {
-            plugins: any;
+            plugins: Record<string, any>;
         };
     }
 }
