@@ -6,7 +6,10 @@ It lets you choose from all commands and configure their icons. You can set icon
 
 If you enable desktop compatibility, it will also let you configure buttons to be shown on both mobile and desktop, only desktop or only mobile.
 
-As of v4.0.0, you can also add buttons to the title bar. You can add them to the left or right side and even exchange the center version text with buttons.
+On desktop, you can also add buttons to the title bar. You can add them to the left or right side and even exchange the center version text with buttons.
+
+If you use **Pane Relief**, you can toggle whether to show the forward/backwards count.
+
 
 ## Known limitations
 
