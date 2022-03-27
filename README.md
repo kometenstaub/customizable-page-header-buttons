@@ -8,7 +8,7 @@ If you enable desktop compatibility, it will also let you configure buttons to b
 
 On desktop, you can also add buttons to the title bar. You can add them to the left or right side and even exchange the center version text with buttons.
 
-If you use **Pane Relief**, you can toggle whether to show the forward/backwards count.
+If you use **Pane Relief**, you can toggle whether to show the forward/backwards count. For this to work you of course need to add back/forward buttons to the page header.
 
 
 ## Known limitations
