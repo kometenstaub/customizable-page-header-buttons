@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.0.0...4.1.0) (2022-03-27)
+
+
+### Features
+
+* settings option for pane relief count ([5c0ce1f](https://github.com/kometenstaub/customizable-page-header-buttons/commit/5c0ce1f7c800c77140cafe75a4f4424fda07cf6e))
+
 ## [4.0.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/3.2.0...4.0.0) (2022-03-21)
 
 
