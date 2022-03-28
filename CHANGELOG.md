@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.1.0...4.1.1) (2022-03-28)
+
+
+### Bug Fixes
+
+* apply back/forward to correct pane ([85b9f50](https://github.com/kometenstaub/customizable-page-header-buttons/commit/85b9f509fd2e4d144f4d84bd064cb59a744cf45c))
+
 ## [4.1.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.0.0...4.1.0) (2022-03-27)
 
 
