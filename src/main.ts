@@ -54,24 +54,14 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         viewActions.prepend(buttonIcon);
 
-        if (
-            this.settings.paneRelief &&
-            (id === 'app:go-forward' || id === 'app:go-back')
-        ) {
-            this.registerDomEvent(buttonIcon, 'click', () => {
-                /* this way the pane gets activated from the click
+        this.registerDomEvent(buttonIcon, 'click', () => {
+            /* this way the pane gets activated from the click
                 otherwise the action would get executed on the former active pane
                 timeout of 1 was enough, but 5 is chosen for slower computers
                 may need to be made its own setting in the future
                  */
-                setTimeout(() => this.app.commands.executeCommandById(id), 5)
-            });
-
-        } else {
-            this.registerDomEvent(buttonIcon, 'click', () => {
-                this.app.commands.executeCommandById(id);
-            });
-        }
+            setTimeout(() => this.app.commands.executeCommandById(id), 5);
+        });
     }
 
     addLeftTitleBarButton(viewActions: Element, button: baseButton) {
