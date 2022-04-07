@@ -35,6 +35,21 @@ declare module 'obsidian' {
         plugins: {
             plugins: Record<string, any>;
         };
+        setting: {
+            openTabById(id: string): void;
+            pluginTabs: Array<{
+                id: string;
+                name: string;
+                plugin: { [key: string]: manifest };
+                instance?: {
+                    description: string;
+                    id: string;
+                    name: string;
+                };
+            }>;
+            activeTab: any;
+            open(): void;
+        };
     }
 }
 
@@ -47,3 +62,15 @@ export type TitleOrPage =
 export type TitleSettings = 'titleLeft' | 'titleRight' | 'titleCenter';
 
 export type ButtonSettings = TitleSettings | 'enabledSettings';
+
+interface manifest {
+    author: string;
+    authorUrl: string;
+    description: string;
+    dir: string;
+    id: string;
+    isDesktopOnly: boolean;
+    minAppVersion: string;
+    name: string;
+    version: string;
+}

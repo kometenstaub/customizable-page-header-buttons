@@ -39,9 +39,17 @@
                 content: var(--pane-relief-backward-count);
             }
         }
+
+        &:not(:last-child) {
+            margin-right: var(--page-header-spacing-desktop);
+        }
     }
 
     .pane-relief body:not(.no-svg-replace) svg {
         vertical-align: top;
     }
+}
+
+.is-mobile .view-action:not(:last-child) {
+    margin-right: var(--page-header-spacing-mobile);
 }

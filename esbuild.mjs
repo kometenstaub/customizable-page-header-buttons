@@ -3,6 +3,7 @@ import esbuild from 'esbuild';
 import fs from 'fs';
 import minify from 'css-minify';
 import sass from 'sass'
+import builtins from 'builtin-modules'
 
 const license = `
 	MIT License
@@ -73,13 +74,40 @@ const copyManifest = {
 	},
 };
 
+const styleSettings = `
+/* @settings
+
+name: Customizable Page Header and Title Bar
+id: customizable-page-header-buttons
+settings:
+    - 
+        id: page-header-spacing-mobile
+        title: Page Header Button Spacing (mobile)
+        type: variable-number-slider
+        default: 12
+        min: 0
+        max: 30
+        step: 1
+        format: px
+    - 
+        id: page-header-spacing-desktop
+        title: Page Header Button Spacing (desktop)
+        type: variable-number-slider
+        default: 8
+        min: 0
+        max: 30
+        step: 1
+        format: px
+*/
+`
+
 const copyMinifiedCSS = {
 	name: 'minify-css',
 	setup: (build) => {
 		build.onEnd(async () => {
 			const {css} = sass.compile('src/styles.scss');
 			const minCss = await minify(css);
-			const content = `/*${license}*/\n${minCss}`;
+			const content = `/*${license}*/\n${styleSettings}\n${minCss}`;
 			fs.writeFileSync('build/styles.css', content, {encoding: 'utf-8'});
 		})
 	}
@@ -91,12 +119,12 @@ const isProd = process.env.BUILD === 'production';
 (async () => {
 	try {
 		await esbuild.build({
-			entryPoints: ['src/main.ts'],
+			entryPoints: ['src/main.ts', 'src/styles.scss'],
 			bundle: true,
 			watch: !isProd,
-			platform: 'browser',
-			external: ['obsidian'],
+			external: ['obsidian', 'electron', ...builtins],
 			format: 'cjs',
+			target: 'es2018',
 			banner: { js: banner },
 			sourcemap: isProd ? false : 'inline',
 			minify: isProd,
@@ -104,9 +132,10 @@ const isProd = process.env.BUILD === 'production';
 			define: {
 				'process.env.NODE_ENV': JSON.stringify(process.env.BUILD),
 			},
-			outfile: 'build/main.js',
+			outdir: 'build/',
 			logLevel: 'info',
 			plugins: [copyManifest, copyMinifiedCSS],
+			loader: { '.scss': 'text' }
 		});
 	} catch (err) {
 		console.error(err);

@@ -89,6 +89,18 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                 });
         }
 
+        new Setting(containerEl)
+            .setName(`Button spacing`)
+            .setDesc('Set the spacing for Page Header buttons.')
+            .addButton((b) => {
+                b.setButtonText(
+                    'Click to go to the Style settings. Requires the Style settings plugin.'
+                );
+                b.onClick((e) =>
+                    this.app.setting.openTabById('obsidian-style-settings')
+                );
+            });
+
         for (let i = 0; i < settings.enabledButtons.length; i++) {
             let command = settings.enabledButtons[i];
             const iconDiv = createDiv({ cls: 'CS-settings-icon' });
