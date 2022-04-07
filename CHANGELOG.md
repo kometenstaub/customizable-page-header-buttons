@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.1.2...4.2.0) (2022-04-07)
+
+
+### Features
+
+* Page Header Button spacing ([a4dd5ac](https://github.com/kometenstaub/customizable-page-header-buttons/commit/a4dd5acc6f4999c03aacf414dfaa19116a5b256f)), closes [#17](https://github.com/kometenstaub/customizable-page-header-buttons/issues/17)
+
 ### [4.1.2](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.1.1...4.1.2) (2022-03-31)
 
 
