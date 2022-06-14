@@ -119,9 +119,15 @@ export function exchangeCenterTitleBar(): Element {
 // Page header utility functions
 
 export function removeAllPageHeaderButtons() {
+    /*
     const activeLeaves = document.getElementsByClassName(
         'workspace-leaf-content'
     );
+*/
+    const activeLeaves: HTMLElement[] = [];
+    app.workspace.iterateAllLeaves((leaf) => {
+        activeLeaves.push(leaf.view.containerEl);
+    });
     for (let i = 0; i < activeLeaves.length; i++) {
         const leaf = activeLeaves[i];
         const element = leaf.getElementsByClassName(PLUGIN_CLASS_NAME);
@@ -132,9 +138,15 @@ export function removeAllPageHeaderButtons() {
 }
 
 export function removePageHeaderButton(buttonId: string) {
+    /*
     const activeLeaves = document.getElementsByClassName(
         'workspace-leaf-content'
     );
+*/
+    const activeLeaves: HTMLElement[] = [];
+    app.workspace.iterateAllLeaves((leaf) => {
+        activeLeaves.push(leaf.view.containerEl);
+    });
     for (let i = 0; i < activeLeaves.length; i++) {
         const leaf = activeLeaves[i];
         removeSingleButton(leaf, buttonId, 'view-action');
