@@ -1,4 +1,4 @@
-import { Platform, Plugin } from 'obsidian';
+import { MarkdownView, Platform, Plugin } from 'obsidian';
 import type {
     baseButton,
     enabledButton,
@@ -185,11 +185,12 @@ export default class TopBarButtonsPlugin extends Plugin {
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-                    const activeLeaf =
-                        app.workspace.getLeaf(false).view.containerEl;
-                    if (!activeLeaf) {
+                    const view =
+                        app.workspace.getActiveViewOfType(MarkdownView);
+                    if (!view) {
                         return;
                     }
+                    let activeLeaf = view.containerEl;
                     /*
                     const activeLeaf = document.getElementsByClassName(
                         'workspace-leaf mod-active'
@@ -197,6 +198,11 @@ export default class TopBarButtonsPlugin extends Plugin {
 */
                     const viewActions =
                         activeLeaf.getElementsByClassName('view-actions')[0];
+
+                    // sidebar panes without a view-header can take focus
+                    if (!viewActions) {
+                        return;
+                    }
 
                     for (
                         let i = this.settings.enabledButtons.length - 1;
