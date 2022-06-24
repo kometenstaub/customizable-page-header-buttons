@@ -185,12 +185,17 @@ export default class TopBarButtonsPlugin extends Plugin {
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-                    const view =
-                        app.workspace.getActiveViewOfType(MarkdownView);
-                    if (!view) {
+                    console.log('file-open')
+                    const activeLeaf =
+                        app.workspace.getLeaf(false).view.containerEl;
+
+                    // if that is used, the buttons don't stay when navigating to a non-markdown pane (excalidraw)
+                    //const view =
+                    //    app.workspace.getActiveViewOfType(MarkdownView);
+                    if (!activeLeaf) {
                         return;
                     }
-                    let activeLeaf = view.containerEl;
+                    //let activeLeaf = view.containerEl;
                     /*
                     const activeLeaf = document.getElementsByClassName(
                         'workspace-leaf mod-active'
