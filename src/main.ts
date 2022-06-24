@@ -185,7 +185,6 @@ export default class TopBarButtonsPlugin extends Plugin {
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-                    console.log('file-open')
                     const activeLeaf =
                         app.workspace.getLeaf(false).view.containerEl;
 
