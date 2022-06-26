@@ -19,6 +19,10 @@
     }
 
     .view-action {
+        /* fix for pop-out windows */
+        position: unset;
+        display: flex;
+
         &.pane-relief {
             display: flex;
             position: unset;
