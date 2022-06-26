@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.4](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.3.3...4.3.4) (2022-06-26)
+
+
+### Bug Fixes
+
+* CSS for pop-out windows ([877b25d](https://github.com/kometenstaub/customizable-page-header-buttons/commit/877b25d5fa581539a50895d97163503dd0b030dc))
+
 ### [4.3.3](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.3.2...4.3.3) (2022-06-24)
 
 
