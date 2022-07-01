@@ -38,14 +38,13 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
         });
 
         containerEl.createEl('p', {
-            text: 'The buttons are added in the order in which they are shown here. This only takes effect after a reload.',
+            text: 'The buttons are added in the order in which they are shown here.',
         });
 
         new Setting(containerEl)
             .setName('Show buttons on desktop')
             .setDesc(
-                'By default, the buttons will only be shown in Obsidian Mobile. \
-                It requires a reload after being toggled to take effect.'
+                'By default, the buttons will only be shown in Obsidian Mobile.'
             )
             .addToggle((toggle) => {
                 toggle.setValue(settings.desktop).onChange(async (state) => {
@@ -77,7 +76,7 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
             new Setting(containerEl)
                 .setName('Pane Relief count')
                 .setDesc(
-                    'Enable to show the pane relief count next to back/forward buttons. Needs a reload to take effect.'
+                    'Enable to show the pane relief history count next to back/forward buttons.'
                 )
                 .addToggle((toggle) => {
                     toggle
