@@ -8,8 +8,11 @@ If you enable desktop compatibility, it will also let you configure buttons to b
 
 On desktop, you can also add buttons to the title bar. You can add them to the left or right side and even exchange the center version text with buttons.
 
-If you use **Pane Relief**, you can toggle whether to show the forward/backwards count. For this to work you need to add back/forward buttons to the page header.
+If you use **Pane Relief**, you can toggle whether to show the forward/backwards history count when you're adding back/forward buttons.
 
+![pane-relief-history-count](https://raw.githubusercontent.com/kometenstaub/customizable-page-header-buttons/main/resources/pane-relief.png)
+
+Thank you to @pjeby for supporting this in Pane Relief.
 
 ## Known limitations
 
@@ -27,3 +30,5 @@ This plugin uses an internal API for showing the commands. That means for exampl
 ## Credits
 
 Shoutout to [@phibr0](https://github.com/phibr0) for his awesome work on the [Customizable Sidebar Plugin](https://github.com/phibr0/obsidian-customizable-sidebar). The code that powers this plugins' settings (adding/removing commands/changing icons) is powered by an adapted version of his code.
+
+Thanks to @pjeby the buttons auto-refresh on setting change and at startup. It will also tell Pane Relief when buttons changed so that title tooltips for the back/forward history count can, if needed, be updated.
