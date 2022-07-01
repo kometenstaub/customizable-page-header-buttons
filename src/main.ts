@@ -1,4 +1,5 @@
-import { Platform, Plugin, WorkspaceLeaf } from 'obsidian';
+import { Platform, Plugin, Workspace, WorkspaceLeaf } from 'obsidian';
+import { around } from "monkey-around";
 import type {
     baseButton,
     enabledButton,
@@ -19,6 +20,12 @@ import {
     restoreCenterTitlebar,
 } from './utils';
 import { lucideIcons } from './lucide';
+
+declare module "obsidian" {
+    interface Workspace {
+        onLayoutChange(): void  // tell plugins the layout changed
+    }
+}
 
 const DEFAULT_SETTINGS: TopBarButtonsSettings = {
     enabledButtons: [],
@@ -186,6 +193,13 @@ export default class TopBarButtonsPlugin extends Plugin {
         });
 
         if (Platform.isMobile || this.settings.desktop) {
+            const self = this;
+            this.register(around(Workspace.prototype, {
+                changeLayout(old) { return async function changeLayout(this: Workspace, ws: any){
+                    await old.call(this, ws);
+                    self.addButtonsToAllLeaves();
+                }}
+            }));
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
                     const activeLeaf = app.workspace.getLeaf(false);
@@ -211,7 +225,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     addButtonsToAllLeaves() {
         app.workspace.iterateAllLeaves(leaf => this.addButtonsToLeaf(leaf));
-        (app.workspace as any).onLayoutChange();
+        app.workspace.onLayoutChange();
     }
 
     addButtonsToLeaf(leaf: WorkspaceLeaf) {
