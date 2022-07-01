@@ -8,7 +8,7 @@ import builtins from 'builtin-modules'
 const license = `
 	MIT License
 
-	Copyright (c) 2021-2022 kometenstaub
+	Copyright (c) 2021-2022 kometenstaub and contributors
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,8 @@ It is MIT-licensed:
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 
+The workspace monkey-patching uses code from monkey-around, which is ISC-licensed.
+https://github.com/pjeby/monkey-around
 
 */
 `;

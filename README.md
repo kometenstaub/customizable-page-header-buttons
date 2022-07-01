@@ -33,4 +33,5 @@ This plugin uses an internal API for showing the commands. That means for exampl
 
 Shoutout to [@phibr0](https://github.com/phibr0) for his awesome work on the [Customizable Sidebar Plugin](https://github.com/phibr0/obsidian-customizable-sidebar). The code that powers this plugins' settings (adding/removing commands/changing icons) is powered by an adapted version of his code.
 
-Thanks to @pjeby the buttons auto-refresh on setting change and at startup. It will also tell Pane Relief when buttons changed so that title tooltips for the back/forward history count can, if needed, be updated.
+Thanks to @pjeby the buttons auto-refresh on setting change and at startup. It will also tell Pane Relief when buttons changed so that title tooltips for the back/forward history count can, if needed, be updated and all the leaves will be populated when the workspace is changed (using monkey-around, which ISC-licensed).
+
