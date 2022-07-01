@@ -1,4 +1,4 @@
-import { MarkdownView, Platform, Plugin } from 'obsidian';
+import { Platform, Plugin, WorkspaceLeaf } from 'obsidian';
 import type {
     baseButton,
     enabledButton,
@@ -180,13 +180,15 @@ export default class TopBarButtonsPlugin extends Plugin {
                     this.addInitialCenterTitleBarButtons();
                 }
             }
+            if (Platform.isMobile || this.settings.desktop) {
+                this.addButtonsToAllLeaves();
+            }
         });
 
         if (Platform.isMobile || this.settings.desktop) {
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-                    const activeLeaf =
-                        app.workspace.getLeaf(false).view.containerEl;
+                    const activeLeaf = app.workspace.getLeaf(false);
 
                     // if that is used, the buttons don't stay when navigating to a non-markdown pane (excalidraw)
                     //const view =
@@ -200,43 +202,52 @@ export default class TopBarButtonsPlugin extends Plugin {
                         'workspace-leaf mod-active'
                     )[0];
 */
-                    const viewActions =
-                        activeLeaf.getElementsByClassName('view-actions')[0];
+                    this.addButtonsToLeaf(activeLeaf);
 
-                    // sidebar panes without a view-header can take focus
-                    if (!viewActions) {
-                        return;
-                    }
-
-                    for (
-                        let i = this.settings.enabledButtons.length - 1;
-                        i >= 0;
-                        i--
-                    ) {
-                        if (
-                            this.settings.enabledButtons[i].showButtons ===
-                                'both' ||
-                            (this.settings.enabledButtons[i].showButtons ===
-                                'mobile' &&
-                                Platform.isMobile) ||
-                            (this.settings.enabledButtons[i].showButtons ===
-                                'desktop' &&
-                                Platform.isDesktop)
-                        ) {
-                            if (
-                                !viewActions.getElementsByClassName(
-                                    `view-action page-header-button ${this.settings.enabledButtons[i].id}`
-                                )[0]
-                            ) {
-                                this.addPageHeaderButton(
-                                    viewActions,
-                                    this.settings.enabledButtons[i]
-                                );
-                            }
-                        }
-                    }
                 })
             );
+        }
+    }
+
+    addButtonsToAllLeaves() {
+        app.workspace.iterateAllLeaves(leaf => this.addButtonsToLeaf(leaf));
+        (app.workspace as any).onLayoutChange();
+    }
+
+    addButtonsToLeaf(leaf: WorkspaceLeaf) {
+        const activeLeaf = leaf?.view.containerEl;
+        const viewActions =
+            activeLeaf?.getElementsByClassName('view-actions')[0];
+
+        // sidebar panes without a view-header can take focus
+        if (!viewActions) {
+            return;
+        }
+
+        for (
+            let i = this.settings.enabledButtons.length - 1;
+            i >= 0;
+            i--
+        ) {
+            // Remove the existing element first
+            viewActions.getElementsByClassName(
+                `view-action page-header-button ${this.settings.enabledButtons[i].id}`
+            )[0]?.detach();
+            if (
+                this.settings.enabledButtons[i].showButtons ===
+                    'both' ||
+                (this.settings.enabledButtons[i].showButtons ===
+                    'mobile' &&
+                    Platform.isMobile) ||
+                (this.settings.enabledButtons[i].showButtons ===
+                    'desktop' &&
+                    Platform.isDesktop)
+            ) {
+                this.addPageHeaderButton(
+                    viewActions,
+                    this.settings.enabledButtons[i]
+                );
+            }
         }
     }
 
@@ -260,5 +271,6 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(this.settings);
+        app.workspace.onLayoutReady(() => this.addButtonsToAllLeaves())
     }
 }
