@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.4.0...4.5.0) (2022-07-01)
+
+
+### Features
+
+* Support refreshing on workspace load ([659ed5e](https://github.com/kometenstaub/customizable-page-header-buttons/commit/659ed5ec0058cd3408f4147a999bb123cb4ea69e))
+
 ## [4.4.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.3.4...4.4.0) (2022-07-01)
 
 
