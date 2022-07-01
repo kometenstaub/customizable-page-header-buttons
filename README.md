@@ -12,6 +12,8 @@ If you use **Pane Relief**, you can toggle whether to show the forward/backwards
 
 ![pane-relief-history-count](https://raw.githubusercontent.com/kometenstaub/customizable-page-header-buttons/main/resources/pane-relief.png)
 
+![back-forward-settings](https://raw.githubusercontent.com/kometenstaub/customizable-page-header-buttons/main/resources/back-forward-settings.png)
+
 Thank you to @pjeby for supporting this in Pane Relief.
 
 ## Known limitations
