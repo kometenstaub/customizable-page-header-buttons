@@ -202,7 +202,7 @@ export default class TopBarButtonsPlugin extends Plugin {
             }));
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
-                    const activeLeaf = app.workspace.getLeaf(false);
+                    const activeLeaf = app.workspace.activeLeaf;
 
                     // if that is used, the buttons don't stay when navigating to a non-markdown pane (excalidraw)
                     //const view =
