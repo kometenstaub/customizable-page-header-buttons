@@ -101,14 +101,9 @@ export default class TopBarButtonsPlugin extends Plugin {
             TITLEBAR_CLASSES,
             'div'
         );
-        if (!this.app.workspace.layoutReady) {
-            setTimeout(() => {
-                // why does appending work?
-                viewActions.append(buttonIcon);
-            },  100)
-        } else {
-            viewActions.prepend(buttonIcon);
-        }
+        // necessary for popout windows; in the main window .prepend() works,
+        // but not in popout windows
+        viewActions.insertBefore(buttonIcon, viewActions.children[0]);
 
         this.registerDomEvent(buttonIcon, 'click', () => {
             this.app.commands.executeCommandById(id);

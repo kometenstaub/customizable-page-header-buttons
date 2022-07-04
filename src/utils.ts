@@ -206,7 +206,6 @@ export function getLeftTitleBar(doc: Document): Element {
 }
 
 export function getRightTitleBar(doc: Document): Element {
-    console.log(doc.getElementsByClassName('titlebar-button-container mod-right'))
     return doc.getElementsByClassName(
         'titlebar-button-container mod-right'
     )[0];
