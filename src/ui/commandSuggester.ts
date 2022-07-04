@@ -8,10 +8,12 @@ import type {
 } from '../interfaces';
 import type TopBarButtonsPlugin from '../main';
 import {
+    exchangeCenterTitleBar,
+    getTitlebarText,
     removeAllTitleBarButtons,
     removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons,
+    removeRightTitleBarButtons, removeTitlebarText,
     restoreCenterTitlebar,
 } from '../utils';
 
@@ -92,8 +94,14 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
             } else if (this.type === 'title-center') {
                 // initial button is added
                 if (centerCounter === 0) {
+                    this.plugin.titlebarText = [];
                     for (let i = 0; i < this.plugin.windows.length; i++) {
-                        this.plugin.addInitialCenterTitleBarButtons(this.plugin.windows[i])
+                        const doc = this.plugin.windows[i]
+                        this.plugin.titlebarText.push(getTitlebarText(doc));
+                        removeTitlebarText(doc)
+                        // could be passed; maybe for next refactoring
+                        const newActions = exchangeCenterTitleBar(doc)
+                        this.plugin.addCenterTitleBarButtons(doc)
                     }
                     // all buttons removed
                 } else if (this.plugin.settings.titleCenter.length === 0) {

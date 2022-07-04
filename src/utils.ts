@@ -1,9 +1,5 @@
-import { Platform, setIcon } from 'obsidian';
-import {
-    PLUGIN_CLASS_NAME,
-    TITLEBAR_CENTER,
-    TITLEBAR_CLASS,
-} from './constants';
+import {Platform, setIcon} from 'obsidian';
+import {PLUGIN_CLASS_NAME, TITLEBAR_CENTER, TITLEBAR_CLASS,} from './constants';
 
 // General purpose utility functions
 
@@ -77,26 +73,25 @@ export function removeSingleButton(
 // Center title bar utility functions
 
 export function getTitlebarText(doc: Document) {
-    const titlebarText = document.getElementsByClassName('titlebar-text')[0];
-    return titlebarText.getText();
+    return doc.getElementsByClassName('titlebar-text')[0]
 }
 
-export function removeTitlebarText() {
-    const titlebarText = document.getElementsByClassName('titlebar-text');
-    removeElements(titlebarText);
+export function removeTitlebarText(doc: Document) {
+    const titlebarText = doc.getElementsByClassName('titlebar-text')[0];
+    titlebarText.detach();
 }
 
-export function restoreCenterTitlebar(text: string, doc: Document) {
+export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
     const centerTitlebar = doc.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
     // needed for ununload if no center buttons are defined
     if (centerTitlebar !== undefined) {
-        centerTitlebar.classList.remove(
-            ...[PLUGIN_CLASS_NAME, TITLEBAR_CENTER]
-        );
-        centerTitlebar.addClass('titlebar-text');
-        centerTitlebar.innerHTML = text;
+        const inner = centerTitlebar.parentElement
+        centerTitlebar.detach()
+        if (inner) {
+            inner.insertBefore(titlebarText, inner.children[0])
+        }
     }
 }
 
@@ -109,10 +104,11 @@ export function removeCenterTitleBarButtons(doc: Document) {
 }
 
 export function exchangeCenterTitleBar(doc: Document): Element {
-    const centerTitleBar = doc.getElementsByClassName('titlebar-text')[0];
-    centerTitleBar.classList.remove('titlebar-text');
-    centerTitleBar.addClasses([PLUGIN_CLASS_NAME, TITLEBAR_CENTER]);
-    centerTitleBar.innerHTML = '';
+    const centerTitleBar = createDiv({cls: [PLUGIN_CLASS_NAME, 'titlebar-center']})
+    const parent = doc.getElementsByClassName('titlebar-inner')[0]
+    if (parent) {
+        parent.insertBefore(centerTitleBar, parent.children[0])
+    }
     return centerTitleBar;
 }
 

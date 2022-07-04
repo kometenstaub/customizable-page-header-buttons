@@ -10,9 +10,11 @@ import {
 import type TopBarButtonsPlugin from '../main';
 import type { Buttons, TitleOrPage } from 'src/interfaces';
 import {
+    exchangeCenterTitleBar,
+    getTitlebarText,
     removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
-    removeRightTitleBarButtons,
+    removeRightTitleBarButtons, removeTitlebarText,
     restoreCenterTitlebar,
 } from '../utils';
 
@@ -138,8 +140,14 @@ export default class IconPicker extends FuzzySuggestModal<string> {
         } else {
             // initial button is added
             if (centerCounter === 0) {
+                this.plugin.titlebarText = [];
                 for (let i = 0; i < this.plugin.windows.length; i++) {
-                    this.plugin.addInitialCenterTitleBarButtons(this.plugin.windows[i])
+                    const doc = this.plugin.windows[i]
+                    this.plugin.titlebarText.push(getTitlebarText(doc));
+                    removeTitlebarText(doc)
+                    // could be passed; maybe for next refactoring
+                    const newActions = exchangeCenterTitleBar(doc)
+                    this.plugin.addCenterTitleBarButtons(doc)
                 }
             } else if (settings.titleCenter.length === 0) {
                 for (let i = 0; i < this.plugin.windows.length; i++) {

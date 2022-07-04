@@ -16,7 +16,7 @@ import {
     getRightTitleBar,
     getTitlebarText,
     removeAllPageHeaderButtons,
-    removeAllTitleBarButtons,
+    removeAllTitleBarButtons, removeTitlebarText,
     restoreCenterTitlebar,
 } from './utils';
 import { lucideIcons } from './lucide';
@@ -40,7 +40,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     settings!: TopBarButtonsSettings;
     iconList: string[] = obsiIcons.concat(lucideIcons);
     listener!: () => void;
-    titlebarText: string[] = [];
+    titlebarText: Element[] = [];
     windows: Document[] = [];
 
     addPageHeaderButton(
@@ -152,6 +152,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     // before any button is added, the parent needs to be removed and the
     // own parent added; this requires checks in the settings modal when
     // buttons are added and removed
+/*
     addInitialCenterTitleBarButtons(doc: Document) {
         if (this.settings.titleCenter.length > 0) {
             const center = exchangeCenterTitleBar(doc);
@@ -163,6 +164,7 @@ export default class TopBarButtonsPlugin extends Plugin {
             }
         }
     }
+*/
 
     addCenterTitleBarButtons(doc: Document) {
         if (this.settings.titleCenter.length > 0) {
@@ -179,9 +181,13 @@ export default class TopBarButtonsPlugin extends Plugin {
     initTitleBar(doc: Document) {
         this.addLeftTitleBarButtons(doc);
         this.addRightTitleBarButtons(doc);
-        this.titlebarText.push(getTitlebarText(doc));
+        // store the element so that it can be restored later on
         if (this.settings.titleCenter.length > 0) {
-            this.addInitialCenterTitleBarButtons(doc);
+            this.titlebarText.push(getTitlebarText(doc));
+            removeTitlebarText(doc)
+            // could be passed; maybe for next refactoring
+            const newActions = exchangeCenterTitleBar(doc)
+            this.addCenterTitleBarButtons(doc);
         }
     }
     async onload() {
@@ -192,8 +198,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         this.app.workspace.onLayoutReady(() => {
             if (Platform.isDesktopApp) {
-                this.initTitleBar(document)
                 this.windows.push(document)
+                this.initTitleBar(document)
             }
             if (Platform.isMobile || this.settings.desktop) {
                 this.addButtonsToAllLeaves();
