@@ -41,7 +41,7 @@
 		"css-minify": "^2.0.0",
 		"esbuild": "0.14.3",
 		"monkey-around": "^2.3.0",
-		"obsidian": "^0.14.8",
+		"obsidian": "^0.15.3",
 		"prettier": "2.5.1",
 		"sass": "^1.49.9",
 		"standard-version": "^9.3.2",

@@ -8,6 +8,7 @@ import type {
 } from '../interfaces';
 import type TopBarButtonsPlugin from '../main';
 import {
+    removeAllTitleBarButtons,
     removeCenterTitleBarButtons,
     removeLeftTitleBarButtons,
     removeRightTitleBarButtons,
@@ -79,22 +80,32 @@ export default class CommandSuggester extends FuzzySuggestModal<Command> {
             }
             await this.plugin.saveSettings();
             if (this.type === 'title-left') {
-                removeLeftTitleBarButtons();
-                this.plugin.addLeftTitleBarButtons();
+                for (let i = 0; i < this.plugin.windows.length; i++) {
+                    removeLeftTitleBarButtons(this.plugin.windows[i]);
+                    this.plugin.addLeftTitleBarButtons(this.plugin.windows[i])
+                }
             } else if (this.type === 'title-right') {
-                removeRightTitleBarButtons();
-                this.plugin.addRightTitleBarButtons();
+                for (let i = 0; i < this.plugin.windows.length; i++) {
+                    removeRightTitleBarButtons(this.plugin.windows[i]);
+                    this.plugin.addRightTitleBarButtons(this.plugin.windows[i])
+                }
             } else if (this.type === 'title-center') {
                 // initial button is added
                 if (centerCounter === 0) {
-                    this.plugin.addInitialCenterTitleBarButtons();
+                    for (let i = 0; i < this.plugin.windows.length; i++) {
+                        this.plugin.addInitialCenterTitleBarButtons(this.plugin.windows[i])
+                    }
                     // all buttons removed
                 } else if (this.plugin.settings.titleCenter.length === 0) {
-                    restoreCenterTitlebar(this.plugin.titlebarText);
+                    for (let i = 0; i < this.plugin.windows.length; i++) {
+                        restoreCenterTitlebar(this.plugin.titlebarText[i], this.plugin.windows[i])
+                    }
                     // button was there before or at least one is left
                 } else {
-                    removeCenterTitleBarButtons();
-                    this.plugin.addCenterTitleBarButtons();
+                    for (let i = 0; i < this.plugin.windows.length; i++) {
+                        removeCenterTitleBarButtons(this.plugin.windows[i]);
+                        this.plugin.addCenterTitleBarButtons(this.plugin.windows[i])
+                    }
                 }
             }
             setTimeout(() => {

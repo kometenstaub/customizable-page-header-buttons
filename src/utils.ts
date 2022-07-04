@@ -76,7 +76,7 @@ export function removeSingleButton(
 
 // Center title bar utility functions
 
-export function getTitlebarText() {
+export function getTitlebarText(doc: Document) {
     const titlebarText = document.getElementsByClassName('titlebar-text')[0];
     return titlebarText.getText();
 }
@@ -86,8 +86,8 @@ export function removeTitlebarText() {
     removeElements(titlebarText);
 }
 
-export function restoreCenterTitlebar(text: string) {
-    const centerTitlebar = document.getElementsByClassName(
+export function restoreCenterTitlebar(text: string, doc: Document) {
+    const centerTitlebar = doc.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
     // needed for ununload if no center buttons are defined
@@ -100,16 +100,16 @@ export function restoreCenterTitlebar(text: string) {
     }
 }
 
-export function removeCenterTitleBarButtons() {
-    const centerTitlebar = getCenterTitleBar();
+export function removeCenterTitleBarButtons(doc: Document) {
+    const centerTitlebar = getCenterTitleBar(doc);
     const buttons = centerTitlebar.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS}`
     );
     removeElements(buttons);
 }
 
-export function exchangeCenterTitleBar(): Element {
-    const centerTitleBar = document.getElementsByClassName('titlebar-text')[0];
+export function exchangeCenterTitleBar(doc: Document): Element {
+    const centerTitleBar = doc.getElementsByClassName('titlebar-text')[0];
     centerTitleBar.classList.remove('titlebar-text');
     centerTitleBar.addClasses([PLUGIN_CLASS_NAME, TITLEBAR_CENTER]);
     centerTitleBar.innerHTML = '';
@@ -155,15 +155,15 @@ export function removePageHeaderButton(buttonId: string) {
 
 // Left and right title bar utility functions
 
-export function removeAllTitleBarButtons() {
-    removeLeftTitleBarButtons();
-    removeRightTitleBarButtons();
+export function removeAllTitleBarButtons(doc: Document) {
+    removeLeftTitleBarButtons(doc);
+    removeRightTitleBarButtons(doc);
 }
 
 // remove all left and right title bar buttons
 
-export function removeLeftTitleBarButtons() {
-    const leftContainer = getLeftTitleBar();
+export function removeLeftTitleBarButtons(doc: Document) {
+    const leftContainer = getLeftTitleBar(doc);
     const leftElements =
         leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
     if (leftElements.length > 0) {
@@ -171,8 +171,8 @@ export function removeLeftTitleBarButtons() {
     }
 }
 
-export function removeRightTitleBarButtons() {
-    const rightContainer = getRightTitleBar();
+export function removeRightTitleBarButtons(doc: Document) {
+    const rightContainer = getRightTitleBar(doc);
     const rightElements =
         rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
     if (rightElements.length > 0) {
@@ -182,37 +182,38 @@ export function removeRightTitleBarButtons() {
 
 // remove single title bar button
 
-export function removeLeftTitleBarButton(buttonId: string) {
-    const leftContainer = getLeftTitleBar();
+export function removeLeftTitleBarButton(buttonId: string, doc: Document) {
+    const leftContainer = getLeftTitleBar(doc);
     removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
 }
 
-export function removeRightTitleBarButton(buttonId: string) {
-    const rightContainer = getRightTitleBar();
+export function removeRightTitleBarButton(buttonId: string, doc: Document) {
+    const rightContainer = getRightTitleBar(doc);
     removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
 }
 
-export function removeCenterTitleBarButton(buttonId: string) {
-    const centerContainer = getCenterTitleBar();
+export function removeCenterTitleBarButton(buttonId: string, doc: Document) {
+    const centerContainer = getCenterTitleBar(doc);
     removeSingleButton(centerContainer, buttonId, TITLEBAR_CLASS);
 }
 
 // get HTML Elements
 
-export function getLeftTitleBar(): Element {
-    return document.getElementsByClassName(
+export function getLeftTitleBar(doc: Document): Element {
+    return doc.getElementsByClassName(
         'titlebar-button-container mod-left'
     )[0];
 }
 
-export function getRightTitleBar(): Element {
-    return document.getElementsByClassName(
+export function getRightTitleBar(doc: Document): Element {
+    console.log(doc.getElementsByClassName('titlebar-button-container mod-right'))
+    return doc.getElementsByClassName(
         'titlebar-button-container mod-right'
     )[0];
 }
 
-export function getCenterTitleBar(): Element {
-    return document.getElementsByClassName(
+export function getCenterTitleBar(doc: Document): Element {
+    return doc.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
 }
