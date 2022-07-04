@@ -82,7 +82,9 @@ export function getTitlebarText(doc: Document) {
 
 export function removeTitlebarText(doc: Document) {
     const titlebarText = doc.getElementsByClassName('titlebar-text')[0];
-    titlebarText.detach();
+    if (titlebarText) {
+        titlebarText.detach();
+    }
 }
 
 export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {

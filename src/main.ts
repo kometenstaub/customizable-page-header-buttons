@@ -1,4 +1,4 @@
-import { Platform, Plugin, Workspace, WorkspaceLeaf } from 'obsidian';
+import {Platform, Plugin, Workspace, WorkspaceLeaf, WorkspaceWindow} from 'obsidian';
 import { around } from 'monkey-around';
 import type {
     baseButton,
@@ -25,6 +25,9 @@ import { lucideIcons } from './lucide';
 declare module 'obsidian' {
     interface Workspace {
         onLayoutChange(): void; // tell plugins the layout changed
+        floatingSplit: {
+            children: WorkspaceWindow[];
+        }
     }
 }
 
@@ -184,11 +187,15 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.addRightTitleBarButtons(doc);
         // store the element so that it can be restored later on
         if (this.settings.titleCenter.length > 0) {
-            this.titlebarText.push(getTitlebarText(doc));
-            removeTitlebarText(doc);
-            // could be passed; maybe for next refactoring
-            const newActions = exchangeCenterTitleBar(doc);
-            this.addCenterTitleBarButtons(doc);
+            const titleBarText = getTitlebarText(doc)
+            // differentiate between enabled after start and enabled on start
+            if (!this.titlebarText.contains(titleBarText)) {
+                this.titlebarText.push(titleBarText);
+                removeTitlebarText(doc);
+                // could be passed; maybe for next refactoring
+                const newActions = exchangeCenterTitleBar(doc);
+                this.addCenterTitleBarButtons(doc);
+            }
         }
     }
     async onload() {
@@ -201,6 +208,23 @@ export default class TopBarButtonsPlugin extends Plugin {
             if (Platform.isDesktopApp) {
                 this.windows.push(document);
                 this.initTitleBar(document);
+                const { children } = this.app.workspace.floatingSplit
+                // window-open onload (restart of app) gets called before
+                // onLayoutReady; this covers the case that obsidian starts with
+                // multiple windows, but adds the buttons to pop-out windows when
+                // the plugin is newly activated
+                if (children.length + 1 !== this.windows.length) {
+                    for (const el of children) {
+                        // should be redundant, but Licat said to check
+                        if (el instanceof WorkspaceWindow) {
+                            const currentDoc = el.getContainer()?.doc;
+                            if (currentDoc) {
+                                this.windows.push(currentDoc);
+                                this.initTitleBar(currentDoc);
+                            }
+                        }
+                    }
+                }
             }
             if (Platform.isMobile || this.settings.desktop) {
                 this.addButtonsToAllLeaves();
