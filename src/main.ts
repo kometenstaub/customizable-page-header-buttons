@@ -1,4 +1,10 @@
-import {Platform, Plugin, Workspace, WorkspaceLeaf, WorkspaceWindow} from 'obsidian';
+import {
+    Platform,
+    Plugin,
+    Workspace,
+    WorkspaceLeaf,
+    WorkspaceWindow,
+} from 'obsidian';
 import { around } from 'monkey-around';
 import type {
     baseButton,
@@ -27,7 +33,7 @@ declare module 'obsidian' {
         onLayoutChange(): void; // tell plugins the layout changed
         floatingSplit: {
             children: WorkspaceWindow[];
-        }
+        };
     }
 }
 
@@ -187,7 +193,7 @@ export default class TopBarButtonsPlugin extends Plugin {
         this.addRightTitleBarButtons(doc);
         // store the element so that it can be restored later on
         if (this.settings.titleCenter.length > 0) {
-            const titleBarText = getTitlebarText(doc)
+            const titleBarText = getTitlebarText(doc);
             // differentiate between enabled after start and enabled on start
             if (!this.titlebarText.contains(titleBarText)) {
                 this.titlebarText.push(titleBarText);
@@ -208,7 +214,7 @@ export default class TopBarButtonsPlugin extends Plugin {
             if (Platform.isDesktopApp) {
                 this.windows.push(document);
                 this.initTitleBar(document);
-                const { children } = this.app.workspace.floatingSplit
+                const { children } = this.app.workspace.floatingSplit;
                 // window-open onload (restart of app) gets called before
                 // onLayoutReady; this covers the case that obsidian starts with
                 // multiple windows, but adds the buttons to pop-out windows when
