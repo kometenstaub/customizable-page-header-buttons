@@ -231,9 +231,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleLeft[i - 1];
                                 settings.titleLeft[i - 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeLeftTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addLeftTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -249,9 +257,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleLeft[i + 1];
                                 settings.titleLeft[i + 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeLeftTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addLeftTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -265,8 +281,15 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleLeft.remove(command);
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeLeftTitleBarButton(command.id, this.plugin.windows[j]);
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeLeftTitleBarButton(
+                                        command.id,
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -285,9 +308,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     'title-left',
                                     index
                                 ).open();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeLeftTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addLeftTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addLeftTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                             });
                     });
@@ -325,9 +356,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleRight[i - 1];
                                 settings.titleRight[i - 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeRightTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addRightTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -343,9 +382,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleRight[i + 1];
                                 settings.titleRight[i + 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeRightTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addRightTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -359,8 +406,15 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                             .onClick(async () => {
                                 settings.titleRight.remove(command);
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeRightTitleBarButton(command.id, this.plugin.windows[j]);
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeRightTitleBarButton(
+                                        command.id,
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -379,9 +433,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     'title-right',
                                     index
                                 ).open();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeRightTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addRightTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addRightTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                             });
                     });
@@ -420,9 +482,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleCenter[i - 1];
                                 settings.titleCenter[i - 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeCenterTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addCenterTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeCenterTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addCenterTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -438,9 +508,17 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     settings.titleCenter[i + 1];
                                 settings.titleCenter[i + 1] = command;
                                 await this.plugin.saveSettings();
-                                for (let j = 0; j < this.plugin.windows.length; j++) {
-                                    removeCenterTitleBarButtons(this.plugin.windows[j]);
-                                    this.plugin.addCenterTitleBarButtons(this.plugin.windows[j])
+                                for (
+                                    let j = 0;
+                                    j < this.plugin.windows.length;
+                                    j++
+                                ) {
+                                    removeCenterTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
+                                    this.plugin.addCenterTitleBarButtons(
+                                        this.plugin.windows[j]
+                                    );
                                 }
                                 this.display();
                             });
@@ -458,12 +536,26 @@ export default class TopBarButtonsSettingTab extends PluginSettingTab {
                                     this.plugin.settings.titleCenter.length ===
                                     0
                                 ) {
-                                    for (let i = 0; i < this.plugin.windows.length; i++) {
-                                        restoreCenterTitlebar(this.plugin.titlebarText[i], this.plugin.windows[i])
+                                    for (
+                                        let i = 0;
+                                        i < this.plugin.windows.length;
+                                        i++
+                                    ) {
+                                        restoreCenterTitlebar(
+                                            this.plugin.titlebarText[i],
+                                            this.plugin.windows[i]
+                                        );
                                     }
                                 } else {
-                                    for (let j = 0; j < this.plugin.windows.length; j++) {
-                                        removeCenterTitleBarButton(command.id, this.plugin.windows[j]);
+                                    for (
+                                        let j = 0;
+                                        j < this.plugin.windows.length;
+                                        j++
+                                    ) {
+                                        removeCenterTitleBarButton(
+                                            command.id,
+                                            this.plugin.windows[j]
+                                        );
                                     }
                                 }
                                 this.display();

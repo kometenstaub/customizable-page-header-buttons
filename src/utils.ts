@@ -1,5 +1,9 @@
-import {Platform, setIcon} from 'obsidian';
-import {PLUGIN_CLASS_NAME, TITLEBAR_CENTER, TITLEBAR_CLASS,} from './constants';
+import { Platform, setIcon } from 'obsidian';
+import {
+    PLUGIN_CLASS_NAME,
+    TITLEBAR_CENTER,
+    TITLEBAR_CLASS,
+} from './constants';
 
 // General purpose utility functions
 
@@ -73,7 +77,7 @@ export function removeSingleButton(
 // Center title bar utility functions
 
 export function getTitlebarText(doc: Document) {
-    return doc.getElementsByClassName('titlebar-text')[0]
+    return doc.getElementsByClassName('titlebar-text')[0];
 }
 
 export function removeTitlebarText(doc: Document) {
@@ -87,10 +91,10 @@ export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
     )[0];
     // needed for ununload if no center buttons are defined
     if (centerTitlebar !== undefined) {
-        const inner = centerTitlebar.parentElement
-        centerTitlebar.detach()
+        const inner = centerTitlebar.parentElement;
+        centerTitlebar.detach();
         if (inner) {
-            inner.insertBefore(titlebarText, inner.children[0])
+            inner.insertBefore(titlebarText, inner.children[0]);
         }
     }
 }
@@ -104,10 +108,12 @@ export function removeCenterTitleBarButtons(doc: Document) {
 }
 
 export function exchangeCenterTitleBar(doc: Document): Element {
-    const centerTitleBar = createDiv({cls: [PLUGIN_CLASS_NAME, 'titlebar-center']})
-    const parent = doc.getElementsByClassName('titlebar-inner')[0]
+    const centerTitleBar = createDiv({
+        cls: [PLUGIN_CLASS_NAME, 'titlebar-center'],
+    });
+    const parent = doc.getElementsByClassName('titlebar-inner')[0];
     if (parent) {
-        parent.insertBefore(centerTitleBar, parent.children[0])
+        parent.insertBefore(centerTitleBar, parent.children[0]);
     }
     return centerTitleBar;
 }
@@ -196,15 +202,11 @@ export function removeCenterTitleBarButton(buttonId: string, doc: Document) {
 // get HTML Elements
 
 export function getLeftTitleBar(doc: Document): Element {
-    return doc.getElementsByClassName(
-        'titlebar-button-container mod-left'
-    )[0];
+    return doc.getElementsByClassName('titlebar-button-container mod-left')[0];
 }
 
 export function getRightTitleBar(doc: Document): Element {
-    return doc.getElementsByClassName(
-        'titlebar-button-container mod-right'
-    )[0];
+    return doc.getElementsByClassName('titlebar-button-container mod-right')[0];
 }
 
 export function getCenterTitleBar(doc: Document): Element {

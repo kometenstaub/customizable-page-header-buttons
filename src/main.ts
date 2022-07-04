@@ -1,5 +1,5 @@
 import { Platform, Plugin, Workspace, WorkspaceLeaf } from 'obsidian';
-import { around } from "monkey-around";
+import { around } from 'monkey-around';
 import type {
     baseButton,
     enabledButton,
@@ -16,14 +16,15 @@ import {
     getRightTitleBar,
     getTitlebarText,
     removeAllPageHeaderButtons,
-    removeAllTitleBarButtons, removeTitlebarText,
+    removeAllTitleBarButtons,
+    removeTitlebarText,
     restoreCenterTitlebar,
 } from './utils';
 import { lucideIcons } from './lucide';
 
-declare module "obsidian" {
+declare module 'obsidian' {
     interface Workspace {
-        onLayoutChange(): void  // tell plugins the layout changed
+        onLayoutChange(): void; // tell plugins the layout changed
     }
 }
 
@@ -152,7 +153,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     // before any button is added, the parent needs to be removed and the
     // own parent added; this requires checks in the settings modal when
     // buttons are added and removed
-/*
+    /*
     addInitialCenterTitleBarButtons(doc: Document) {
         if (this.settings.titleCenter.length > 0) {
             const center = exchangeCenterTitleBar(doc);
@@ -184,9 +185,9 @@ export default class TopBarButtonsPlugin extends Plugin {
         // store the element so that it can be restored later on
         if (this.settings.titleCenter.length > 0) {
             this.titlebarText.push(getTitlebarText(doc));
-            removeTitlebarText(doc)
+            removeTitlebarText(doc);
             // could be passed; maybe for next refactoring
-            const newActions = exchangeCenterTitleBar(doc)
+            const newActions = exchangeCenterTitleBar(doc);
             this.addCenterTitleBarButtons(doc);
         }
     }
@@ -198,8 +199,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         this.app.workspace.onLayoutReady(() => {
             if (Platform.isDesktopApp) {
-                this.windows.push(document)
-                this.initTitleBar(document)
+                this.windows.push(document);
+                this.initTitleBar(document);
             }
             if (Platform.isMobile || this.settings.desktop) {
                 this.addButtonsToAllLeaves();
@@ -208,12 +209,19 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         if (Platform.isMobile || this.settings.desktop) {
             const self = this;
-            this.register(around(Workspace.prototype, {
-                changeLayout(old) { return async function changeLayout(this: Workspace, ws: any){
-                    await old.call(this, ws);
-                    self.addButtonsToAllLeaves();
-                }}
-            }));
+            this.register(
+                around(Workspace.prototype, {
+                    changeLayout(old) {
+                        return async function changeLayout(
+                            this: Workspace,
+                            ws: any
+                        ) {
+                            await old.call(this, ws);
+                            self.addButtonsToAllLeaves();
+                        };
+                    },
+                })
+            );
             this.registerEvent(
                 this.app.workspace.on('file-open', () => {
                     const activeLeaf = app.workspace.getMostRecentLeaf();
@@ -231,7 +239,6 @@ export default class TopBarButtonsPlugin extends Plugin {
                     )[0];
 */
                     this.addButtonsToLeaf(activeLeaf);
-
                 })
             );
             this.registerEvent(
@@ -242,12 +249,12 @@ export default class TopBarButtonsPlugin extends Plugin {
                         this.initTitleBar(currentDoc);
                     }
                 })
-            )
+            );
         }
     }
 
     addButtonsToAllLeaves() {
-        app.workspace.iterateAllLeaves(leaf => this.addButtonsToLeaf(leaf));
+        app.workspace.iterateAllLeaves((leaf) => this.addButtonsToLeaf(leaf));
         app.workspace.onLayoutChange();
     }
 
@@ -261,23 +268,18 @@ export default class TopBarButtonsPlugin extends Plugin {
             return;
         }
 
-        for (
-            let i = this.settings.enabledButtons.length - 1;
-            i >= 0;
-            i--
-        ) {
+        for (let i = this.settings.enabledButtons.length - 1; i >= 0; i--) {
             // Remove the existing element first
-            viewActions.getElementsByClassName(
-                `view-action page-header-button ${this.settings.enabledButtons[i].id}`
-            )[0]?.detach();
+            viewActions
+                .getElementsByClassName(
+                    `view-action page-header-button ${this.settings.enabledButtons[i].id}`
+                )[0]
+                ?.detach();
             if (
-                this.settings.enabledButtons[i].showButtons ===
-                    'both' ||
-                (this.settings.enabledButtons[i].showButtons ===
-                    'mobile' &&
+                this.settings.enabledButtons[i].showButtons === 'both' ||
+                (this.settings.enabledButtons[i].showButtons === 'mobile' &&
                     Platform.isMobile) ||
-                (this.settings.enabledButtons[i].showButtons ===
-                    'desktop' &&
+                (this.settings.enabledButtons[i].showButtons === 'desktop' &&
                     Platform.isDesktop)
             ) {
                 this.addPageHeaderButton(
@@ -294,9 +296,8 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         for (let i = 0; i < this.windows.length; i++) {
             removeAllTitleBarButtons(this.windows[i]);
-            restoreCenterTitlebar(this.titlebarText[i], this.windows[i])
+            restoreCenterTitlebar(this.titlebarText[i], this.windows[i]);
         }
-
 
         globalThis.removeEventListener('TopBar-addedCommand', this.listener);
     }
@@ -311,6 +312,6 @@ export default class TopBarButtonsPlugin extends Plugin {
 
     async saveSettings() {
         await this.saveData(this.settings);
-        app.workspace.onLayoutReady(() => this.addButtonsToAllLeaves())
+        app.workspace.onLayoutReady(() => this.addButtonsToAllLeaves());
     }
 }
