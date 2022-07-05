@@ -1,6 +1,7 @@
 import {
     Platform,
     Plugin,
+    View,
     Workspace,
     WorkspaceLeaf,
     WorkspaceWindow,
@@ -72,13 +73,15 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         viewActions.prepend(buttonIcon);
 
-        this.registerDomEvent(buttonIcon, 'click', () => {
+        this.registerDomEvent(buttonIcon, 'mousedown', () => {
             /* this way the pane gets activated from the click
                 otherwise the action would get executed on the former active pane
                 timeout of 1 was enough, but 5 is chosen for slower computers
                 may need to be made its own setting in the future
                  */
-            setTimeout(() => this.app.commands.executeCommandById(id), 5);
+            setTimeout(() => {
+                this.app.commands.executeCommandById(id);
+            }, 5);
         });
     }
 
@@ -253,22 +256,12 @@ export default class TopBarButtonsPlugin extends Plugin {
                 })
             );
             this.registerEvent(
-                this.app.workspace.on('file-open', () => {
-                    const activeLeaf = app.workspace.getMostRecentLeaf();
-
-                    // if that is used, the buttons don't stay when navigating to a non-markdown pane (excalidraw)
-                    //const view =
-                    //    app.workspace.getActiveViewOfType(MarkdownView);
+                this.app.workspace.on('layout-change', () => {
+                    const activeLeaf = app.workspace.getActiveViewOfType(View);
                     if (!activeLeaf) {
                         return;
                     }
-                    //let activeLeaf = view.containerEl;
-                    /*
-                    const activeLeaf = document.getElementsByClassName(
-                        'workspace-leaf mod-active'
-                    )[0];
-*/
-                    this.addButtonsToLeaf(activeLeaf);
+                    this.addButtonsToLeaf(activeLeaf.leaf);
                 })
             );
             this.registerEvent(
