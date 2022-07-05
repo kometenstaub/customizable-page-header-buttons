@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.5.2...4.6.0) (2022-07-05)
+
+
+### Features
+
+* load titlebar buttons in pop-out windows... ([601a43d](https://github.com/kometenstaub/customizable-page-header-buttons/commit/601a43d5c34b7c3565dc558ae8855c783d9589bc))
+* support left and right titlebar buttons ([ccb9f32](https://github.com/kometenstaub/customizable-page-header-buttons/commit/ccb9f3260432b842e266bae5a0f3f0c1e588b898))
+
+
+### Bug Fixes
+
+* exchangeCenterTitleBar ([ab98d70](https://github.com/kometenstaub/customizable-page-header-buttons/commit/ab98d70addcb1e4ecbcc8e6a627fa71812d28801))
+* support 0.15.4 ([1f40baa](https://github.com/kometenstaub/customizable-page-header-buttons/commit/1f40baab96b488a0b6d03261ef1ddfa4360ec269))
+* use insertBefore instead of prepend ([d952a6c](https://github.com/kometenstaub/customizable-page-header-buttons/commit/d952a6cbfc8fb0f2fd11593754b72b460b4c82ec))
+
 ### [4.5.2](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.5.0...4.5.2) (2022-07-03)
 
 
