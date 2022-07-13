@@ -13,7 +13,7 @@
 
 /* Pane relief count */
 
-:not(.is-mobile) {
+body:not(.is-mobile) {
     .view-actions {
         align-items: center;
     }
@@ -54,6 +54,12 @@
     }
 }
 
-.is-mobile .view-action:not(:last-child) {
-    margin-right: var(--page-header-spacing-mobile);
+.is-mobile {
+    .view-actions {
+        align-items: center;
+    }
+
+    .view-action:not(:last-child) {
+        margin-right: var(--page-header-spacing-mobile);
+    }
 }
