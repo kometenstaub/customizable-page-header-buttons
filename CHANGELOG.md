@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.2](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.1...4.6.2) (2022-07-15)
+
+
+### Bug Fixes
+
+* better compatibility with Pane Relief history ([08b5b5d](https://github.com/kometenstaub/customizable-page-header-buttons/commit/08b5b5de211aa87a38f8d1009ea977db61103a58))
+
 ### [4.6.1](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.0...4.6.1) (2022-07-13)
 
 
