@@ -73,15 +73,19 @@ export default class TopBarButtonsPlugin extends Plugin {
 
         viewActions.prepend(buttonIcon);
 
-        this.registerDomEvent(buttonIcon, 'mousedown', () => {
-            /* this way the pane gets activated from the click
-                otherwise the action would get executed on the former active pane
-                timeout of 1 was enough, but 5 is chosen for slower computers
-                may need to be made its own setting in the future
-                 */
-            setTimeout(() => {
-                this.app.commands.executeCommandById(id);
-            }, 5);
+        this.registerDomEvent(buttonIcon, 'mousedown', (evt) => {
+            /* This way the pane gets activated from the click,
+             * otherwise the action would get executed on the former active pane.
+             * Timeout of 1 was enough, but 5 is chosen for slower computers.
+             * May need to be made its own setting in the future.
+             *
+             * Only execute event on primary button press. Needed for compatibility with Pane Relief.
+             */
+            if (evt.button === 0) {
+                setTimeout(() => {
+                    this.app.commands.executeCommandById(id);
+                }, 5);
+            }
         });
     }
 
