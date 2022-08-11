@@ -109,6 +109,20 @@ settings:
         max: 16
         step: 1
         format: px
+    - 
+        id: display-view-header-title
+        title: Hide the view header title 
+        description: Redundant because of the embedded title. Gives more spaces for buttons.
+        type: variable-select
+        default: initial
+        options:
+            -
+                label: Show header
+                value: initial
+            -
+                label: Hide header
+                value: none
+
 */
 `
 

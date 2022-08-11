@@ -1,3 +1,7 @@
+.view-header-title {
+    display: var(--display-view-header-title, initial);
+}
+
 .page-header-button.titlebar-center {
     position: absolute;
     width: 100%;
