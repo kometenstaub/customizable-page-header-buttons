@@ -117,10 +117,10 @@ settings:
         default: initial
         options:
             -
-                label: Show header
+                label: Show title
                 value: initial
             -
-                label: Hide header
+                label: Hide title
                 value: none
 
 */
