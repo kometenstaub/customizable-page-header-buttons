@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.3](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.2...4.6.3) (2022-08-11)
+
+
+### Bug Fixes
+
+* CSS ([3f69fcf](https://github.com/kometenstaub/customizable-page-header-buttons/commit/3f69fcfdc90a792f8d926544a7d3aa393738aaca))
+* CSS for Obsi 0.16 ([cfe48b1](https://github.com/kometenstaub/customizable-page-header-buttons/commit/cfe48b14274633bd61ffb6e94ff5c6a70eaee962))
+* CSS for titlebar buttons ([4fd43e2](https://github.com/kometenstaub/customizable-page-header-buttons/commit/4fd43e200528bde4f46c1eb6545be7f656393173))
+* icon-btn class ([f4897b1](https://github.com/kometenstaub/customizable-page-header-buttons/commit/f4897b16fa59accfbe24b1e79d91f2b4d1b86809))
+
 ### [4.6.2](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.1...4.6.2) (2022-07-15)
 
 
