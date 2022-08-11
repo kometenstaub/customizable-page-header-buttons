@@ -43,7 +43,7 @@ export function getButtonIcon(
     tag: 'a' | 'div' = 'a'
 ) {
     const tooltip = getTooltip(name);
-    const buttonClasses = classes.concat([id]);
+    const buttonClasses = classes.concat(['icon-btn', id]);
 
     const buttonIcon = createEl(tag, {
         cls: buttonClasses,

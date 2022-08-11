@@ -17,6 +17,12 @@
     text-overflow: ellipsis;
 }
 
+.titlebar-button.titlebar-button.page-header-button {
+    padding: 16px var(--titlebar-button-horizontal-spacing);
+    display: flex;
+    align-items: center;
+}
+
 /* Pane relief count */
 
 body:not(.is-mobile) {

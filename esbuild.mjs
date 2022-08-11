@@ -100,6 +100,15 @@ settings:
         max: 30
         step: 1
         format: px
+    - 
+        id: titlebar-button-horizontal-spacing
+        title: Horizontal spacing of titlebar buttons
+        type: variable-number-slider
+        default: 16
+        min: 4
+        max: 16
+        step: 1
+        format: px
 */
 `
 
