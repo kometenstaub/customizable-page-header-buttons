@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.3...4.7.0) (2022-08-11)
+
+
+### Features
+
+* add hide header option ([8022577](https://github.com/kometenstaub/customizable-page-header-buttons/commit/80225770cb3516703968927641e8797d8af986d3))
+
+
+### Bug Fixes
+
+* check for undefined ([ee0175f](https://github.com/kometenstaub/customizable-page-header-buttons/commit/ee0175f1aee721b438e2ee98c206faf6a9b6b150))
+* more checks for titlebar ([73c549b](https://github.com/kometenstaub/customizable-page-header-buttons/commit/73c549baaf4f1a4cb67afb2da4347caaf7e90856))
+
 ### [4.6.3](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.6.2...4.6.3) (2022-08-11)
 
 
