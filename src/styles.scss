@@ -17,10 +17,14 @@
     text-overflow: ellipsis;
 }
 
-.titlebar-button.titlebar-button.page-header-button {
-    padding: 16px var(--titlebar-button-horizontal-spacing);
-    display: flex;
+.titlebar-button {
     align-items: center;
+
+    &.titlebar-button.page-header-button {
+        padding: 16px var(--titlebar-button-horizontal-spacing, 16px);
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* Pane relief count */
