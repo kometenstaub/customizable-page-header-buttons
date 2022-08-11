@@ -148,6 +148,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     addLeftTitleBarButtons(doc: Document) {
         if (this.settings.titleLeft.length > 0) {
             const modLeft = getLeftTitleBar(doc);
+            if (!modLeft) return;
             for (const button of this.settings.titleLeft) {
                 this.addLeftTitleBarButton(modLeft, button);
             }
@@ -157,6 +158,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     addRightTitleBarButtons(doc: Document) {
         if (this.settings.titleRight.length > 0) {
             const modRight = getRightTitleBar(doc);
+            if (!modRight) return;
             for (let i = this.settings.titleRight.length - 1; i >= 0; i--) {
                 this.addRightTitleBarButton(
                     modRight,
@@ -186,6 +188,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     addCenterTitleBarButtons(doc: Document) {
         if (this.settings.titleCenter.length > 0) {
             const center = getCenterTitleBar(doc);
+            if (!center) return;
             //const center = document.getElementsByClassName(
             //    `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
             //)[0];
@@ -196,11 +199,13 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     initTitleBar(doc: Document) {
+
         this.addLeftTitleBarButtons(doc);
         this.addRightTitleBarButtons(doc);
         // store the element so that it can be restored later on
         if (this.settings.titleCenter.length > 0) {
             const titleBarText = getTitlebarText(doc);
+            if (!titleBarText) return;
             // differentiate between enabled after start and enabled on start
             if (!this.titlebarText.contains(titleBarText)) {
                 this.titlebarText.push(titleBarText);

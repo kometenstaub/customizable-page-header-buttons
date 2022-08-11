@@ -112,7 +112,7 @@ settings:
     - 
         id: display-view-header-title
         title: Hide the view header title 
-        description: Redundant because of the embedded title. Gives more spaces for buttons.
+        description: Hiding it makes sense because of the embedded title. It gives more space for buttons, which is useful when many tab containers are open.
         type: variable-select
         default: initial
         options:

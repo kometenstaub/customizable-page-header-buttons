@@ -92,7 +92,7 @@ export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
     // needed for ununload if no center buttons are defined
-    if (centerTitlebar !== undefined) {
+    if (centerTitlebar) {
         const inner = centerTitlebar.parentElement;
         centerTitlebar.detach();
         if (inner) {
@@ -103,6 +103,7 @@ export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
 
 export function removeCenterTitleBarButtons(doc: Document) {
     const centerTitlebar = getCenterTitleBar(doc);
+    if (!centerTitlebar) return;
     const buttons = centerTitlebar.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CLASS}`
     );
@@ -168,6 +169,7 @@ export function removeAllTitleBarButtons(doc: Document) {
 
 export function removeLeftTitleBarButtons(doc: Document) {
     const leftContainer = getLeftTitleBar(doc);
+    if (!leftContainer) return;
     const leftElements =
         leftContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
     if (leftElements.length > 0) {
@@ -177,6 +179,7 @@ export function removeLeftTitleBarButtons(doc: Document) {
 
 export function removeRightTitleBarButtons(doc: Document) {
     const rightContainer = getRightTitleBar(doc);
+    if (!rightContainer) return;
     const rightElements =
         rightContainer.getElementsByClassName(PLUGIN_CLASS_NAME);
     if (rightElements.length > 0) {
@@ -188,16 +191,19 @@ export function removeRightTitleBarButtons(doc: Document) {
 
 export function removeLeftTitleBarButton(buttonId: string, doc: Document) {
     const leftContainer = getLeftTitleBar(doc);
+    if (!leftContainer) return;
     removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
 }
 
 export function removeRightTitleBarButton(buttonId: string, doc: Document) {
     const rightContainer = getRightTitleBar(doc);
+    if (!rightContainer) return;
     removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
 }
 
 export function removeCenterTitleBarButton(buttonId: string, doc: Document) {
     const centerContainer = getCenterTitleBar(doc);
+    if (!centerContainer) return;
     removeSingleButton(centerContainer, buttonId, TITLEBAR_CLASS);
 }
 
