@@ -90,6 +90,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addLeftTitleBarButton(viewActions: Element, button: baseButton) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         const { id, icon, name } = button;
         const iconSize = 15;
         const buttonIcon = getButtonIcon(
@@ -108,6 +109,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addRightTitleBarButton(viewActions: Element, button: baseButton) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         const { id, icon, name } = button;
         const iconSize = 15;
         const buttonIcon = getButtonIcon(
@@ -128,6 +130,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addCenterTitleBarButton(viewActions: Element, button: baseButton) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         const { id, icon, name } = button;
         const iconSize = 15;
         const buttonIcon = getButtonIcon(
@@ -146,6 +149,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addLeftTitleBarButtons(doc: Document) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         if (this.settings.titleLeft.length > 0) {
             const modLeft = getLeftTitleBar(doc);
             if (!modLeft) return;
@@ -156,6 +160,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     addRightTitleBarButtons(doc: Document) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         if (this.settings.titleRight.length > 0) {
             const modRight = getRightTitleBar(doc);
             if (!modRight) return;
@@ -186,6 +191,7 @@ export default class TopBarButtonsPlugin extends Plugin {
 */
 
     addCenterTitleBarButtons(doc: Document) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
         if (this.settings.titleCenter.length > 0) {
             const center = getCenterTitleBar(doc);
             if (!center) return;
@@ -199,6 +205,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     }
 
     initTitleBar(doc: Document) {
+        if (activeDocument.body.classList.contains('is-hidden-frameless')) return;
 
         this.addLeftTitleBarButtons(doc);
         this.addRightTitleBarButtons(doc);

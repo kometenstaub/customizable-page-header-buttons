@@ -88,6 +88,7 @@ export function removeTitlebarText(doc: Document) {
 }
 
 export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const centerTitlebar = doc.getElementsByClassName(
         `${PLUGIN_CLASS_NAME} ${TITLEBAR_CENTER}`
     )[0];
@@ -102,6 +103,7 @@ export function restoreCenterTitlebar(titlebarText: Element, doc: Document) {
 }
 
 export function removeCenterTitleBarButtons(doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const centerTitlebar = getCenterTitleBar(doc);
     if (!centerTitlebar) return;
     const buttons = centerTitlebar.getElementsByClassName(
@@ -110,7 +112,8 @@ export function removeCenterTitleBarButtons(doc: Document) {
     removeElements(buttons);
 }
 
-export function exchangeCenterTitleBar(doc: Document): Element {
+export function exchangeCenterTitleBar(doc: Document): Element | undefined {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const centerTitleBar = createDiv({
         cls: [PLUGIN_CLASS_NAME, 'titlebar-center'],
     });
@@ -161,6 +164,7 @@ export function removePageHeaderButton(buttonId: string) {
 // Left and right title bar utility functions
 
 export function removeAllTitleBarButtons(doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     removeLeftTitleBarButtons(doc);
     removeRightTitleBarButtons(doc);
 }
@@ -168,6 +172,7 @@ export function removeAllTitleBarButtons(doc: Document) {
 // remove all left and right title bar buttons
 
 export function removeLeftTitleBarButtons(doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const leftContainer = getLeftTitleBar(doc);
     if (!leftContainer) return;
     const leftElements =
@@ -178,6 +183,7 @@ export function removeLeftTitleBarButtons(doc: Document) {
 }
 
 export function removeRightTitleBarButtons(doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const rightContainer = getRightTitleBar(doc);
     if (!rightContainer) return;
     const rightElements =
@@ -190,18 +196,21 @@ export function removeRightTitleBarButtons(doc: Document) {
 // remove single title bar button
 
 export function removeLeftTitleBarButton(buttonId: string, doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const leftContainer = getLeftTitleBar(doc);
     if (!leftContainer) return;
     removeSingleButton(leftContainer, buttonId, TITLEBAR_CLASS);
 }
 
 export function removeRightTitleBarButton(buttonId: string, doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const rightContainer = getRightTitleBar(doc);
     if (!rightContainer) return;
     removeSingleButton(rightContainer, buttonId, TITLEBAR_CLASS);
 }
 
 export function removeCenterTitleBarButton(buttonId: string, doc: Document) {
+    if (doc.body.classList.contains('is-hidden-frameless')) return;
     const centerContainer = getCenterTitleBar(doc);
     if (!centerContainer) return;
     removeSingleButton(centerContainer, buttonId, TITLEBAR_CLASS);
