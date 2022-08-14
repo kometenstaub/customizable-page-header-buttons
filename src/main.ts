@@ -60,7 +60,7 @@ export default class TopBarButtonsPlugin extends Plugin {
     ) {
         const { id, icon, name } = button;
         const iconSize = getIconSize();
-        const classes = ['view-action', 'icon-btn', PLUGIN_CLASS_NAME];
+        const classes = ['view-action', 'clickable-icon', PLUGIN_CLASS_NAME];
 
         const buttonIcon = getButtonIcon(name, id, icon, iconSize, classes);
 
