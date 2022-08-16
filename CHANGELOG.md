@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.2](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.7.1...4.7.2) (2022-08-16)
+
+
+### Bug Fixes
+
+* improve title visibility on mobile ([08407bd](https://github.com/kometenstaub/customizable-page-header-buttons/commit/08407bdf08b5e0f285d6660bc69e8f6238ef50dd))
+
 ### [4.7.1](https://github.com/kometenstaub/customizable-page-header-buttons/compare/4.7.0...4.7.1) (2022-08-14)
 
 
