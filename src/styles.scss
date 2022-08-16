@@ -82,4 +82,9 @@ body:not(.is-mobile) {
     .view-action:not(:last-child) {
         margin-right: var(--page-header-spacing-mobile);
     }
+
+    .view-header-title {
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
 }
