@@ -1,4 +1,4 @@
-# Customizable Page Header and Title Bar Obsidian Plugin
+# ~~Customizable Page Header and Title Bar Obsidian Plugin~~ Discontinued, please use the Commander plugin
 
 This plugin lets you add buttons that execute commands to page header in the mobile (and desktop, off by default) app.
 
